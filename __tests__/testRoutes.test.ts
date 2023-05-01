@@ -3,11 +3,11 @@ import { app } from '../src/app';
 
 describe('Sample Test File: GET /', () => {
     it('should return Hello world', async () => {
-        const result = 'Hello World';
+        const expectedResult = 'Hello, World!';
 
-        const response = await request(app).get('/api');
+        const response = await request(app).get('/api/test');
 
         expect(response.status).toEqual(200);
-        expect(response.text).toEqual(result);
+        expect(response.text).toEqual(expectedResult);
     });
 });

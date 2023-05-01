@@ -10,7 +10,7 @@
         "moduleResolution": "node" /* Specify how TypeScript looks up a file from a given module specifier. */,
         "baseUrl": "./" /* Specify the base directory to resolve non-relative module names. */,
         "paths": {
-            "@controllers/*": ["controllers/*"]
+            "@controllers/*": ["src/controllers/*"]
         } /* Specify a set of entries that re-map imports to additional lookup locations. */,
         // "types": [],                                      /* Specify type package names to be included without being referenced in a source file. */
         /* JavaScript Support */
@@ -27,8 +27,7 @@
         /* Completeness */
         "skipLibCheck": true /* Skip type checking all .d.ts files. */
     },
-    // "exclude": [
-    //   "public"
-    // ]
-    "include": ["public/js/*"]
+    "exclude": [
+      "public"
+    ]
 }

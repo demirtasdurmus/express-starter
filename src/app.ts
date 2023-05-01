@@ -1,11 +1,9 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application } from 'express';
+import { testRoutes } from './routes/testRoutes';
 
 const app: Application = express();
 
 app.use(express.static('public'));
-
-app.get('/api', (req: Request, res: Response) => {
-    res.send('Hello World');
-});
+app.use('/api/test', testRoutes);
 
 export { app };
