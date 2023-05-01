@@ -1,0 +1,10 @@
+body {
+    background-color: #1a1c1d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.doc_title {
+    color: red;
+}
