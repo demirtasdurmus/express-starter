@@ -3,5 +3,7 @@
 /dist
 /coverage
 node_modules
+package-lock.json
 *.yml
 CHANGELOG.md
+
