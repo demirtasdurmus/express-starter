@@ -27,7 +27,5 @@
         /* Completeness */
         "skipLibCheck": true /* Skip type checking all .d.ts files. */
     },
-    "exclude": [
-      "public"
-    ]
+    "exclude": ["public"]
 }

@@ -1,8 +1,8 @@
 {
     "root": true,
     "env": {
-        "browser": true,
-        "es2021": true
+        "es2021": true,
+        "node": true
     },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -14,18 +14,18 @@
     "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
     "plugins": ["@typescript-eslint", "prettier"],
     "rules": {
-        // "prettier/prettier": "error",
-        // "spaced-comment": "warn",
-        // "no-console": "error",
-        // "consistent-return": "off",
-        // "func-names": "off",
-        // "object-shorthand": "off",
-        // "no-process-exit": "off",
-        // "no-param-reassign": "off",
-        // "no-return-await": "warn",
-        // "no-underscore-dangle": "off",
-        // "class-methods-use-this": "off",
-        // "prefer-destructuring": ["error", { "object": true, "array": false }]
+        "prettier/prettier": "error",
+        "spaced-comment": "warn",
+        "no-console": "error",
+        "consistent-return": "off",
+        "func-names": "off",
+        "object-shorthand": "off",
+        "no-process-exit": "off",
+        "no-param-reassign": "off",
+        "no-return-await": "warn",
+        "no-underscore-dangle": "off",
+        "class-methods-use-this": "off",
+        "prefer-destructuring": ["error", { "object": true, "array": false }]
     },
     "overrides": []
 }
