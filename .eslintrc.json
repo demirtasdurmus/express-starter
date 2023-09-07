@@ -8,24 +8,30 @@
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "project": "./tsconfig.json",
+        "tsconfigRootDir": "./",
         "sourceType": "module",
         "ecmaVersion": "latest"
     },
     "extends": ["plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended", "prettier"],
     "plugins": ["@typescript-eslint/eslint-plugin", "prettier"],
     "rules": {
-        "prettier/prettier": "error",
-        "spaced-comment": "warn",
+        // errors
+        "prettier/prettier": "error", // show prettier errors as eslint errors
         "no-console": "error",
+        "no-param-reassign": "error",
+        "no-return-await": "error",
+        "prefer-destructuring": ["error", { "object": true, "array": false }],
+
+        // warnings
+        "spaced-comment": "warn",
+
+        // off
         "consistent-return": "off",
         "func-names": "off",
         "object-shorthand": "off",
         "no-process-exit": "off",
-        "no-param-reassign": "off",
-        "no-return-await": "warn",
         "no-underscore-dangle": "off",
-        "class-methods-use-this": "off",
-        "prefer-destructuring": ["error", { "object": true, "array": false }]
+        "class-methods-use-this": "off"
     },
     "overrides": [
         {
@@ -33,13 +39,18 @@
             "plugins": ["jest"],
             "extends": ["plugin:jest/recommended"],
             "rules": {
-                "jest/prefer-expect-assertions": "off",
-                "jest/no-disabled-tests": "warn",
+                // errors
                 "jest/no-focused-tests": "error",
                 "jest/no-identical-title": "error",
-                "jest/prefer-to-have-length": "warn",
                 "jest/valid-expect": "error",
-                "jest/max-expects": ["error", { "max": 5 }]
+                "jest/max-expects": ["error", { "max": 5 }],
+
+                // warnings
+                "jest/no-disabled-tests": "warn",
+                "jest/prefer-to-have-length": "warn",
+
+                // off
+                "jest/prefer-expect-assertions": "off"
             }
         }
     ]
