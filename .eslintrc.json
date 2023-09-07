@@ -2,17 +2,17 @@
     "root": true,
     "env": {
         "es2021": true,
-        "node": true
+        "node": true,
+        "jest": true
     },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": "latest",
         "project": "./tsconfig.json",
-        "tsconfigRootDir": "./",
-        "sourceType": "module"
+        "sourceType": "module",
+        "ecmaVersion": "latest"
     },
-    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
-    "plugins": ["@typescript-eslint", "prettier"],
+    "extends": ["plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended", "prettier"],
+    "plugins": ["@typescript-eslint/eslint-plugin", "prettier"],
     "rules": {
         "prettier/prettier": "error",
         "spaced-comment": "warn",
@@ -27,5 +27,20 @@
         "class-methods-use-this": "off",
         "prefer-destructuring": ["error", { "object": true, "array": false }]
     },
-    "overrides": []
+    "overrides": [
+        {
+            "files": ["*.test.ts"],
+            "plugins": ["jest"],
+            "extends": ["plugin:jest/recommended"],
+            "rules": {
+                "jest/prefer-expect-assertions": "off",
+                "jest/no-disabled-tests": "warn",
+                "jest/no-focused-tests": "error",
+                "jest/no-identical-title": "error",
+                "jest/prefer-to-have-length": "warn",
+                "jest/valid-expect": "error",
+                "jest/max-expects": ["error", { "max": 5 }]
+            }
+        }
+    ]
 }

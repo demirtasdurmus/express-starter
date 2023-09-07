@@ -5,6 +5,8 @@ const config: Config.InitialOptions = {
     testEnvironment: 'node',
     verbose: true,
     automock: false,
-    setupFilesAfterEnv: ['./jest.setup.ts'],
+    rootDir: './src',
+    coverageDirectory: '../coverage',
+    testRegex: '.test.ts$',
 };
 export default config;
