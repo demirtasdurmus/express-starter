@@ -1,0 +1,79 @@
+name: Linting, Testing, Building
+
+on:
+  pull_request:
+    branches: [main, develop, release/*]
+
+  workflow_dispatch:
+
+env:
+  PORT: 3000 # workflow level environment variable example
+
+jobs:
+  Linting:
+    env: # job level environment variable
+      HOST: 127.0.0.1
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Load & Cache Dependencies
+        uses: ./.github/actions/cached-deps
+        
+      - name: Run Linting Rules
+        run: npm run lint
+
+  Testing:
+    needs: Linting
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Load & Cache Dependencies
+        uses: ./.github/actions/cached-deps
+        
+      - name: Run Unit Tests
+        run: npm run test
+
+      - name: Run e2e Tests
+        run: npm run test:e2e
+  
+  # This job checks if the project builds successfully
+  Building:
+    needs: Testing
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Load & Cache Dependencies
+        uses: ./.github/actions/cached-deps
+        
+      - name: Build
+        run: npm run build
