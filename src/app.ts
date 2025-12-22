@@ -9,6 +9,6 @@ app.use(express.static('public'));
 app.use('/api/samples', sampleRoutes);
 
 app.use(errorHandler);
-app.all('*', notFoundHandler);
+app.all(/.*/, notFoundHandler);
 
 export { app };
