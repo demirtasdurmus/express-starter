@@ -7,6 +7,9 @@ on:
     - cron: "0 9 28-31 * *"
   workflow_dispatch: # Allow manual triggering
 
+env:
+  NODE_VERSION: 22
+
 jobs:
   update-dependencies:
     runs-on: ubuntu-latest
@@ -16,16 +19,15 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.ACTIONS_PAT_GITHUB }}
           fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v5
         with:
-          node-version: "22"
-          cache: "npm"
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Update dependencies
         run: |
