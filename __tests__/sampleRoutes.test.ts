@@ -8,6 +8,7 @@ describe('Sample Test File: GET /', () => {
     const response = await request(app).get('/api/samples');
 
     expect(response.status).toEqual(200);
-    expect(response.text).toEqual(expectedResult);
+    expect(response.body.success).toEqual(true);
+    expect(response.body.payload.message).toEqual(expectedResult);
   });
 });
