@@ -19,6 +19,8 @@ FORCE="${1:-}"
 
 EXCLUDES=(
   ".cursor"
+  ".env"
+  ".env.production"
 )
 
 EXCLUDE_ARGS=()
