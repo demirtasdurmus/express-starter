@@ -58,6 +58,7 @@
   },
   "dependencies": {
     "express": "^5.2.1",
+    "http-status": "^2.1.0",
     "zod": "^4.2.1"
   }
 }
