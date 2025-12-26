@@ -46,6 +46,11 @@ jobs:
       - name: Run Unit Tests
         run: npm run test
 
+      - name: Copy .env.example to .env
+        run: |
+          cp .env.example .env || true
+          echo "NODE_ENV=test" >> .env
+
       - name: Run Integration Tests
         run: npm run test:int
 
