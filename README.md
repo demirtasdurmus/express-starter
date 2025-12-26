@@ -17,11 +17,13 @@ A modern, production-ready Express.js starter template with TypeScript, comprehe
 ```
 src/
 ├── controllers/     # Request handlers
+├── env/             # Environment variables
 ├── middleware/      # Custom middleware
-├── routes/         # Route definitions
-├── services/       # Business logic
-├── app.ts          # Express app configuration
-└── index.ts        # Server entry point
+├── routes/          # Route definitions
+├── services/        # Business logic
+├── utils/           # Utility functions
+├── app.ts           # Express app configuration
+└── index.ts         # Server entry point
 
 __tests__/              # Integration tests
 dist/               # Compiled JavaScript output
@@ -44,6 +46,9 @@ cd express-starter
 
 # Install dependencies
 npm install
+
+# Create .env file
+cp .env.example .env
 
 # Start the development server
 npm run dev
@@ -108,6 +113,7 @@ The starter includes a sample endpoint at `/api/samples` that demonstrates the M
 ### Production
 
 - `express` - Web framework
+- `zod` - Data validation
 
 ### Development
 

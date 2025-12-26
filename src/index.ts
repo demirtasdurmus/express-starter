@@ -1,13 +1,15 @@
 import { createServer } from 'http';
 import { shutdownGracefully } from './utils/shutdown-gracefully';
 import { logger } from './utils/logger';
+import { env } from './env';
 import { app } from './app';
 
-const PORT = process.env.PORT || 3000;
 const server = createServer(app);
+const PORT = env.PORT;
+const HOST = env.HOST;
 
-server.listen(PORT, () => {
-  logger.info(`Server listening on port: ${PORT}`);
+server.listen(PORT, HOST, () => {
+  logger.info(`Server listening on http://${HOST}:${PORT}`);
 });
 
 process.on('SIGINT', () => shutdownGracefully({ signalOrEvent: 'SIGINT', server }));
