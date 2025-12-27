@@ -14,7 +14,7 @@ A modern, production-ready Express.js starter template with TypeScript, comprehe
 
 ## 📁 Project Structure
 
-```
+```sh
 src/
 ├── controllers/     # Request handlers
 ├── env/             # Environment variables
@@ -45,29 +45,29 @@ git clone git@github.com:demirtasdurmus/express-starter.git
 cd express-starter
 
 # Install dependencies
-npm install
+pnpm install
 
 # Create .env file
 cp .env.example .env
 
 # Start the development server
-npm run dev
+pnpm dev
 ```
 
 ## 📜 Available Scripts
 
-| Script                  | Description                              |
-| ----------------------- | ---------------------------------------- |
-| `npm run dev`           | Start development server with hot reload |
-| `npm run build`         | Build TypeScript to JavaScript           |
-| `npm start`             | Start production server                  |
-| `npm test`              | Run unit tests                           |
-| `npm run test:watch`    | Run tests in watch mode                  |
-| `npm run test:coverage` | Run tests with coverage report           |
-| `npm run test:int`      | Run integration tests                    |
-| `npm run lint`          | Lint and fix code                        |
-| `npm run format:write`  | Format code with Prettier                |
-| `npm run clean`         | Clean build artifacts                    |
+| Script               | Description                              |
+| -------------------- | ---------------------------------------- |
+| `pnpm dev`           | Start development server with hot reload |
+| `pnpm build`         | Build TypeScript to JavaScript           |
+| `pnpm start`         | Start production server                  |
+| `pnpm test`          | Run unit tests                           |
+| `pnpm test:watch`    | Run tests in watch mode                  |
+| `pnpm test:coverage` | Run tests with coverage report           |
+| `pnpm test:int`      | Run integration tests                    |
+| `pnpm lint`          | Lint and fix code                        |
+| `pnpm format:write`  | Format code with Prettier                |
+| `pnpm clean`         | Clean build artifacts                    |
 
 ## 🧪 Testing
 
@@ -79,13 +79,13 @@ The project includes comprehensive testing setup:
 
 ```bash
 # Run all tests
-npm test
+pnpm test
 
 # Run integration tests
-npm run test:int
+pnpm test:int
 
 # Generate coverage report
-npm run test:coverage
+pnpm test:coverage
 ```
 
 ## 🏗️ Development
@@ -114,6 +114,7 @@ The starter includes a sample endpoint at `/api/samples` that demonstrates the M
 
 - `express` - Web framework
 - `zod` - Data validation
+- `http-status` - Error library construction
 
 ### Development
 
@@ -126,8 +127,8 @@ The starter includes a sample endpoint at `/api/samples` that demonstrates the M
 
 ## 🚀 Deployment
 
-1. Build the project: `npm run build`
-2. Start the server: `npm start`
+1. Build the project: `pnpm build`
+2. Start the server: `pnpm start`
 3. The server will run on the port specified in the `PORT` environment variable (default: 3000)
 
 ## 📄 License
