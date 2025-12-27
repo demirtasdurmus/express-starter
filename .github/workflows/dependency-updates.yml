@@ -29,6 +29,9 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Update dependencies
         run: |
           pnpx npm-check-updates

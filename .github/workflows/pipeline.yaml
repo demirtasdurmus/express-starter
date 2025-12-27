@@ -22,6 +22,9 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Load & Cache Dependencies
         uses: ./.github/actions/cached-deps
 
@@ -40,11 +43,14 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Load & Cache Dependencies
         uses: ./.github/actions/cached-deps
 
       - name: Run Unit Tests
-        run: pnpm run test
+        run: pnpm test
 
       - name: Copy .env.example to .env
         run: |
@@ -52,7 +58,7 @@ jobs:
           echo "NODE_ENV=test" >> .env
 
       - name: Run Integration Tests
-        run: pnpm run test:int
+        run: pnpm test:int
 
   Building:
     needs: Testing
@@ -66,8 +72,11 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Load & Cache Dependencies
         uses: ./.github/actions/cached-deps
 
       - name: Build
-        run: pnpm run build
+        run: pnpm build
