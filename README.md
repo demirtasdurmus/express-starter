@@ -113,6 +113,7 @@ The starter includes a sample endpoint at `/api/samples` that demonstrates the M
 ### Production
 
 - `express` - Web framework
+- `dotenv` - Load env variables
 - `zod` - Data validation
 - `http-status` - Error library construction
 
@@ -129,7 +130,7 @@ The starter includes a sample endpoint at `/api/samples` that demonstrates the M
 
 1. Build the project: `pnpm build`
 2. Start the server: `pnpm start`
-3. The server will run on the port specified in the `PORT` environment variable (default: 3000)
+3. The server will run on the port specified in the `PORT` environment variable (default: 8080)
 
 ## 📄 License
 

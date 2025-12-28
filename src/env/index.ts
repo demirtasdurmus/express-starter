@@ -1,10 +1,6 @@
 import z from 'zod';
+import 'dotenv/config';
 import { parseWithZod } from '../utils/parse-with-zod';
-
-/**
- * @see https://nodejs.org/en/learn/command-line/how-to-read-environment-variables-from-nodejs#loading-env-files-programmatically-with-processloadenvfilepath
- */
-process.loadEnvFile();
 
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
@@ -21,6 +17,7 @@ parseWithZod({
   schema: envSchema,
   onError: (error) => {
     console.error(
+      'Do you have a .env file? If not, create one by running cp .env.example .env:\n',
       'Invalid environment variables:\n',
       error.issues.map((issue) => `-> ${issue.message}`).join('\n '),
     );
