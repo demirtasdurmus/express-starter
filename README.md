@@ -6,11 +6,14 @@ A modern, production-ready Express.js starter template with TypeScript, comprehe
 
 - **TypeScript** - Full TypeScript support with strict configuration
 - **Express.js** - Fast, unopinionated web framework
+- **Security** - Helmet for security headers, CORS configuration, and rate limiting
+- **API Documentation** - Swagger/OpenAPI documentation with interactive UI
 - **Testing** - Jest with unit and integration test configurations
 - **Code Quality** - ESLint, Prettier, and Husky for code formatting and linting
 - **Development** - Hot reload with TypeScript watch mode
 - **Architecture** - Clean MVC structure with controllers, services, and middleware
 - **Static Files** - Built-in static file serving
+- **Error Handling** - Comprehensive error handling with proper HTTP status codes
 
 ## 📁 Project Structure
 
@@ -49,27 +52,12 @@ cd express-starter
 # Install dependencies
 pnpm install
 
-# Create .env file
+# Create .env file and update the values if needed
 cp .env.example .env
 
-# Start the development server
+# Start the development server with hot reload
 pnpm dev
 ```
-
-## 📜 Available Scripts
-
-| Script               | Description                              |
-| -------------------- | ---------------------------------------- |
-| `pnpm dev`           | Start development server with hot reload |
-| `pnpm build`         | Build TypeScript to JavaScript           |
-| `pnpm start`         | Start production server                  |
-| `pnpm test`          | Run unit tests                           |
-| `pnpm test:watch`    | Run tests in watch mode                  |
-| `pnpm test:coverage` | Run tests with coverage report           |
-| `pnpm test:int`      | Run integration tests                    |
-| `pnpm lint`          | Lint and fix code                        |
-| `pnpm format:write`  | Format code with Prettier                |
-| `pnpm clean`         | Clean build artifacts                    |
 
 ## 🧪 Testing
 
@@ -96,7 +84,7 @@ pnpm test:coverage
 
 1. Create a controller in `src/controllers/`
 2. Create a service in `src/services/` (if needed)
-3. Define routes in `src/routes/`
+3. Define routes in `src/routes/` and add openapi specification for the endpoint
 4. Import and use in `src/app.ts`
 
 ### Example API Endpoint
@@ -110,12 +98,30 @@ The starter includes a sample endpoint at `/api/samples` that demonstrates the M
 - **Prettier**: Code formatting in `.prettierrc`
 - **Jest**: Testing configuration in `jest.config.ts` and `jest-int.config.ts`
 
+## 🔒 Security Features
+
+The starter includes several security best practices:
+
+- **Helmet**: Sets various HTTP security headers to protect against common vulnerabilities
+- **CORS**: Configurable Cross-Origin Resource Sharing with environment-based origins
+- **Rate Limiting**: API rate limiting (100 requests/15min in production, 1000 in development)
+- **Body Parsing**: Secure JSON and URL-encoded body parsing with size limits (10MB)
+
+### API Documentation
+
+Access the interactive Swagger UI at `/api-docs` to view the API documentation.
+
+**Note**: In production, consider protecting the Swagger UI endpoint with authentication.
+
 ## 📦 Dependencies
 
 ### Production
 
 - `express` - Web framework
 - `dotenv` - Load env variables
+- `helmet` - Security headers middleware
+- `cors` - Cross-Origin Resource Sharing middleware
+- `express-rate-limit` - Rate limiting middleware
 - `zod` - Data validation
 - `http-status` - Error library construction
 - `swagger-jsdoc` and `swagger-ui-express` - Swagger documentation and UI
@@ -133,8 +139,17 @@ The starter includes a sample endpoint at `/api/samples` that demonstrates the M
 ## 🚀 Deployment
 
 1. Build the project: `pnpm build`
-2. Start the server: `pnpm start`
-3. The server will run on the port specified in the `PORT` environment variable (default: 8080)
+2. Set environment variables (especially `NODE_ENV=production` and `CORS_ORIGIN`)
+3. Start the server: `pnpm start`
+4. The server will run on the port specified in the `PORT` environment variable (default: 8080)
+
+### Production Considerations
+
+- Set `NODE_ENV=production` for optimized error handling and security
+- Configure `CORS_ORIGIN` with your frontend domain(s)
+- Consider protecting the `/api-docs` endpoint in production
+- Ensure HTTPS is configured at the reverse proxy/load balancer level
+- Monitor rate limiting and adjust limits based on your traffic patterns
 
 ## 📄 License
 

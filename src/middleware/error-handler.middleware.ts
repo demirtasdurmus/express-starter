@@ -21,7 +21,7 @@ export const errorHandler: ErrorRequestHandler<
     },
   };
 
-  res.locals.error = error;
+  res.locals.error = response.error;
 
   if (env.NODE_ENV === 'production' && error.statusCode >= 500) {
     delete response.error.stack;

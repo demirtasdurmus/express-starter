@@ -2,22 +2,34 @@ import swaggerUi from 'swagger-ui-express';
 import express, { Application } from 'express';
 import { swaggerSpec } from './utils/swagger';
 import { sampleRoutes } from './routes/sample.route';
+import { apiRateLimiter } from './middleware/rate-limit.middleware';
 import { notFoundHandler } from './middleware/not-found-handler.middleware';
 import { httpLogger } from './middleware/http-logger.middleware';
+import { helmetMiddleware } from './middleware/helmet.middleware';
 import { errorHandler } from './middleware/error-handler.middleware';
+import { corsMiddleware } from './middleware/cors.middleware';
+import { apiConfig } from './config';
 
 const app: Application = express();
 
-app.disable('x-powered-by');
-
 app.use(httpLogger);
+
+app.disable('x-powered-by');
+app.use(helmetMiddleware);
+app.use(corsMiddleware);
+
+app.use(express.json({ limit: apiConfig.requestBodyLimit }));
+app.use(express.urlencoded({ extended: true, limit: apiConfig.requestBodyLimit }));
+
+app.use('/api', apiRateLimiter);
+
 app.use(express.static('public'));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/api/samples', sampleRoutes);
 
-app.use(errorHandler);
 app.all(/.*/, notFoundHandler);
+app.use(errorHandler);
 
 export { app };
