@@ -55,7 +55,7 @@
     "ts-jest": "^29.4.6",
     "tsc-files": "^1.1.4",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.50.1"
+    "typescript-eslint": "^8.51.0"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
