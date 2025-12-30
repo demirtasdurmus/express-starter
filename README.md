@@ -11,6 +11,8 @@ A modern, production-ready Express.js starter template with TypeScript, comprehe
 - **Rate Limiting** - API rate limiting (100 requests/15min in production, 1000 in development)
 - **Body Parsing** - Secure JSON and URL-encoded body parsing with size limits (10MB)
 - **Request Validation** - Automatic validation of request body, params, and query using Zod schemas
+- **Response Compression** - Automatic gzip/deflate compression for improved performance
+- **Health Check** - Health check endpoint at `/health` for load balancers and monitoring
 - **API Documentation** - Swagger/OpenAPI documentation with interactive UI at `/api-docs`
 - **Testing** - Jest with unit and integration test configurations
 - **Code Quality** - ESLint, Prettier, and Husky for code formatting and linting
@@ -136,6 +138,7 @@ The starter includes CRUD endpoints for a sample resource that demonstrates:
 - `helmet` - Security headers middleware
 - `cors` - Cross-Origin Resource Sharing middleware
 - `express-rate-limit` - Rate limiting middleware
+- `compression` - Response compression middleware
 - `zod` - Data validation
 - `http-status` - Error library construction
 - `swagger-jsdoc` and `swagger-ui-express` - Swagger documentation and UI
