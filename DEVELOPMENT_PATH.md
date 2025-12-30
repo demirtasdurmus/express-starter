@@ -36,14 +36,13 @@ This document tracks all planned improvements and enhancements for the Express S
 - **Implementation**: `app.ts` - `express.json()` and `express.urlencoded()`
 - **Notes**: Size limits configured via `apiConfig.requestBodyLimit`
 
-### ⚠️ 5. Request Validation Middleware
+### ✅ 5. Request Validation Middleware
 
-- **Status**: ⚠️ Partial
+- **Status**: ✅ Completed
 - **Priority**: Critical
 - **Impact**: No automatic validation of request bodies/params/query
-- **Current State**: `parseWithZod` utility exists but no Express middleware wrapper
-- **Needed**: Create reusable Zod validation middleware for body/params/query
-- **Files**: `src/utils/parse-with-zod.ts` exists, needs middleware wrapper
+- **Implementation**: `src/middleware/validate.middleware.ts`
+- **Notes**: Reusable Zod validation middleware for body/params/query. Supports Express 5 with proper query handling.
 
 ---
 
@@ -67,23 +66,6 @@ This document tracks all planned improvements and enhancements for the Express S
 - **Needed**:
   - Install: `pnpm add compression @types/compression`
   - Add compression middleware to `app.ts`
-
-### ✅ 8. Request Size Limits
-
-- **Status**: ✅ Completed
-- **Priority**: High
-- **Impact**: Vulnerable to DoS via large payloads
-- **Implementation**: Configured in `app.ts` via `apiConfig.requestBodyLimit`
-- **Notes**: Already implemented with body parser limits
-
-### ⚠️ 9. Request Validation Middleware (Zod Integration)
-
-- **Status**: ⚠️ Partial
-- **Priority**: High
-- **Impact**: Manual validation in each controller
-- **Current State**: `parseWithZod` utility exists
-- **Needed**: Create Express middleware that validates body/params/query with Zod schemas
-- **Example**: `validateBody(schema)`, `validateParams(schema)`, `validateQuery(schema)`
 
 ### ❌ 10. Environment-based Swagger UI Protection
 
@@ -218,64 +200,6 @@ This document tracks all planned improvements and enhancements for the Express S
 - **Impact**: Long-running requests can hang
 - **Needed**: Add timeout middleware
 - **Implementation**: Set timeout per route or globally
-
----
-
-## 📊 Summary
-
-### Completed (✅): 4 items
-
-- Security Headers (Helmet)
-- CORS Configuration
-- Rate Limiting
-- Request Body Parsing
-- Request Size Limits
-
-### Partial (⚠️): 3 items
-
-- Request Validation Middleware (needs Express middleware wrapper)
-- Structured Logging (basic logger exists, needs upgrade)
-- Graceful Shutdown (exists but could be enhanced)
-
-### Not Started (❌): 15 items
-
-- Health Check Endpoint
-- Response Compression
-- Swagger UI Protection
-- Docker Support
-- Database Integration Example
-- Authentication/Authorization Example
-- Request ID Middleware
-- API Versioning Strategy
-- API Response Pagination Helper
-- Request Sanitization
-- API Caching Headers
-- Metrics/Observability
-- API Request Timeout
-
-### Total Progress: 7/22 (32%)
-
----
-
-## 🎯 Recommended Next Steps
-
-### Immediate (Critical)
-
-1. **Request Validation Middleware** - Create Zod validation middleware wrapper
-2. **Health Check Endpoint** - Essential for production deployments
-
-### Next Sprint (High Priority)
-
-3. **Response Compression** - Easy win for performance
-4. **Swagger UI Protection** - Security concern for production
-5. **Request ID Middleware** - Improves debugging and observability
-
-### Future Enhancements (Medium/Low Priority)
-
-6. Docker support
-7. Structured logging upgrade
-8. Authentication example
-9. Database integration example
 
 ---
 
