@@ -12,11 +12,11 @@ import { apiConfig } from './config';
 
 const app: Application = express();
 
-app.use(httpLogger);
-
 app.disable('x-powered-by');
 app.use(helmetMiddleware);
 app.use(corsMiddleware);
+
+app.use(httpLogger);
 
 app.use(express.json({ limit: apiConfig.requestBodyLimit }));
 app.use(express.urlencoded({ extended: true, limit: apiConfig.requestBodyLimit }));
