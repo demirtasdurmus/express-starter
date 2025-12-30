@@ -1,7 +1,1 @@
-beforeAll(async () => {
-  console.log('__SETUP__');
-});
-
-afterAll(async () => {
-  console.log('__TEARDOWN__');
-});
+// Add any setup code here
