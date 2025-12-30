@@ -1,7 +1,9 @@
+export type TValidationMap = 'params' | 'query' | 'body';
+
 export type ServerResponse<T extends Record<string, unknown> = Record<string, unknown>> =
   | {
       success: true;
-      payload: T | null;
+      payload: T | undefined;
     }
   | {
       success: false;

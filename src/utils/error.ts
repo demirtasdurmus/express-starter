@@ -1,5 +1,6 @@
+import { $ZodIssue } from 'zod/v4/core';
 import httpStatus from 'http-status';
-import { BaseErrorData } from '../types';
+import { BaseErrorData, BaseErrorIssue } from '../types';
 
 /**
  * Base error class that extends the native Error class
@@ -165,10 +166,32 @@ export class InternalServerError extends BaseError {
   }
 }
 
+/**
+ * Checks if an error is a BaseError.
+ * @param error - The error to check.
+ * @returns True if the error is a BaseError, false otherwise.
+ */
 export function isBaseError(error: unknown): error is BaseError {
   return error instanceof BaseError;
 }
 
+/**
+ * Converts a Zod issue to a BaseErrorIssue.
+ * @param issue - The Zod issue to convert.
+ * @returns The BaseErrorIssue.
+ */
+export function fromZodIssueToBaseErrorIssue(issue: $ZodIssue): BaseErrorIssue {
+  return {
+    field: issue.path.join('.'),
+    detail: issue.message,
+  };
+}
+
+/**
+ * Serializes an error to a BaseError.
+ * @param err - The error to serialize.
+ * @returns The BaseError.
+ */
 export function serializeError(err: unknown): BaseError {
   let error: BaseError;
 

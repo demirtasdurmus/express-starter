@@ -6,8 +6,12 @@ A modern, production-ready Express.js starter template with TypeScript, comprehe
 
 - **TypeScript** - Full TypeScript support with strict configuration
 - **Express.js** - Fast, unopinionated web framework
-- **Security** - Helmet for security headers, CORS configuration, and rate limiting
-- **API Documentation** - Swagger/OpenAPI documentation with interactive UI
+- **Security Headers (Helmet)** - Sets various HTTP security headers to protect against common vulnerabilities
+- **CORS** - Configurable Cross-Origin Resource Sharing with environment-based origins
+- **Rate Limiting** - API rate limiting (100 requests/15min in production, 1000 in development)
+- **Body Parsing** - Secure JSON and URL-encoded body parsing with size limits (10MB)
+- **Request Validation** - Automatic validation of request body, params, and query using Zod schemas
+- **API Documentation** - Swagger/OpenAPI documentation with interactive UI at `/api-docs`
 - **Testing** - Jest with unit and integration test configurations
 - **Code Quality** - ESLint, Prettier, and Husky for code formatting and linting
 - **Development** - Hot reload with TypeScript watch mode
@@ -24,7 +28,9 @@ src/
 ├── env/             # Environment variables
 ├── middleware/      # Custom middleware
 ├── routes/          # Route definitions
+├── schemas/         # Zod validation schemas
 ├── services/        # Business logic
+├── types/           # TypeScript type definitions
 ├── utils/           # Utility functions
 ├── app.ts           # Express app configuration
 └── index.ts         # Server entry point
@@ -84,12 +90,35 @@ pnpm test:coverage
 
 1. Create a controller in `src/controllers/`
 2. Create a service in `src/services/` (if needed)
-3. Define routes in `src/routes/` and add openapi specification for the endpoint
-4. Import and use in `src/app.ts`
+3. Create Zod validation schemas in `src/schemas/` for request validation
+4. Define routes in `src/routes/` with validation middleware and OpenAPI specification
+5. Import and use in `src/app.ts`
+
+#### Request Validation
+
+The starter includes a reusable validation middleware that uses Zod schemas:
+
+```typescript
+import { createSampleSchema } from '../schemas/sample';
+import { validate } from '../middleware/validate.middleware';
+
+router.post('/', validate({ validationMap: 'body', schema: createSampleSchema }), createController);
+```
+
+The `validate` middleware supports:
+
+- `body` - Validates request body
+- `params` - Validates URL parameters
+- `query` - Validates query string parameters
 
 ### Example API Endpoint
 
-The starter includes a sample endpoint at `/api/samples` that demonstrates the MVC pattern.
+The starter includes CRUD endpoints for a sample resource that demonstrates:
+
+- MVC pattern (Model-View-Controller)
+- Request validation with Zod schemas
+- Error handling
+- Swagger/OpenAPI documentation
 
 ## 🔧 Configuration
 
@@ -97,21 +126,6 @@ The starter includes a sample endpoint at `/api/samples` that demonstrates the M
 - **ESLint**: Code linting rules in `eslint.config.mts`
 - **Prettier**: Code formatting in `.prettierrc`
 - **Jest**: Testing configuration in `jest.config.ts` and `jest-int.config.ts`
-
-## 🔒 Security Features
-
-The starter includes several security best practices:
-
-- **Helmet**: Sets various HTTP security headers to protect against common vulnerabilities
-- **CORS**: Configurable Cross-Origin Resource Sharing with environment-based origins
-- **Rate Limiting**: API rate limiting (100 requests/15min in production, 1000 in development)
-- **Body Parsing**: Secure JSON and URL-encoded body parsing with size limits (10MB)
-
-### API Documentation
-
-Access the interactive Swagger UI at `/api-docs` to view the API documentation.
-
-**Note**: In production, consider protecting the Swagger UI endpoint with authentication.
 
 ## 📦 Dependencies
 
@@ -147,7 +161,7 @@ Access the interactive Swagger UI at `/api-docs` to view the API documentation.
 
 - Set `NODE_ENV=production` for optimized error handling and security
 - Configure `CORS_ORIGIN` with your frontend domain(s)
-- Consider protecting the `/api-docs` endpoint in production
+- Consider protecting the `/api-docs` endpoint in production (Swagger UI)
 - Ensure HTTPS is configured at the reverse proxy/load balancer level
 - Monitor rate limiting and adjust limits based on your traffic patterns
 

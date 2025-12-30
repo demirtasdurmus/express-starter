@@ -7,7 +7,7 @@ export const apiConfig = {
   requestBodyLimit: '10mb',
   apiRateLimit: {
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: env.NODE_ENV === 'production' ? 100 : 1,
+    max: env.NODE_ENV === 'production' ? 100 : 1000,
   },
   cors: {
     allowedOrigins: env.CORS_ORIGIN
