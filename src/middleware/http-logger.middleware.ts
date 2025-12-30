@@ -9,8 +9,9 @@ export const httpLogger: RequestHandler = (req, res, next) => {
     const status = res.statusCode;
     const method = req.method;
     const url = req.originalUrl;
+    const ip = req.ip;
 
-    const message = `${method} ${url} - ${status} (${duration}ms)`;
+    const message = `${ip} - ${method} ${url} - ${status} (${duration}ms)`;
 
     if (status >= 500) {
       logger.error({ error: res.locals?.error }, message);
