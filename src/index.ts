@@ -2,6 +2,7 @@ import { createServer } from 'http';
 import { shutdownGracefully } from './utils/shutdown-gracefully';
 import { logger } from './utils/logger';
 import { env } from './env';
+import { apiConfig } from './config';
 import { app } from './app';
 
 const server = createServer(app);
@@ -9,7 +10,8 @@ const PORT = env.PORT;
 const HOST = env.HOST;
 
 server.listen(PORT, HOST, () => {
-  logger.info(`Server listening on http://${HOST}:${PORT}`);
+  logger.info(`${apiConfig.title} is listening on http://${HOST}:${PORT}`);
+  logger.info(`API documentation available at http://${HOST}:${PORT}/api-docs`);
 });
 
 process.on('SIGINT', () => shutdownGracefully({ signalOrEvent: 'SIGINT', server }));

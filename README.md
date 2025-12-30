@@ -16,6 +16,7 @@ A modern, production-ready Express.js starter template with TypeScript, comprehe
 
 ```sh
 src/
+├── config/          # Configuration
 ├── controllers/     # Request handlers
 ├── env/             # Environment variables
 ├── middleware/      # Custom middleware
@@ -25,9 +26,10 @@ src/
 ├── app.ts           # Express app configuration
 └── index.ts         # Server entry point
 
-__tests__/              # Integration tests
+__tests__/          # Integration tests
 dist/               # Compiled JavaScript output
 public/             # Static files
+coverage/           # Coverage reports
 ```
 
 ## 🛠️ Getting Started
@@ -106,7 +108,7 @@ The starter includes a sample endpoint at `/api/samples` that demonstrates the M
 - **TypeScript**: Configured in `tsconfig.json` with strict settings
 - **ESLint**: Code linting rules in `eslint.config.mts`
 - **Prettier**: Code formatting in `.prettierrc`
-- **Jest**: Testing configuration in `jest.config.ts`
+- **Jest**: Testing configuration in `jest.config.ts` and `jest-int.config.ts`
 
 ## 📦 Dependencies
 
@@ -116,6 +118,7 @@ The starter includes a sample endpoint at `/api/samples` that demonstrates the M
 - `dotenv` - Load env variables
 - `zod` - Data validation
 - `http-status` - Error library construction
+- `swagger-jsdoc` and `swagger-ui-express` - Swagger documentation and UI
 
 ### Development
 
@@ -125,6 +128,7 @@ The starter includes a sample endpoint at `/api/samples` that demonstrates the M
 - `prettier` - Code formatting
 - `husky` - Git hooks
 - `supertest` - HTTP testing
+- `tsc-files` - TypeScript files checker
 
 ## 🚀 Deployment
 
