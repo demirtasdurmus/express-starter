@@ -15,7 +15,6 @@ const config: Config = {
   },
   testEnvironment: 'node',
   rootDir: './src',
-  coverageDirectory: '../coverage',
 };
 
 export default config;

@@ -14,9 +14,17 @@ const config: Config = {
     ...tsJestTransformCfg,
   },
   testEnvironment: 'node',
-  rootDir: './__tests__',
-  setupFilesAfterEnv: ['../jest-int.setup.ts'],
-  coverageDirectory: '../coverage-int',
+  rootDir: '.',
+  setupFilesAfterEnv: ['<rootDir>/__tests__/setup.ts'],
+  testMatch: ['<rootDir>/__tests__/**/*.test.ts', '<rootDir>/__tests__/**/*.spec.ts'],
+  coverageDirectory: '<rootDir>/coverage',
+  collectCoverageFrom: [
+    '<rootDir>/src/**/*.ts',
+    '!<rootDir>/src/**/*.test.ts',
+    '!<rootDir>/src/**/*.spec.ts',
+    '!<rootDir>/src/**/*.d.ts',
+  ],
+  coveragePathIgnorePatterns: ['/node_modules/', '/dist/', '/__tests__/', '/coverage/'],
 };
 
 export default config;

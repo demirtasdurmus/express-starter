@@ -16,23 +16,22 @@
   "scripts": {
     "dev:tsc": "tsc --watch --preserveWatchOutput -p tsconfig.build.json",
     "dev:node": "node --enable-source-maps --watch dist/index.js",
-    "dev": "pnpm run dev:tsc & pnpm run dev:node",
+    "dev": "pnpm run \"/dev:/\"",
     "build": "tsc --pretty -p tsconfig.build.json",
     "start": "node dist/index.js",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage",
     "test:int": "jest --config ./jest-int.config.ts",
     "test:int:watch": "jest --config ./jest-int.config.ts --watchAll",
-    "test:int:coverage": "jest --config ./jest-int.config.ts --coverage",
+    "test:coverage": "jest --config ./jest-int.config.ts --coverage",
     "type-check": "tsc --noEmit",
     "lint": "eslint --fix .",
-    "format:write": "prettier --write \"**/*.ts\" --cache",
-    "format:check": "prettier --check \"**/*.ts\" --cache",
+    "format:write": "prettier --write \"**/*.{js,mjs,cjs,ts,mts,cts,json,yml,yaml,md}\" --cache",
+    "format:check": "prettier --check \"**/*.{js,mjs,cjs,ts,mts,cts,json,yml,yaml,md}\" --cache",
     "clean": "bash scripts/clean.sh",
     "commit": "commit",
     "prepare": "husky",
-    "postinstall": "pnpm run build"
+    "postinstall": "pnpm build"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.2.0",

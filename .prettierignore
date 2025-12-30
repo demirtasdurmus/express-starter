@@ -3,9 +3,4 @@
 dist
 coverage
 node_modules
-package-lock.json
-*.yml
-CHANGELOG.md
-coverage
-coverage-int
-.github
+pnpm-lock.yaml
