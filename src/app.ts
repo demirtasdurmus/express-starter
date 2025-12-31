@@ -18,7 +18,7 @@ app.disable('x-powered-by');
 app.use(helmetMiddleware);
 app.use(corsMiddleware);
 
-app.use(httpLogger);
+app.use(httpLogger({ skipPaths: ['/health', '/api-docs'] })); //
 
 app.use(express.json({ limit: apiConfig.requestBodyLimit }));
 app.use(express.urlencoded({ extended: true, limit: apiConfig.requestBodyLimit }));

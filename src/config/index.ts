@@ -5,6 +5,7 @@ export const apiConfig = {
   title: 'Express Starter API',
   version: JSON.parse(readFileSync('package.json', 'utf8'))?.version || '1.0.0',
   requestBodyLimit: '10mb',
+  isProdLikeEnvironment: env.NODE_ENV === 'production',
   apiRateLimit: {
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: env.NODE_ENV === 'production' ? 100 : 1000,

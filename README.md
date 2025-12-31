@@ -13,6 +13,8 @@ A modern, production-ready Express.js starter template with TypeScript, comprehe
 - **Request Validation** - Automatic validation of request body, params, and query using Zod schemas
 - **Response Compression** - Automatic gzip/deflate compression for improved performance
 - **Health Check** - Health check endpoint at `/health` for load balancers and monitoring
+- **Structured Logging** - Pino-based structured logging with JSON output in production
+- **Request ID** - Automatic request ID generation and tracking via `X-Request-ID` header
 - **API Documentation** - Swagger/OpenAPI documentation with interactive UI at `/api-docs`
 - **Testing** - Jest with unit and integration test configurations
 - **Code Quality** - ESLint, Prettier, and Husky for code formatting and linting
@@ -139,6 +141,7 @@ The starter includes CRUD endpoints for a sample resource that demonstrates:
 - `cors` - Cross-Origin Resource Sharing middleware
 - `express-rate-limit` - Rate limiting middleware
 - `compression` - Response compression middleware
+- `pino` and `pino-http` - Structured logging library
 - `zod` - Data validation
 - `http-status` - Error library construction
 - `swagger-jsdoc` and `swagger-ui-express` - Swagger documentation and UI
@@ -149,6 +152,7 @@ The starter includes CRUD endpoints for a sample resource that demonstrates:
 - `jest` - Testing framework
 - `eslint` - Code linting
 - `prettier` - Code formatting
+- `pino-pretty` - Pretty printing for Pino logs in development
 - `husky` - Git hooks
 - `supertest` - HTTP testing
 - `tsc-files` - TypeScript files checker
