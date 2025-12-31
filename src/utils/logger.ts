@@ -1,37 +1,48 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
+import pino from 'pino';
 import { env } from '../env';
+import { apiConfig } from '../config';
 
 /**
- * A thin layer over console methods,
- * Replace with a more robust logger like winston or pino in production.
+ * Structured logger using Pino
+ * @see https://github.com/pinojs/pino/blob/main/docs/api.md
  */
-class Logger {
-  constructor(private enabled: boolean = true) {}
-
-  log(message?: any, ...optionalParams: any[]) {
-    if (this.enabled) {
-      console.log(message, ...optionalParams);
-    }
-  }
-
-  error(message?: any, ...optionalParams: any[]) {
-    if (this.enabled) {
-      console.error(message, ...optionalParams);
-    }
-  }
-
-  warn(message?: any, ...optionalParams: any[]) {
-    if (this.enabled) {
-      console.warn(message, ...optionalParams);
-    }
-  }
-
-  info(message?: any, ...optionalParams: any[]) {
-    if (this.enabled) {
-      console.info(message, ...optionalParams);
-    }
-  }
-}
-
-export const logger = new Logger(env.NODE_ENV !== 'test');
+export const logger = pino({
+  enabled: env.NODE_ENV !== 'test',
+  level: apiConfig.isProdLikeEnvironment ? 'info' : 'debug',
+  base: apiConfig.isProdLikeEnvironment
+    ? {
+        service: apiConfig.title,
+        env: env.NODE_ENV,
+        version: apiConfig.version,
+      }
+    : {},
+  timestamp: pino.stdTimeFunctions.isoTime,
+  transport: apiConfig.isProdLikeEnvironment
+    ? undefined
+    : {
+        target: 'pino-pretty',
+        options: {
+          translateTime: 'SYS:standard',
+          ignore: 'pid,hostname',
+          colorize: true,
+          singleLine: true,
+        },
+      },
+  redact: {
+    paths: [
+      'req.headers.authorization',
+      'req.headers.cookie',
+      'req.body.password',
+      'req.body.token',
+      'user.email',
+      'user.password',
+      'res.headers["set-cookie"]',
+    ],
+    censor: '[REDACTED]',
+  },
+  formatters: {
+    level(label: string) {
+      return { level: label };
+    },
+  },
+});

@@ -200,6 +200,8 @@ export function serializeError(err: unknown): BaseError {
     /**
      * Add more cases here as needed
      */
+  } else if (err instanceof Error) {
+    error = new InternalServerError(err.message, { stack: err.stack }, false);
   } else {
     error = new InternalServerError('An unexpected error occurred', { originalError: err }, false);
   }
