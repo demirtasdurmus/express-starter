@@ -11,6 +11,7 @@ A modern, production-ready Express.js starter template with TypeScript, comprehe
 - **Rate Limiting** - API rate limiting (100 requests/15min in production, 1000 in development)
 - **Body Parsing** - Secure JSON and URL-encoded body parsing with size limits (10MB)
 - **Request Validation** - Automatic validation of request body, params, and query using Zod schemas
+- **Internationalization (i18n)** - Multi-language support with automatic language detection and type-safe translation keys
 - **Response Compression** - Automatic gzip/deflate compression for improved performance
 - **Health Check** - Health check endpoint at `/health` for load balancers and monitoring
 - **Structured Logging** - Pino-based structured logging with JSON output in production
@@ -40,6 +41,9 @@ src/
 └── index.ts         # Server entry point
 
 __tests__/          # Integration tests
+locales/            # i18n translation files
+  ├── en/           # English translations
+  └── tr/           # Turkish translations
 dist/               # Compiled JavaScript output
 public/             # Static files
 coverage/           # Coverage reports
@@ -141,8 +145,10 @@ The starter includes CRUD endpoints for a sample resource that demonstrates:
 - `cors` - Cross-Origin Resource Sharing middleware
 - `express-rate-limit` - Rate limiting middleware
 - `compression` - Response compression middleware
+- `cookie-parser` - Parse cookies for language persistence
 - `pino` and `pino-http` - Structured logging library
-- `zod` - Data validation
+- `zod` - Data validation with built-in i18n support
+- `i18next`, `i18next-fs-backend`, `i18next-http-middleware` - Internationalization
 - `http-status` - Error library construction
 - `swagger-jsdoc` and `swagger-ui-express` - Swagger documentation and UI
 
@@ -171,6 +177,7 @@ The starter includes CRUD endpoints for a sample resource that demonstrates:
 - Consider protecting the `/api-docs` endpoint in production (Swagger UI)
 - Ensure HTTPS is configured at the reverse proxy/load balancer level
 - Monitor rate limiting and adjust limits based on your traffic patterns
+- Configure `DEFAULT_LANGUAGE` and `SUPPORTED_LANGUAGES` based on your target audience
 
 ## 📄 License
 

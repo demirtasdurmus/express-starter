@@ -42,7 +42,7 @@ This document tracks all planned improvements and enhancements for the Express S
 - **Priority**: Critical
 - **Impact**: No automatic validation of request bodies/params/query
 - **Implementation**: `src/middleware/validate.middleware.ts`
-- **Notes**: Reusable Zod validation middleware for body/params/query. Supports Express 5 with proper query handling.
+- **Notes**: Reusable Zod validation middleware for body/params/query. Supports Express 5 with proper query handling. Includes i18n support for validation messages.
 
 ---
 
@@ -100,21 +100,26 @@ This document tracks all planned improvements and enhancements for the Express S
   - Reject new connections during shutdown
   - Set proper timeout
 
-### ❌ 11. Internationalization (i18n) / Localization
+### ✅ 11. Internationalization (i18n) / Localization
 
-- **Status**: ❌ Not Started
+- **Status**: ✅ Completed
 - **Priority**: Medium
 - **Impact**: Error messages and API responses are hardcoded in English
-- **Needed**: Add i18n support for error messages and API responses
-- **Implementation Options**:
-  - Use `i18next` or `i18n` library
-  - Support language detection via `Accept-Language` header or query param
-  - Create translation files for common languages (en, es, fr, de, etc.)
-  - Localize error messages, validation messages, and API responses
-- **Use Cases**:
-  - APIs serving international users
-  - Enterprise applications with multi-language requirements
-  - Better developer experience for international projects
+- **Implementation**:
+  - `src/middleware/i18n.middleware.ts` - i18next-based i18n middleware
+  - `src/types/i18next.d.ts` - TypeScript type declarations for translation keys
+  - `locales/en/translation.json` and `locales/tr/translation.json` - Translation files
+- **Features**:
+  - Language detection priority: Query param (`?lang=tr`) > Cookie > Accept-Language header
+  - Cookie persistence for user language preference (1 year)
+  - Type-safe translation keys with autocomplete (`req.t('errors.notFound')`)
+  - Zod v4 native locale support for validation error messages
+  - Custom error message translation using i18next keys
+- **Supported Languages**: English (en) and Turkish (tr)
+- **Notes**:
+  - Uses i18next with file system backend
+  - Full TypeScript support with module augmentation
+  - Integrates with Zod v4's built-in locale system
 
 ---
 
