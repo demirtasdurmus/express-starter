@@ -88,19 +88,7 @@ This document tracks all planned improvements and enhancements for the Express S
   - Includes request ID in all log messages
   - Integrated with Pino HTTP logger for production
 
-### ⚠️ 10. Graceful Shutdown Improvements
-
-- **Status**: ⚠️ Partial
-- **Priority**: Medium
-- **Impact**: May drop in-flight requests
-- **Current State**: `src/utils/shutdown-gracefully.ts` exists
-- **Needed**: Enhance with connection draining
-- **Improvements**:
-  - Wait for in-flight requests to complete
-  - Reject new connections during shutdown
-  - Set proper timeout
-
-### ✅ 11. Internationalization (i18n) / Localization
+### ✅ 10. Internationalization (i18n) / Localization
 
 - **Status**: ✅ Completed
 - **Priority**: Medium
@@ -125,7 +113,7 @@ This document tracks all planned improvements and enhancements for the Express S
 
 ## 🟡 Medium Priority (Developer Experience)
 
-### ❌ 12. Metrics/Observability
+### ❌ 11. Metrics/Observability
 
 - **Status**: ❌ Not Started
 - **Priority**: Low
@@ -136,7 +124,7 @@ This document tracks all planned improvements and enhancements for the Express S
   - OpenTelemetry integration
   - Custom metrics middleware
 
-### ❌ 13. API Caching Headers
+### ❌ 12. API Caching Headers
 
 - **Status**: ❌ Not Started
 - **Priority**: Low
@@ -147,7 +135,7 @@ This document tracks all planned improvements and enhancements for the Express S
   - API responses: no-cache or short cache
   - Public endpoints: appropriate cache headers
 
-### ❌ 14. API Request Timeout
+### ❌ 13. API Request Timeout
 
 - **Status**: ❌ Not Started
 - **Priority**: Low
@@ -155,7 +143,7 @@ This document tracks all planned improvements and enhancements for the Express S
 - **Needed**: Add timeout middleware
 - **Implementation**: Set timeout per route or globally
 
-### ❌ 15. Docker Support
+### ❌ 14. Docker Support
 
 - **Status**: ❌ Not Started
 - **Priority**: Medium
@@ -165,7 +153,7 @@ This document tracks all planned improvements and enhancements for the Express S
   - Create `docker-compose.yml` (optional but recommended)
   - Add `.dockerignore`
 
-### ❌ 16. API Versioning Strategy
+### ❌ 15. API Versioning Strategy
 
 - **Status**: ❌ Not Started
 - **Priority**: Medium
@@ -175,7 +163,7 @@ This document tracks all planned improvements and enhancements for the Express S
   - Header-based versioning (`Accept: application/vnd.api+json;version=1`)
 - **Note**: Choose one approach and document it
 
-### ❌ 17. Environment-based Swagger UI Protection
+### ❌ 16. Environment-based Swagger UI Protection
 
 - **Status**: ❌ Not Started
 - **Priority**: High
@@ -189,7 +177,7 @@ This document tracks all planned improvements and enhancements for the Express S
 
 ## 🟢 Low Priority (Nice to Have)
 
-### ❌ 18. Database Integration Example
+### ❌ 17. Database Integration Example
 
 - **Status**: ❌ Not Started
 - **Priority**: Medium
@@ -197,7 +185,7 @@ This document tracks all planned improvements and enhancements for the Express S
 - **Needed**: Add example with Prisma/TypeORM/Drizzle
 - **Note**: Optional but common in production APIs
 
-### ❌ 19. Authentication/Authorization Example
+### ❌ 18. Authentication/Authorization Example
 
 - **Status**: ❌ Not Started
 - **Priority**: Medium
@@ -205,7 +193,7 @@ This document tracks all planned improvements and enhancements for the Express S
 - **Needed**: Add example auth middleware/strategy
 - **Options**: JWT, Passport.js, or custom implementation
 
-### ❌ 20. API Response Pagination Helper
+### ❌ 19. API Response Pagination Helper
 
 - **Status**: ❌ Not Started
 - **Priority**: Low
