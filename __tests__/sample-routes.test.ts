@@ -1,4 +1,5 @@
 import request from 'supertest';
+import { BaseErrorIssue } from '../src/types';
 import { getSamples, deleteSampleById } from '../src/services/sample.service';
 import { app } from '../src/app';
 
@@ -56,6 +57,17 @@ describe('Sample Routes', () => {
       expect(response.body.success).toBe(false);
       expect(response.body.error.statusCode).toBe(422);
     });
+
+    it('should return 422 when validation fails with proper custom error messages', async () => {
+      const response = await request(app).post('/api/samples').send({ name: '' });
+
+      expect(response.status).toBe(422);
+      expect(response.body.success).toBe(false);
+      expect(response.body.error.statusCode).toBe(422);
+      expect(response.body.error.issues.map((issue: BaseErrorIssue) => issue.detail)).toContain(
+        'Name is required',
+      );
+    });
   });
 
   describe('GET /api/samples/:id', () => {
@@ -70,6 +82,14 @@ describe('Sample Routes', () => {
       expect(response.body.payload.sample).toEqual(createResponse.body.payload.sample);
     });
 
+    it('should return 422 when id is not a valid UUID', async () => {
+      const response = await request(app).get('/api/samples/invalid-id-format');
+
+      expect(response.status).toBe(422);
+      expect(response.body.success).toBe(false);
+      expect(response.body.error.statusCode).toBe(422);
+    });
+
     it('should return 404 when sample does not exist', async () => {
       const nonExistentId = '00000000-0000-0000-0000-000000000000';
 
@@ -79,14 +99,6 @@ describe('Sample Routes', () => {
       expect(response.body.success).toBe(false);
       expect(response.body.error.statusCode).toBe(404);
       expect(response.body.error.message).toBe('Sample not found');
-    });
-
-    it('should return 422 when id is not a valid UUID', async () => {
-      const response = await request(app).get('/api/samples/invalid-id-format');
-
-      expect(response.status).toBe(422);
-      expect(response.body.success).toBe(false);
-      expect(response.body.error.statusCode).toBe(422);
     });
   });
 
@@ -107,6 +119,31 @@ describe('Sample Routes', () => {
       expect(response.body.payload.sample.name).toBe('Updated Name');
     });
 
+    it('should return 422 when validation fails', async () => {
+      const createResponse = await request(app).post('/api/samples').send({ name: 'Test Sample' });
+      const sampleId = createResponse.body.payload.sample.id;
+
+      const response = await request(app).patch(`/api/samples/${sampleId}`).send({});
+
+      expect(response.status).toBe(422);
+      expect(response.body.success).toBe(false);
+      expect(response.body.error.statusCode).toBe(422);
+    });
+
+    it('should return 422 when validation fails with proper custom error messages', async () => {
+      const createResponse = await request(app).post('/api/samples').send({ name: 'Test Name' });
+      const sampleId = createResponse.body.payload.sample.id;
+
+      const response = await request(app).patch(`/api/samples/${sampleId}`).send({ name: '' });
+
+      expect(response.status).toBe(422);
+      expect(response.body.success).toBe(false);
+      expect(response.body.error.statusCode).toBe(422);
+      expect(response.body.error.issues.map((issue: BaseErrorIssue) => issue.detail)).toContain(
+        'Name is required',
+      );
+    });
+
     it('should return 404 when sample does not exist', async () => {
       const nonExistentId = '00000000-0000-0000-0000-000000000000';
 
@@ -118,17 +155,6 @@ describe('Sample Routes', () => {
       expect(response.body.success).toBe(false);
       expect(response.body.error.statusCode).toBe(404);
       expect(response.body.error.message).toBe('Sample not found');
-    });
-
-    it('should return 422 when validation fails', async () => {
-      const createResponse = await request(app).post('/api/samples').send({ name: 'Test Sample' });
-      const sampleId = createResponse.body.payload.sample.id;
-
-      const response = await request(app).patch(`/api/samples/${sampleId}`).send({});
-
-      expect(response.status).toBe(422);
-      expect(response.body.success).toBe(false);
-      expect(response.body.error.statusCode).toBe(422);
     });
   });
 
@@ -145,6 +171,16 @@ describe('Sample Routes', () => {
       // Verify sample is deleted
       const getResponse = await request(app).get(`/api/samples/${sampleId}`);
       expect(getResponse.status).toBe(404);
+    });
+
+    it('should return 422 when an invalid ID is provided with proper custom error messages', async () => {
+      const response = await request(app).delete(`/api/samples/invalid-id`);
+
+      expect(response.status).toBe(422);
+      expect(response.body.success).toBe(false);
+      expect(response.body.error.issues.map((issue: BaseErrorIssue) => issue.detail)).toContain(
+        'Invalid sample ID',
+      );
     });
 
     it('should return 404 when sample does not exist', async () => {

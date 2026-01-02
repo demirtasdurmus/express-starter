@@ -22,7 +22,7 @@
     "test": "jest",
     "test:watch": "jest --watchAll",
     "test:int": "jest --config ./jest-int.config.ts",
-    "test:int:watch": "jest --config ./jest-int.config.ts --watchAll",
+    "test:int:watch": "jest --config ./jest-int.config.ts --watchAll --verbose",
     "test:coverage": "jest --config ./jest-int.config.ts --coverage",
     "type-check": "tsc --noEmit",
     "lint": "eslint --fix .",
