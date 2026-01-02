@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express';
+import { NotFoundError } from '../utils/error';
 import { TSample } from '../types/sample';
 import { ServerResponse } from '../types';
 import {
@@ -51,6 +52,10 @@ export const getSampleByIdController: RequestHandler<
 > = (req, res) => {
   const sample = getSampleById(req.params.id);
 
+  if (!sample) {
+    throw new NotFoundError(req.t('samples.notFound'));
+  }
+
   res.status(200).json({
     success: true,
     payload: { sample },
@@ -65,6 +70,10 @@ export const updateSampleByIdController: RequestHandler<
 > = (req, res) => {
   const sample = updateSampleById(req.params.id, req.body.name);
 
+  if (!sample) {
+    throw new NotFoundError(req.t('samples.notFound'));
+  }
+
   res.status(200).json({
     success: true,
     payload: { sample },
@@ -77,7 +86,11 @@ export const deleteSampleByIdController: RequestHandler<
   unknown,
   unknown
 > = (req, res) => {
-  deleteSampleById(req.params.id);
+  const deletedSampleId = deleteSampleById(req.params.id);
+
+  if (!deletedSampleId) {
+    throw new NotFoundError(req.t('samples.notFound'));
+  }
 
   res.status(200).json({
     success: true,

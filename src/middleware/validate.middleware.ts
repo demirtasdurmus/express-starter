@@ -15,7 +15,7 @@ export function validate<T>({ validationMap, schema }: TValidateOptions<T>): Req
       object: req[validationMap],
       schema,
       onError: (error) => {
-        throw new UnprocessableEntityError('Validation failed', {
+        throw new UnprocessableEntityError(req.t('common.validationFailed'), {
           issues: error.issues.map(fromZodIssueToBaseErrorIssue),
         });
       },

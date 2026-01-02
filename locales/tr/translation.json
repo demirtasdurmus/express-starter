@@ -1,0 +1,9 @@
+{
+  "common": {
+    "somethingWentWrong": "Bir şeyler yanlış gitti",
+    "validationFailed": "Geçersiz veri"
+  },
+  "samples": {
+    "notFound": "Örnek bulunamadı"
+  }
+}

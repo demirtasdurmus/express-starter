@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { readFileSync } from 'node:fs';
 import { env } from '../env';
 
@@ -17,5 +18,13 @@ export const apiConfig = {
         ? []
         : [`http://${env.HOST}:${env.PORT}`],
     allowedHeaders: ['Content-Type', 'Authorization'],
+  },
+  i18n: {
+    defaultLanguage: env.DEFAULT_LANGUAGE,
+    supportedLanguages: env.SUPPORTED_LANGUAGES.split(',').map((lang) => lang.trim()),
+    localesPath: path.resolve(process.cwd(), 'locales'),
+    cookieName: 'lang',
+    cookieMaxAge: 365 * 24 * 60 * 60 * 1000, // 1 year in milliseconds
+    queryParameter: 'lang',
   },
 } as const;

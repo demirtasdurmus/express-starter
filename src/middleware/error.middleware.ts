@@ -3,12 +3,12 @@ import { serializeError } from '../utils/error';
 import { ErrorResponseDetails, ServerResponse } from '../types';
 import { env } from '../env';
 
-export const errorHandler: ErrorRequestHandler<
+export const errorMiddleware: ErrorRequestHandler<
   unknown,
   ServerResponse<ErrorResponseDetails>,
   unknown,
   unknown
-> = (err, _req, res, _next) => {
+> = (err, req, res, _next) => {
   const error = serializeError(err);
 
   const response: ServerResponse<ErrorResponseDetails> = {
@@ -21,12 +21,12 @@ export const errorHandler: ErrorRequestHandler<
     },
   };
 
-  res.locals.error = response.error;
+  res.locals.error = { ...response.error };
 
   if (env.NODE_ENV === 'production' && error.statusCode >= 500) {
     delete response.error.stack;
     delete response.error.originalError;
-    response.error.message = 'Something went wrong';
+    response.error.message = req.t('common.somethingWentWrong');
   }
 
   res.status(error.statusCode).send(response);

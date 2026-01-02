@@ -17,9 +17,7 @@ export function httpLogger({
     ? pinoHttp({
         logger,
         genReqId: (_req: Request, res: Response) => {
-          const id = randomUUID();
-          res.setHeader('X-Request-ID', id);
-          return id;
+          return generateAndSetRequestId(res);
         },
         customLogLevel: (req, res, err) => {
           if (skipPaths?.some((path) => req.url?.includes(path))) return 'debug';
@@ -28,10 +26,23 @@ export function httpLogger({
           return 'info';
         },
         customProps: (_req: Request, res: Response) => {
+          if (!res.locals?.error) return {};
           return {
-            error: res.locals?.error,
+            err: res.locals.error,
           };
         },
+        /**
+         * TODO: There are duplicate error objects are created with our
+         * custom props, each named 'err' and 'error', we need to resolve this
+         * also write tests for error middleware to make sure correct response
+         * fields are sent per environment.
+         */
+        // customErrorObject: (_req: Request, res: Response) => {
+        //   if (!res.locals?.error) return {};
+        //   return {
+        //     err: res.locals.error,
+        //   };
+        // },
       })
     : devHttpLogger;
 }
@@ -41,9 +52,8 @@ export function httpLogger({
  */
 function devHttpLogger(req: Request, res: Response, next: NextFunction): void {
   const start = Date.now();
-  const requestId = randomUUID();
 
-  res.setHeader('X-Request-ID', requestId);
+  const requestId = generateAndSetRequestId(res);
 
   res.on('finish', () => {
     const duration = Date.now() - start;
@@ -70,4 +80,10 @@ function devHttpLogger(req: Request, res: Response, next: NextFunction): void {
   });
 
   next();
+}
+
+function generateAndSetRequestId(res: Response) {
+  const requestId = randomUUID();
+  res.setHeader('X-Request-ID', requestId);
+  return requestId;
 }

@@ -1,11 +1,11 @@
 import {
+  checkSampleExistsById,
   createSample,
   deleteSampleById,
   getSampleById,
   getSamples,
   updateSampleById,
 } from './sample.service';
-import { NotFoundError } from '../utils/error';
 
 describe('Sample Service', () => {
   beforeEach(() => {
@@ -68,11 +68,11 @@ describe('Sample Service', () => {
       expect(result).toEqual(createdSample);
     });
 
-    it('should throw NotFoundError when sample does not exist', () => {
+    it('should return null when sample does not exist', () => {
       const nonExistentId = 'non-existent-id';
+      const result = getSampleById(nonExistentId);
 
-      expect(() => getSampleById(nonExistentId)).toThrow(NotFoundError);
-      expect(() => getSampleById(nonExistentId)).toThrow('Sample not found');
+      expect(result).toBeNull();
     });
   });
 
@@ -89,12 +89,13 @@ describe('Sample Service', () => {
       });
     });
 
-    it('should throw NotFoundError when sample does not exist', () => {
+    it('should return null when sample does not exist', () => {
       const nonExistentId = 'non-existent-id';
       const newName = 'Updated Name';
 
-      expect(() => updateSampleById(nonExistentId, newName)).toThrow(NotFoundError);
-      expect(() => updateSampleById(nonExistentId, newName)).toThrow('Sample not found');
+      const result = updateSampleById(nonExistentId, newName);
+
+      expect(result).toBeNull();
     });
   });
 
@@ -102,15 +103,33 @@ describe('Sample Service', () => {
     it('should delete an existing sample', () => {
       const createdSample = createSample('Test Sample');
 
-      expect(() => deleteSampleById(createdSample.id)).not.toThrow();
-      expect(() => getSampleById(createdSample.id)).toThrow(NotFoundError);
+      const result = deleteSampleById(createdSample.id);
+
+      expect(result).toEqual(createdSample.id);
     });
 
     it('should throw NotFoundError when sample does not exist', () => {
       const nonExistentId = 'non-existent-id';
 
-      expect(() => deleteSampleById(nonExistentId)).toThrow(NotFoundError);
-      expect(() => deleteSampleById(nonExistentId)).toThrow('Sample not found');
+      const result = deleteSampleById(nonExistentId);
+
+      expect(result).toBeNull();
+    });
+  });
+
+  describe('checkSampleExistsById', () => {
+    it('should return true if sample exists', () => {
+      const createdSample = createSample('Test Sample');
+      const result = checkSampleExistsById(createdSample.id);
+
+      expect(result).toBe(true);
+    });
+
+    it('should return false if sample does not exist', () => {
+      const nonExistentId = 'non-existent-id';
+      const result = checkSampleExistsById(nonExistentId);
+
+      expect(result).toBe(false);
     });
   });
 });

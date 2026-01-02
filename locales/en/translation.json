@@ -1,0 +1,9 @@
+{
+  "common": {
+    "somethingWentWrong": "Something went wrong",
+    "validationFailed": "Validation failed"
+  },
+  "samples": {
+    "notFound": "Sample not found"
+  }
+}

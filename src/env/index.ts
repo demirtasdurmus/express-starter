@@ -7,6 +7,8 @@ const envSchema = z.object({
   HOST: z.string().default('localhost'),
   PORT: z.coerce.number().default(8080),
   CORS_ORIGIN: z.string().optional(),
+  DEFAULT_LANGUAGE: z.string().default('en'),
+  SUPPORTED_LANGUAGES: z.string().default('en,tr'),
 });
 
 export type EnvType = z.infer<typeof envSchema>;
