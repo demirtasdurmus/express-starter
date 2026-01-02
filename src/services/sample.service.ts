@@ -1,5 +1,4 @@
 import { randomUUID } from 'crypto';
-import { NotFoundError } from '../utils/error';
 import { TSample } from '../types/sample';
 
 const samples = new Map<string, string>();
@@ -14,25 +13,25 @@ export function createSample(name: string): TSample {
   return { id, name };
 }
 
-export function getSampleById(id: string): TSample {
+export function getSampleById(id: string) {
   const name = samples.get(id);
-  if (!name) {
-    throw new NotFoundError('Sample not found');
-  }
-  return { id, name };
+  return name ? { id, name } : null;
 }
 
-export function updateSampleById(id: string, name: string): TSample {
-  if (!samples.has(id)) {
-    throw new NotFoundError('Sample not found');
-  }
+export function updateSampleById(id: string, name: string) {
+  if (!checkSampleExistsById(id)) return null;
+
   samples.set(id, name);
   return { id, name };
 }
 
-export function deleteSampleById(id: string): void {
-  if (!samples.has(id)) {
-    throw new NotFoundError('Sample not found');
-  }
+export function deleteSampleById(id: string) {
+  if (!checkSampleExistsById(id)) return null;
+
   samples.delete(id);
+  return id;
+}
+
+export function checkSampleExistsById(id: string): boolean {
+  return samples.has(id);
 }

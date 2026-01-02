@@ -1,5 +1,7 @@
 export type TValidationMap = 'params' | 'query' | 'body';
 
+export type TLanguage = 'en' | 'tr';
+
 export type ServerResponse<T extends Record<string, unknown> = Record<string, unknown>> =
   | {
       success: true;

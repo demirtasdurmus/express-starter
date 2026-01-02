@@ -1,0 +1,15 @@
+{
+  "common": {
+    "somethingWentWrong": "Something went wrong",
+    "validationFailed": "Validation failed"
+  },
+  "samples": {
+    "notFound": "Sample not found"
+  },
+  "validation": {
+    "sample": {
+      "invalidId": "Invalid sample ID",
+      "nameRequired": "Name is required"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "common": {
+    "somethingWentWrong": "Bir şeyler yanlış gitti",
+    "validationFailed": "Geçersiz veri"
+  },
+  "samples": {
+    "notFound": "Örnek bulunamadı"
+  },
+  "validation": {
+    "sample": {
+      "invalidId": "Geçersiz örnek ID",
+      "nameRequired": "İsim zorunludur"
+    }
+  }
+}
