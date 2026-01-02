@@ -1,4 +1,5 @@
 import 'i18next';
+import { apiConfig } from '../config';
 import translation from '../../locales/en/translation.json';
 
 /**
@@ -10,15 +11,14 @@ import translation from '../../locales/en/translation.json';
  */
 declare module 'i18next' {
   interface CustomTypeOptions {
-    // Default namespace used when not specified
-    defaultNS: 'translation';
+    defaultNS: typeof apiConfig.i18n.ns;
 
     /**
      * Resources type definition - only need to define the default language
      * as all translations should have the same structure
      */
     resources: {
-      translation: typeof translation;
+      [apiConfig.i18n.ns]: typeof translation;
     };
   }
 }

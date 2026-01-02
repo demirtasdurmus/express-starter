@@ -20,6 +20,7 @@ export const apiConfig = {
     allowedHeaders: ['Content-Type', 'Authorization'],
   },
   i18n: {
+    ns: 'translation',
     defaultLanguage: 'en' as TLanguage,
     supportedLanguages: ['en', 'tr'] as TLanguage[],
     cookieName: 'lang',

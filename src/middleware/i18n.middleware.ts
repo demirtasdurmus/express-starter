@@ -5,7 +5,6 @@ import path from 'node:path';
 import { apiConfig } from '../config';
 
 /**
- * TODO: Analyze here again carefully by checking relevant documents and update config if needed.
  * @see https://www.i18next.com/
  * @see https://www.npmjs.com/package/i18next-fs-backend
  * @see https://www.npmjs.com/package/i18next-http-middleware
@@ -27,8 +26,8 @@ i18next
     backend: {
       loadPath: `${path.resolve(process.cwd(), 'locales')}/{{lng}}/{{ns}}.json`,
     },
-    ns: ['translation'],
-    defaultNS: 'translation',
+    ns: [i18Config.ns],
+    defaultNS: i18Config.ns,
     detection: {
       order: ['querystring', 'cookie', 'header'],
       lookupQuerystring: i18Config.queryParameter,
@@ -46,8 +45,7 @@ i18next
       escapeValue: false, // Not needed for API responses
     },
     saveMissing: false,
-    // Use synchronous backend loading - required for fs-backend to work properly
-    initImmediate: false,
+    initAsync: false,
   });
 
 /**
