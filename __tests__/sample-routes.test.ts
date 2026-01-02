@@ -78,7 +78,7 @@ describe('Sample Routes', () => {
       expect(response.status).toBe(404);
       expect(response.body.success).toBe(false);
       expect(response.body.error.statusCode).toBe(404);
-      expect(response.body.error.message).toBe('Resource not found');
+      expect(response.body.error.message).toBe('Sample not found');
     });
 
     it('should return 422 when id is not a valid UUID', async () => {
@@ -117,7 +117,7 @@ describe('Sample Routes', () => {
       expect(response.status).toBe(404);
       expect(response.body.success).toBe(false);
       expect(response.body.error.statusCode).toBe(404);
-      expect(response.body.error.message).toBe('Resource not found');
+      expect(response.body.error.message).toBe('Sample not found');
     });
 
     it('should return 422 when validation fails', async () => {
@@ -155,7 +155,7 @@ describe('Sample Routes', () => {
       expect(response.status).toBe(404);
       expect(response.body.success).toBe(false);
       expect(response.body.error.statusCode).toBe(404);
-      expect(response.body.error.message).toBe('Resource not found');
+      expect(response.body.error.message).toBe('Sample not found');
     });
   });
 });

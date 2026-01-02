@@ -29,7 +29,6 @@ i18next
     ns: ['translation'],
     defaultNS: 'translation',
     detection: {
-      // Order of language detection methods (query > cookie > header)
       order: ['querystring', 'cookie', 'header'],
       lookupQuerystring: i18Config.queryParameter,
       lookupCookie: i18Config.cookieName,
@@ -45,9 +44,7 @@ i18next
     interpolation: {
       escapeValue: false, // Not needed for API responses
     },
-    // Don't save missing translations (avoid file writes at runtime)
     saveMissing: false,
-
     // Use synchronous backend loading - required for fs-backend to work properly
     initImmediate: false,
   });
@@ -57,6 +54,7 @@ i18next
  * This middleware must be placed after cookie-parser and before routes
  */
 export const i18nMiddleware = i18nextHttpMiddleware.handle(i18next, {
+  ignoreRoutes: ['/health', '/api-docs'],
   removeLngFromUrl: false,
 });
 

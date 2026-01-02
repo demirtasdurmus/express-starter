@@ -5,5 +5,11 @@
   },
   "samples": {
     "notFound": "Sample not found"
+  },
+  "validation": {
+    "sample": {
+      "invalidId": "Invalid sample ID",
+      "nameRequired": "Name is required"
+    }
   }
 }

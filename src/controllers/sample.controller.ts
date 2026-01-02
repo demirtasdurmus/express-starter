@@ -13,7 +13,7 @@ import {
   TCreateSampleRequestBody,
   TSampleIdParams,
   TUpdateSampleRequestBody,
-} from '../schemas/sample';
+} from '../schemas/sample.schema';
 
 export const getSamplesController: RequestHandler<
   unknown,

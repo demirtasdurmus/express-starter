@@ -5,5 +5,11 @@
   },
   "samples": {
     "notFound": "Örnek bulunamadı"
+  },
+  "validation": {
+    "sample": {
+      "invalidId": "Geçersiz örnek ID",
+      "nameRequired": "İsim zorunludur"
+    }
   }
 }

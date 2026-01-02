@@ -3,7 +3,7 @@ import {
   createSampleRequestBodySchema,
   sampleIdParamsSchema,
   updateSampleRequestBodySchema,
-} from '../schemas/sample';
+} from '../schemas/sample.schema';
 import { validate } from '../middleware/validate.middleware';
 import {
   createSampleController,

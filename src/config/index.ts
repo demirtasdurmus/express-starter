@@ -1,5 +1,6 @@
 import path from 'node:path';
 import { readFileSync } from 'node:fs';
+import { TLanguage } from '../types';
 import { env } from '../env';
 
 export const apiConfig = {
@@ -20,11 +21,11 @@ export const apiConfig = {
     allowedHeaders: ['Content-Type', 'Authorization'],
   },
   i18n: {
-    defaultLanguage: env.DEFAULT_LANGUAGE,
-    supportedLanguages: env.SUPPORTED_LANGUAGES.split(',').map((lang) => lang.trim()),
+    defaultLanguage: 'en' as TLanguage,
+    supportedLanguages: ['en', 'tr'] as TLanguage[],
     localesPath: path.resolve(process.cwd(), 'locales'),
     cookieName: 'lang',
-    cookieMaxAge: 365 * 24 * 60 * 60 * 1000, // 1 year in milliseconds
     queryParameter: 'lang',
+    cookieMaxAge: 365 * 24 * 60 * 60 * 1000, // 1 year in milliseconds
   },
 } as const;

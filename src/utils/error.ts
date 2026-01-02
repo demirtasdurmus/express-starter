@@ -1,4 +1,5 @@
-import { $ZodIssue } from 'zod/v4/core';
+import { z } from 'zod';
+import { TFunction } from 'i18next';
 import httpStatus from 'http-status';
 import { BaseErrorData, BaseErrorIssue } from '../types';
 
@@ -176,15 +177,47 @@ export function isBaseError(error: unknown): error is BaseError {
 }
 
 /**
- * Converts a Zod issue to a BaseErrorIssue.
- * @param issue - The Zod issue to convert.
+ * Translates and transforms a Zod issue into a BaseErrorIssue.
+ * @param issue - The Zod issue to translate and transform.
+ * @param t - The translation function.
  * @returns The BaseErrorIssue.
  */
-export function fromZodIssueToBaseErrorIssue(issue: $ZodIssue): BaseErrorIssue {
+export function translateAndTransformZodIssue(
+  issue: z.core.$ZodIssue,
+  t: TFunction,
+): BaseErrorIssue {
+  let detail = issue.message;
+
+  const isCustomMessage = isCustomZodErrorMessage(issue.message);
+
+  if (isCustomMessage) {
+    /**
+     * Used type assertion here as t function is type safe
+     * We will write detailed integration tests for each custom message passed to zod schemas
+     */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const translated = t(issue.message as any);
+    if (translated !== issue.message) {
+      detail = translated;
+    }
+  }
+
   return {
     field: issue.path.join('.'),
-    detail: issue.message,
+    detail,
   };
+}
+
+/**
+ * Checks if a message is a custom Zod error message key.
+ * @param message - The message to check.
+ * @returns True if the message is a custom Zod error message key, false otherwise.
+ * @example
+ * isCustomZodErrorMessage('validation.sample.nameRequired'); // true
+ * isCustomZodErrorMessage('Name is required'); // false
+ */
+function isCustomZodErrorMessage(message: string): boolean {
+  return /^[\w.]+$/.test(message) && message.includes('.');
 }
 
 /**
