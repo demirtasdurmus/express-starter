@@ -1,6 +1,7 @@
 import i18nextHttpMiddleware from 'i18next-http-middleware';
 import i18nextFsBackend from 'i18next-fs-backend';
 import i18next from 'i18next';
+import path from 'node:path';
 import { apiConfig } from '../config';
 
 /**
@@ -24,7 +25,7 @@ i18next
     fallbackLng: i18Config.defaultLanguage,
     preload: i18Config.supportedLanguages,
     backend: {
-      loadPath: `${i18Config.localesPath}/{{lng}}/{{ns}}.json`,
+      loadPath: `${path.resolve(process.cwd(), 'locales')}/{{lng}}/{{ns}}.json`,
     },
     ns: ['translation'],
     defaultNS: 'translation',
