@@ -21,8 +21,8 @@ export const apiConfig = {
   },
   i18n: {
     ns: 'translation',
-    defaultLanguage: 'en' as TLanguage,
-    supportedLanguages: ['en', 'tr'] as TLanguage[],
+    defaultLanguage: 'en' satisfies TLanguage,
+    supportedLanguages: ['en', 'tr'] satisfies TLanguage[],
     cookieName: 'lang',
     queryParameter: 'lang',
     cookieMaxAge: 365 * 24 * 60 * 60 * 1000, // 1 year in milliseconds

@@ -6,7 +6,8 @@ import { apiConfig } from '../config';
 
 /**
  * HTTP logger middleware with request ID generation
- * Uses pino-http for production, simple logger for development
+ * - Development: Clean, readable logs for better DX
+ * - Production: Structured JSON logs for monitoring
  */
 export function httpLogger({
   skipPaths,
@@ -19,71 +20,73 @@ export function httpLogger({
         genReqId: (_req: Request, res: Response) => {
           return generateAndSetRequestId(res);
         },
-        customLogLevel: (req, res, err) => {
-          if (skipPaths?.some((path) => req.url?.includes(path))) return 'debug';
+        autoLogging: {
+          ignore: (req: Request) => {
+            return shouldSkipPath(skipPaths, req.url);
+          },
+        },
+        customLogLevel: (_req, res, err) => {
           if (res.statusCode >= 400 && res.statusCode < 500) return 'warn';
           if (res.statusCode >= 500 || err) return 'error';
           return 'info';
         },
-        customProps: (_req: Request, res: Response) => {
-          if (!res.locals?.error) return {};
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        customErrorObject: (_req: Request, res: Response, err: Error, loggableObject: any) => {
           return {
-            err: res.locals.error,
+            ...loggableObject,
+            err: res.locals?.error || err,
           };
         },
-        /**
-         * TODO: There are duplicate error objects are created with our
-         * custom props, each named 'err' and 'error', we need to resolve this
-         * also write tests for error middleware to make sure correct response
-         * fields are sent per environment.
-         */
-        // customErrorObject: (_req: Request, res: Response) => {
-        //   if (!res.locals?.error) return {};
-        //   return {
-        //     err: res.locals.error,
-        //   };
-        // },
       })
-    : devHttpLogger;
+    : devHttpLogger({ skipPaths });
 }
 
-/**
- * Simple development HTTP logger with request ID
- */
-function devHttpLogger(req: Request, res: Response, next: NextFunction): void {
-  const start = Date.now();
+function devHttpLogger({
+  skipPaths,
+}: {
+  skipPaths?: string[];
+} = {}) {
+  return (req: Request, res: Response, next: NextFunction): void => {
+    const start = Date.now();
+    const requestId = generateAndSetRequestId(res);
 
-  const requestId = generateAndSetRequestId(res);
-
-  res.on('finish', () => {
-    const duration = Date.now() - start;
-    const status = res.statusCode;
-    const method = req.method;
-    const url = req.originalUrl;
-
-    const logData = {
-      requestId,
-      method,
-      url,
-      status,
-      duration,
-      error: res.locals?.error,
-    };
-
-    if (status >= 500) {
-      logger.error(logData, `${method} ${url} - ${status} (${duration}ms)`);
-    } else if (status >= 400) {
-      logger.warn(logData, `${method} ${url} - ${status} (${duration}ms)`);
-    } else {
-      logger.info(logData, `${method} ${url} - ${status} (${duration}ms)`);
+    if (shouldSkipPath(skipPaths, req.url)) {
+      return next();
     }
-  });
 
-  next();
+    res.on('finish', () => {
+      const duration = Date.now() - start;
+      const status = res.statusCode;
+      const method = req.method;
+      const url = req.originalUrl;
+
+      const message = `${method} ${url} → ${status} (${duration}ms)`;
+
+      const logData = {
+        requestId,
+        ...(res.locals?.error && { error: res.locals.error }),
+      };
+
+      if (status >= 500) {
+        logger.error(logData, message);
+      } else if (status >= 400) {
+        logger.warn(logData, message);
+      } else {
+        logger.info(logData, message);
+      }
+    });
+
+    next();
+  };
 }
 
 function generateAndSetRequestId(res: Response) {
   const requestId = randomUUID();
   res.setHeader('X-Request-ID', requestId);
   return requestId;
+}
+
+function shouldSkipPath(skipPaths: string[] = [], url?: string): boolean {
+  if (!url) return false;
+  return skipPaths.some((path) => url.includes(path));
 }

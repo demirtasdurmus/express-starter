@@ -40,9 +40,4 @@ export const logger = pino({
     ],
     censor: '[REDACTED]',
   },
-  formatters: {
-    level(label: string) {
-      return { level: label };
-    },
-  },
 });

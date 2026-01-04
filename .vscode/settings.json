@@ -1,6 +1,6 @@
 {
   "cSpell.language": "en,tr",
   "cSpell.ignorePaths": ["pnpm-lock.yaml", ".vscode", "coverage", "dist"],
-  "cSpell.words": ["commitlint", "Lngs", "middlewares", "ncurc", "pnpx", "toplevel"],
+  "cSpell.words": ["commitlint", "Lngs", "loggable", "middlewares", "ncurc", "pnpx", "toplevel"],
   "i18n-ally.localesPaths": ["locales"]
 }
