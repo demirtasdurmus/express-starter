@@ -113,11 +113,25 @@ This document tracks all planned improvements and enhancements for the Express S
 
 ## 🟡 Medium Priority (Developer Experience)
 
-### ❌ 11. Metrics/Observability
+### ✅ 11. Metrics/Observability
 
-- **Status**: ❌ Not Started
-- **Priority**: Low
-- **Impact**: Limited production monitoring
+- **Status**: ✅ Completed
+- **Priority**: High
+- **Impact**: Production monitoring and observability
+- **Implementation**:
+  - `src/utils/metrics.ts` - Prometheus metrics registry with HTTP and business metrics
+  - `src/middleware/metrics.middleware.ts` - Automatic HTTP request tracking
+  - `src/controllers/metrics.controller.ts` - Metrics endpoint controllers
+  - `src/routes/metrics.route.ts` - Routes with Swagger documentation
+- **Features**:
+  - HTTP request/response metrics (count, duration, active connections)
+  - Node.js process metrics (CPU, memory, event loop lag)
+  - Custom business metrics (samples created, active samples)
+  - Route pattern normalization to prevent high cardinality
+  - Prometheus-compatible metrics exposition
+  - Health check endpoint for metrics system
+- **Configuration**: Metrics enabled by default in production, configurable via `METRICS_ENABLED` env var
+- **Notes**: Uses prom-client with automatic route pattern detection and connection tracking
 - **Needed**: Add Prometheus metrics or similar
 - **Options**:
   - Prometheus metrics endpoint

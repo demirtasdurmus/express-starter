@@ -27,4 +27,8 @@ export const apiConfig = {
     queryParameter: 'lang',
     cookieMaxAge: 365 * 24 * 60 * 60 * 1000, // 1 year in milliseconds
   },
+  metrics: {
+    enabled: env.NODE_ENV === 'production',
+    path: '/metrics',
+  },
 } as const;
