@@ -5,8 +5,11 @@ export const helmetMiddleware = helmet({
     directives: {
       defaultSrc: ["'self'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
-      scriptSrc: ["'self'"],
       imgSrc: ["'self'", 'data:', 'https:'],
+      // Allow scripts from CDN (Showdown and DOMPurify)
+      scriptSrc: ["'self'", 'https://cdn.jsdelivr.net'],
+      // Allow fetching README from GitHub raw content
+      connectSrc: ["'self'", 'https://raw.githubusercontent.com'],
     },
   },
   /**
