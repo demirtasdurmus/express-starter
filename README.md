@@ -13,6 +13,7 @@ A modern, production-ready Express.js starter template with TypeScript, comprehe
 - **Request Validation** - Automatic validation of request body, params, and query using Zod schemas
 - **Internationalization (i18n)** - Multi-language support with automatic language detection and type-safe translation keys
 - **Response Compression** - Automatic gzip/deflate compression for improved performance
+- **Asset Minification** - Automatic minification of JavaScript and CSS files in production builds
 - **Health Check** - Health check endpoint at `/health` for load balancers and monitoring
 - **Structured Logging** - Pino-based structured logging with JSON output in production
 - **Request ID** - Automatic request ID generation and tracking via `X-Request-ID` header
@@ -39,11 +40,15 @@ src/
 ├── utils/           # Utility functions
 ├── app.ts           # Express app configuration
 └── index.ts         # Server entry point
-
-__tests__/          # Integration tests
 locales/            # i18n translation files
   ├── en/           # English translations
   └── tr/           # Turkish translations
+public/             # Static files
+  ├── css/          # CSS files
+  ├── js/           # JavaScript files
+  └── index.html    # HTML file
+scripts/            # Scripts
+__tests__/          # Integration tests
 dist/               # Compiled JavaScript output
 public/             # Static files
 coverage/           # Coverage reports
@@ -172,7 +177,7 @@ The starter includes CRUD endpoints for a sample resource that demonstrates:
 
 ### Production Considerations
 
-- Set `NODE_ENV=production` for optimized error handling and security
+- Set `NODE_ENV=production` for optimized error handling, security and static asset minification
 - Configure `CORS_ORIGIN` with your frontend domain(s)
 - Consider protecting the `/api-docs` endpoint in production (Swagger UI)
 - Ensure HTTPS is configured at the reverse proxy/load balancer level
