@@ -1,43 +1,32 @@
-version: '3.9'
-
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
-    image: express-app:latest
-    container_name: express-app
+    image: express-starter-template:latest
+    container_name: express-starter-template
     restart: unless-stopped
     ports:
-      - '${PORT:-3000}:3000'
+      - '${PORT}:${PORT}'
     environment:
-      - NODE_ENV=${NODE_ENV:-production}
-      - PORT=${PORT:-3000}
-      - LOG_LEVEL=${LOG_LEVEL:-info}
-    env_file:
-      - .env
-    volumes:
-      # Mount locales for hot-reload in development (optional)
-      # - ./locales:/app/locales:ro
-      # Mount public files for hot-reload in development (optional)
-      # - ./public:/app/public:ro
-      # Mount logs directory (optional)
-      - ./logs:/app/logs
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - HOST=${HOST}
+      - CORS_ORIGIN=${CORS_ORIGIN}
     networks:
       - express-network
     healthcheck:
       test:
         [
-          'CMD',
+          'CMD-SHELL',
           'node',
           '-e',
-          "require('http').get('http://localhost:3000/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})",
+          "require('http').get('http://localhost:${PORT}/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})",
         ]
       interval: 30s
       timeout: 3s
       retries: 3
-      start_period: 5s
-    # Resource limits (adjust based on your needs)
+      start_period: 10s
     deploy:
       resources:
         limits:
@@ -47,47 +36,6 @@ services:
           cpus: '0.5'
           memory: 256M
 
-  # Example: Add Redis for caching/sessions (uncomment if needed)
-  # redis:
-  #   image: redis:7-alpine
-  #   container_name: express-redis
-  #   restart: unless-stopped
-  #   ports:
-  #     - '6379:6379'
-  #   volumes:
-  #     - redis-data:/data
-  #   networks:
-  #     - express-network
-  #   healthcheck:
-  #     test: ['CMD', 'redis-cli', 'ping']
-  #     interval: 10s
-  #     timeout: 3s
-  #     retries: 3
-
-  # Example: Add PostgreSQL database (uncomment if needed)
-  # postgres:
-  #   image: postgres:16-alpine
-  #   container_name: express-postgres
-  #   restart: unless-stopped
-  #   ports:
-  #     - '5432:5432'
-  #   environment:
-  #     - POSTGRES_USER=${DB_USER:-postgres}
-  #     - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
-  #     - POSTGRES_DB=${DB_NAME:-express_db}
-  #   volumes:
-  #     - postgres-data:/var/lib/postgresql/data
-  #   networks:
-  #     - express-network
-  #   healthcheck:
-  #     test: ['CMD-SHELL', 'pg_isready -U ${DB_USER:-postgres}']
-  #     interval: 10s
-  #     timeout: 3s
-  #     retries: 3
-
 networks:
   express-network:
     driver: bridge
-# volumes:
-# redis-data:
-# postgres-data:

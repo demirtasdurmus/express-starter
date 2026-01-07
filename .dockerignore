@@ -36,42 +36,28 @@ __tests__
 *.test.js
 *.spec.ts
 *.spec.js
+jest.config.*
+jest-int.config.*
 
 # Documentation
 *.md
 !README.md
-docs
 
 # CI/CD
 .husky
 .github
 
 # Linting and formatting
-.eslintrc*
+eslint.config.mts
 .prettierrc*
 .prettierignore
 .lintstagedrc*
 .commitlintrc*
 
-# TypeScript
-tsconfig.json
-tsconfig.*.json
-
 # Config files
-jest.config.*
-jest-int.config.*
-eslint.config.*
 .ncurc.js
 
 # Docker
 Dockerfile
 docker-compose.yml
 .dockerignore
-
-# Logs
-logs
-*.log
-
-# Temporary files
-tmp
-temp
