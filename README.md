@@ -18,6 +18,7 @@ A modern, production-ready Express.js starter template with TypeScript, comprehe
 - **Structured Logging** - Pino-based structured logging with JSON output in production
 - **Request ID** - Automatic request ID generation and tracking via `X-Request-ID` header
 - **API Documentation** - Swagger/OpenAPI documentation with interactive UI at `/api-docs`
+- **Docker Support** - Production-ready Dockerfile and docker-compose.yml for easy containerization
 - **Testing** - Jest with unit and integration test configurations
 - **Code Quality** - ESLint, Prettier, and Husky for code formatting and linting
 - **Development** - Hot reload with TypeScript watch mode
@@ -47,10 +48,9 @@ public/             # Static files
   ├── css/          # CSS files
   ├── js/           # JavaScript files
   └── index.html    # HTML file
-scripts/            # Scripts
+scripts/            # Build and utility scripts
 __tests__/          # Integration tests
 dist/               # Compiled JavaScript output
-public/             # Static files
 coverage/           # Coverage reports
 ```
 
@@ -167,18 +167,75 @@ The starter includes CRUD endpoints for a sample resource that demonstrates:
 - `husky` - Git hooks
 - `supertest` - HTTP testing
 - `tsc-files` - TypeScript files checker
+- `terser` - JavaScript minifier
+- `cssnano-cli` - CSS minifier
 
 ## 🚀 Deployment
 
-1. Build the project: `pnpm build`
+### Local Deployment
+
+1. Build the project: `pnpm build` (static assets are minified in production builds)
 2. Set environment variables (especially `NODE_ENV=production` and `CORS_ORIGIN`)
 3. Start the server: `pnpm start`
 4. The server will run on the port specified in the `PORT` environment variable (default: 8080)
 
+### Docker Deployment
+
+The project includes production-ready Docker configuration:
+
+#### Using Docker Compose (Recommended)
+
+1. Create a `.env` file with your environment variables:
+
+   ```bash
+   NODE_ENV=production
+   PORT=8080
+   HOST=0.0.0.0
+   CORS_ORIGIN=*
+   ```
+
+2. Build and start the container:
+
+   ```bash
+   docker-compose up --build -d
+   ```
+
+3. View logs:
+
+   ```bash
+   docker logs express-starter-template
+   ```
+
+4. Stop the container:
+   ```bash
+   docker-compose down
+   ```
+
+#### Using Docker Directly
+
+1. Build the image:
+
+   ```bash
+   docker build -t express-starter-template .
+   ```
+
+2. Run the container:
+   ```bash
+   docker run -d \
+     --name express-starter-template \
+     -p 8080:8080 \
+     -e NODE_ENV=production \
+     -e PORT=8080 \
+     -e HOST=0.0.0.0 \
+     -e CORS_ORIGIN=* \
+     express-starter-template
+   ```
+
 ### Production Considerations
 
 - Set `NODE_ENV=production` for optimized error handling, security and static asset minification
-- Configure `CORS_ORIGIN` with your frontend domain(s)
+- Set `HOST=0.0.0.0` when running in Docker to allow external connections
+- Configure `CORS_ORIGIN` with your frontend domain(s) (avoid using `*` in production)
 - Consider protecting the `/api-docs` endpoint in production (Swagger UI)
 - Ensure HTTPS is configured at the reverse proxy/load balancer level
 - Monitor rate limiting and adjust limits based on your traffic patterns
