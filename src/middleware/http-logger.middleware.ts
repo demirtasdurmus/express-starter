@@ -88,5 +88,36 @@ function generateAndSetRequestId(res: Response) {
 
 function shouldSkipPath(skipPaths: string[] = [], url?: string): boolean {
   if (!url) return false;
-  return skipPaths.some((path) => url.includes(path));
+
+  // Skip explicitly configured paths
+  if (skipPaths.some((path) => url.includes(path))) {
+    return true;
+  }
+
+  // Skip static files (common static file extensions)
+  return isStaticFile(url);
+}
+
+function isStaticFile(url: string): boolean {
+  const staticExtensions = [
+    '.css',
+    '.js',
+    '.ico',
+    '.png',
+    '.jpg',
+    '.jpeg',
+    '.gif',
+    '.svg',
+    '.woff',
+    '.woff2',
+    '.ttf',
+    '.eot',
+    '.html',
+    '.json',
+    '.xml',
+    '.txt',
+    '.map',
+  ];
+
+  return staticExtensions.some((ext) => url.toLowerCase().endsWith(ext));
 }
