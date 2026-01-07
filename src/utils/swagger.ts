@@ -4,12 +4,10 @@ import { apiConfig } from '../config';
 
 const devServer = {
   url: `http://${env.HOST}:${env.PORT}`,
-  description: 'Development server',
 };
 
 const productionServer = {
   url: `https://express-template.durmusdemirtas.com`,
-  description: 'Production server',
 };
 
 export const swaggerSpec = swaggerJsdoc({
