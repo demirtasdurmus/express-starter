@@ -266,8 +266,6 @@ body {
   border-radius: 0.75rem;
   padding: 2rem;
   min-height: 200px;
-  max-height: 90vh;
-  overflow-y: auto;
   box-shadow: 0 4px 15px var(--shadow);
 }
 
