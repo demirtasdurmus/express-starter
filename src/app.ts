@@ -19,6 +19,13 @@ const app: Application = express();
  * Middleware execution order should be respected
  */
 app.disable('x-powered-by');
+
+/**
+ * Enable trust proxy to work correctly behind reverse proxies (nginx, load balancers, etc.)
+ * This allows express-rate-limit to correctly identify client IPs from X-Forwarded-For headers
+ */
+app.set('trust proxy', true);
+
 app.use(helmetMiddleware);
 app.use(corsMiddleware);
 
