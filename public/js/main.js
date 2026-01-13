@@ -37,9 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     observer.observe(el);
   });
 
-  console.log('🚀 Express TypeScript Starter - UI Loaded');
-
-  // Fetch and render README from GitHub
+  logWelcomeMessage();
   loadReadme();
 });
 
@@ -104,4 +102,23 @@ async function loadReadme() {
       </div>
     `;
   }
+}
+
+/**
+ * Logs a welcome message to the console
+ */
+function logWelcomeMessage() {
+  console.log(
+    '%c🚀 Express TypeScript Starter',
+    'font-size: 16px; font-weight: bold; color: #6366f1;',
+  );
+  console.log('%cUI Loaded successfully!', 'color: #10b981;');
+  console.log(
+    '%c💡 Diving deep into the code? Consider contributing:',
+    'color: #8b5cf6; font-weight: bold;',
+  );
+  console.log(
+    '%chttps://github.com/demirtasdurmus/express-starter/blob/main/DEVELOPMENT_PATH.md',
+    'color: #3b82f6; text-decoration: underline;',
+  );
 }

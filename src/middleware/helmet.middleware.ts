@@ -8,8 +8,8 @@ export const helmetMiddleware = helmet({
       imgSrc: ["'self'", 'data:', 'https:'],
       // Allow scripts from CDN (Showdown and DOMPurify)
       scriptSrc: ["'self'", 'https://cdn.jsdelivr.net'],
-      // Allow fetching README from GitHub raw content
-      connectSrc: ["'self'", 'https://raw.githubusercontent.com'],
+      // Allow fetching README from GitHub raw content and CDN source maps
+      connectSrc: ["'self'", 'https://raw.githubusercontent.com', 'https://cdn.jsdelivr.net'],
     },
   },
   /**
