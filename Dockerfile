@@ -9,9 +9,10 @@ WORKDIR /app
 
 COPY . .
 
+RUN npm config set update-notifier false
 RUN pnpm install --frozen-lockfile --ignore-scripts
 
-RUN NODE_ENV=production pnpm build
+RUN MINIFY_ASSETS=true pnpm build
 
 ########################################################
 # Production stage

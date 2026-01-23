@@ -12,10 +12,10 @@ const dotenv = require('dotenv');
 const { execSync } = require('child_process');
 dotenv.config();
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.MINIFY_ASSETS === 'true';
 
 if (!isProduction) {
-  console.log('⏭️  Skipping asset minification (not in production mode)');
+  console.log('⏭️  Skipping asset minification, export MINIFY_ASSETS=true to enable');
   process.exit(0);
 }
 
