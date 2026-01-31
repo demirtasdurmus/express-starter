@@ -11,6 +11,7 @@ import { httpLogger } from './middleware/http-logger.middleware';
 import { helmetMiddleware } from './middleware/helmet.middleware';
 import { errorMiddleware } from './middleware/error.middleware';
 import { corsMiddleware } from './middleware/cors.middleware';
+import { cacheControlMiddleware } from './middleware/cache-control.middleware';
 import { apiConfig } from './config';
 
 const app: Application = express();
@@ -23,8 +24,20 @@ app.disable('x-powered-by');
 /**
  * Enable trust proxy to work correctly behind reverse proxies (nginx, load balancers, etc.)
  * This allows express-rate-limit to correctly identify client IPs from X-Forwarded-For headers
+ * Configure the number of proxy hops via TRUST_PROXY_HOPS environment variable
+ * Examples: 1 for single nginx, 2 for ALB + CloudFront, true for unknown/variable
+ * @see https://expressjs.com/en/guide/behind-proxies.html
+ * @see https://express-rate-limit.mintlify.app/guides/troubleshooting-proxy-issues
  */
-app.set('trust proxy', true);
+app.set('trust proxy', apiConfig.trustProxy);
+
+/**
+ * Use Express built-in ETag for dynamic responses (res.json, res.send)
+ * - weak: Weak ETags (W/"hash") - sufficient for API JSON, works with compression
+ * - Applies to all dynamic responses; express.static has its own etag option for static files
+ * @see https://expressjs.com/en/api.html#app.settings.table
+ */
+app.set('etag', 'weak');
 
 app.use(helmetMiddleware);
 app.use(corsMiddleware);
@@ -40,7 +53,16 @@ app.use(i18nMiddleware);
 
 app.use(compression());
 
-app.use(express.static('public'));
+/**
+ * Must be after compression to set Vary: Accept-Encoding
+ */
+app.use(cacheControlMiddleware);
+
+app.use(
+  express.static('public', {
+    maxAge: apiConfig.cache.staticMaxAge * 1000,
+  }),
+);
 
 app.use('/health', healthRoutes);
 

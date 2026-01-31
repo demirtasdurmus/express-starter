@@ -7,6 +7,15 @@ const envSchema = z.object({
   HOST: z.string().default('localhost'),
   PORT: z.coerce.number().default(8080),
   CORS_ORIGIN: z.string().optional(),
+  TRUST_PROXY_HOPS: z
+    .string()
+    .optional()
+    .default('1')
+    .transform((val) => {
+      if (val.toLowerCase() === 'true') return true;
+      const parsed = Number.parseInt(val, 10);
+      return Number.isNaN(parsed) ? 1 : parsed;
+    }),
 });
 
 export type EnvType = z.infer<typeof envSchema>;
