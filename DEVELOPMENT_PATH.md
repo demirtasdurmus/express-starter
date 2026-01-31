@@ -137,7 +137,57 @@ This document tracks all planned improvements and enhancements for the Express S
   - Asset minification runs automatically when NODE_ENV=production
   - Health check endpoint configured for container orchestration
 
-### ❌ 12. Metrics/Observability
+### ✅ 12. API Caching Headers
+
+- **Status**: ✅ Completed
+- **Priority**: High
+- **Impact**: Sensible Cache-Control for a standard Express server (browser/CDN caching only)
+- **Implementation**:
+  - `src/middleware/cache-control.middleware.ts` – sets Cache-Control by path (health no-cache, static max-age, API GET no-cache, mutations no-store)
+  - `src/utils/cache.ts` – `setCacheControl(res, directives)` for controller overrides
+  - Config: `apiConfig.cache` (staticMaxAge, apiDefault, health, swagger)
+  - Express built-in ETag (`app.set('etag', 'weak')`) for dynamic responses; `express.static` for static files
+
+### ❌ 13. API Request Timeout
+
+- **Status**: ❌ Not Started
+- **Priority**: Low
+- **Impact**: Long-running requests can hang
+- **Needed**: Add timeout middleware
+- **Implementation**: Set timeout per route or globally
+
+### ❌ 14. API Versioning Strategy
+
+- **Status**: ❌ Not Started
+- **Priority**: Medium
+- **Impact**: No versioning pattern
+- **Needed**:
+  - Add `/api/v1/` structure, or
+  - Header-based versioning (`Accept: application/vnd.api+json;version=1`)
+- **Note**: Choose one approach and document it
+
+### ❌ 15. Environment-based Swagger UI Protection
+
+- **Status**: ❌ Not Started
+- **Priority**: High
+- **Impact**: Swagger UI exposed in production
+- **Needed**:
+  - Add authentication middleware for `/api-docs` in production
+  - Or conditionally disable Swagger UI in production
+  - Options: Basic auth, API key, or disable entirely
+
+### ❌ 16. API Response Pagination Helper
+
+- **Status**: ❌ Not Started
+- **Priority**: Low
+- **Impact**: Manual pagination implementation
+- **Needed**: Add pagination utility/middleware
+- **Features**:
+  - Parse `page` and `limit` query params
+  - Calculate offset
+  - Return pagination metadata in response
+
+### ❌ 17. Metrics/Observability
 
 - **Status**: ❌ Not Started
 - **Priority**: Low
@@ -148,50 +198,9 @@ This document tracks all planned improvements and enhancements for the Express S
   - OpenTelemetry integration
   - Custom metrics middleware
 
-### ❌ 13. API Caching Headers
-
-- **Status**: ❌ Not Started
-- **Priority**: Low
-- **Impact**: No cache control for static/dynamic content
-- **Needed**: Add cache-control middleware
-- **Use Cases**:
-  - Static files: long cache
-  - API responses: no-cache or short cache
-  - Public endpoints: appropriate cache headers
-
-### ❌ 14. API Request Timeout
-
-- **Status**: ❌ Not Started
-- **Priority**: Low
-- **Impact**: Long-running requests can hang
-- **Needed**: Add timeout middleware
-- **Implementation**: Set timeout per route or globally
-
-### ❌ 15. API Versioning Strategy
-
-- **Status**: ❌ Not Started
-- **Priority**: Medium
-- **Impact**: No versioning pattern
-- **Needed**:
-  - Add `/api/v1/` structure, or
-  - Header-based versioning (`Accept: application/vnd.api+json;version=1`)
-- **Note**: Choose one approach and document it
-
-### ❌ 16. Environment-based Swagger UI Protection
-
-- **Status**: ❌ Not Started
-- **Priority**: High
-- **Impact**: Swagger UI exposed in production
-- **Needed**:
-  - Add authentication middleware for `/api-docs` in production
-  - Or conditionally disable Swagger UI in production
-  - Options: Basic auth, API key, or disable entirely
-
----
-
 ## 🟢 Low Priority (Nice to Have)
 
-### ❌ 17. Database Integration Example
+### ❌ 18. Database Integration Example
 
 - **Status**: ❌ Not Started
 - **Priority**: Medium
@@ -199,24 +208,13 @@ This document tracks all planned improvements and enhancements for the Express S
 - **Needed**: Add example with Prisma/TypeORM/Drizzle
 - **Note**: Optional but common in production APIs
 
-### ❌ 18. Authentication/Authorization Example
+### ❌ 19. Authentication/Authorization Example
 
 - **Status**: ❌ Not Started
 - **Priority**: Medium
 - **Impact**: No auth pattern (JWT, sessions, etc.)
 - **Needed**: Add example auth middleware/strategy
 - **Options**: JWT, Passport.js, or custom implementation
-
-### ❌ 19. API Response Pagination Helper
-
-- **Status**: ❌ Not Started
-- **Priority**: Low
-- **Impact**: Manual pagination implementation
-- **Needed**: Add pagination utility/middleware
-- **Features**:
-  - Parse `page` and `limit` query params
-  - Calculate offset
-  - Return pagination metadata in response
 
 ---
 

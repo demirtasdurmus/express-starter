@@ -29,5 +29,7 @@ export const errorMiddleware: ErrorRequestHandler<
     response.error.message = req.t('common.somethingWentWrong');
   }
 
+  res.setHeader('Cache-Control', 'no-store');
+
   res.status(error.statusCode).send(response);
 };
