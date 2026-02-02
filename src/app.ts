@@ -2,6 +2,7 @@ import swaggerUi from 'swagger-ui-express';
 import express, { Application } from 'express';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
+import timeout from 'connect-timeout';
 import { swaggerSpec } from './utils/swagger';
 import { sampleRoutes } from './routes/sample.route';
 import { healthRoutes } from './routes/health.route';
@@ -41,6 +42,11 @@ app.set('etag', 'weak');
 
 app.use(helmetMiddleware);
 app.use(corsMiddleware);
+
+/**
+ * @see https://expressjs.com/en/resources/middleware/timeout.html
+ */
+app.use(timeout(apiConfig.timeout.request, { respond: true }));
 
 app.use(httpLogger({ skipPaths: ['/health', '/api-docs'] }));
 

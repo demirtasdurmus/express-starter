@@ -14,7 +14,9 @@
     "middlewares",
     "ncurc",
     "pnpx",
+    "timedout",
     "toplevel"
   ],
-  "i18n-ally.localesPaths": ["locales"]
+  "i18n-ally.localesPaths": ["locales"],
+  "i18n-ally.keystyle": "nested"
 }

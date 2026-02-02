@@ -50,4 +50,7 @@ export const apiConfig = {
     health: 'no-cache',
     swagger: 'public, max-age=3600',
   },
+  timeout: {
+    request: 30000,
+  },
 } as const;

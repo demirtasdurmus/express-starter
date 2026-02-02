@@ -148,13 +148,17 @@ This document tracks all planned improvements and enhancements for the Express S
   - Config: `apiConfig.cache` (staticMaxAge, apiDefault, health, swagger)
   - Express built-in ETag (`app.set('etag', 'weak')`) for dynamic responses; `express.static` for static files
 
-### ❌ 13. API Request Timeout
+### ✅ 13. API Request Timeout
 
-- **Status**: ❌ Not Started
+- **Status**: ✅ Completed
 - **Priority**: Low
 - **Impact**: Long-running requests can hang
-- **Needed**: Add timeout middleware
-- **Implementation**: Set timeout per route or globally
+- **Implementation**:
+  - `connect-timeout` middleware applied globally in `app.ts`
+  - Config: `apiConfig.timeout.request` (default: 30000ms / 30 seconds)
+  - Sends 503 Service Unavailable when timeout fires
+  - Error middleware checks `req.timedout` or `res.headersSent` to prevent double-send
+  - Note: Long-running handlers should check `req.timedout` before expensive operations
 
 ### ❌ 14. API Versioning Strategy
 
