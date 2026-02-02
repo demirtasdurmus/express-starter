@@ -167,13 +167,19 @@ export class InternalServerError extends BaseError {
   }
 }
 
-/**
- * Checks if an error is a BaseError.
- * @param error - The error to check.
- * @returns True if the error is a BaseError, false otherwise.
- */
-export function isBaseError(error: unknown): error is BaseError {
-  return error instanceof BaseError;
+export class ServiceUnavailableError extends BaseError {
+  private static readonly statusCode = httpStatus.SERVICE_UNAVAILABLE;
+
+  constructor(message: string, data?: BaseErrorData, isOperational?: boolean) {
+    super(
+      httpStatus[`${ServiceUnavailableError.statusCode}_NAME`],
+      ServiceUnavailableError.statusCode,
+      message,
+      isOperational,
+      data,
+    );
+    Object.setPrototypeOf(this, ServiceUnavailableError.prototype);
+  }
 }
 
 /**
@@ -233,6 +239,8 @@ export function serializeError(err: unknown): BaseError {
     /**
      * Add more cases here as needed
      */
+  } else if (isTimeoutError(err)) {
+    error = new ServiceUnavailableError('Request timed out', { originalError: err }, false);
   } else if (err instanceof Error) {
     error = new InternalServerError(err.message, { stack: err.stack }, false);
   } else {
@@ -240,4 +248,22 @@ export function serializeError(err: unknown): BaseError {
   }
 
   return error;
+}
+
+/**
+ * Checks if an error is a timeout error.
+ * @param err - The error to check.
+ * @returns True if the error is a timeout error, false otherwise.
+ */
+export function isTimeoutError(err: unknown): boolean {
+  return err instanceof Error && 'code' in err && err.code === 'ETIMEDOUT';
+}
+
+/**
+ * Checks if an error is a BaseError.
+ * @param error - The error to check.
+ * @returns True if the error is a BaseError, false otherwise.
+ */
+export function isBaseError(error: unknown): error is BaseError {
+  return error instanceof BaseError;
 }

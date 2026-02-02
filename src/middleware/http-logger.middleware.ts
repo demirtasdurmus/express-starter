@@ -2,6 +2,7 @@ import { pinoHttp } from 'pino-http';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { randomUUID } from 'crypto';
 import { logger } from '../utils/logger';
+import { isStaticFile } from '../utils/cache';
 import { apiConfig } from '../config';
 
 /**
@@ -96,28 +97,4 @@ function shouldSkipPath(skipPaths: string[] = [], url?: string): boolean {
 
   // Skip static files (common static file extensions)
   return isStaticFile(url);
-}
-
-function isStaticFile(url: string): boolean {
-  const staticExtensions = [
-    '.css',
-    '.js',
-    '.ico',
-    '.png',
-    '.jpg',
-    '.jpeg',
-    '.gif',
-    '.svg',
-    '.woff',
-    '.woff2',
-    '.ttf',
-    '.eot',
-    '.html',
-    '.json',
-    '.xml',
-    '.txt',
-    '.map',
-  ];
-
-  return staticExtensions.some((ext) => url.toLowerCase().endsWith(ext));
 }
