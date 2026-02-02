@@ -1,25 +1,21 @@
 import { ErrorRequestHandler } from 'express';
 import { logger } from '../utils/logger';
 import { serializeError } from '../utils/error';
-import { ErrorResponseDetails, ServerResponse } from '../types';
+import { ErrorResponse } from '../types';
 import { env } from '../env';
 
-export const errorMiddleware: ErrorRequestHandler<
-  unknown,
-  ServerResponse<ErrorResponseDetails>,
-  unknown,
-  unknown
-> = (err, req, res, _next) => {
+export const errorMiddleware: ErrorRequestHandler<unknown, ErrorResponse> = (
+  err,
+  req,
+  res,
+  _next,
+) => {
   const error = serializeError(err);
 
-  const response: ServerResponse<ErrorResponseDetails> = {
-    success: false,
-    error: {
-      name: error.name,
-      statusCode: error.statusCode,
-      message: error.message,
-      ...(error.data ? { ...error.data } : {}),
-    },
+  const errorResponse: ErrorResponse = {
+    name: error.name,
+    message: error.message,
+    ...(error.data ? { ...error.data } : {}),
   };
 
   if (res.headersSent) {
@@ -27,21 +23,20 @@ export const errorMiddleware: ErrorRequestHandler<
 
     const logData = {
       requestId: req.headers['x-request-id'],
-      error: response.error,
+      error: errorResponse,
     };
     logger.error(logData, message);
     return;
   }
 
-  res.locals.error = { ...response.error };
+  res.locals.error = { ...errorResponse };
 
   if (env.NODE_ENV === 'production' && error.statusCode >= 500) {
-    delete response.error.stack;
-    delete response.error.originalError;
-    response.error.message = req.t('common.somethingWentWrong');
+    delete errorResponse.stack;
+    delete errorResponse.originalError;
+    errorResponse.message = req.t('common.somethingWentWrong');
   }
 
   res.setHeader('Cache-Control', 'no-store');
-
-  res.status(error.statusCode).send(response);
+  res.status(error.statusCode).send(errorResponse);
 };

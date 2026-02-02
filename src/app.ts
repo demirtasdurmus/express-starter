@@ -1,8 +1,8 @@
 import swaggerUi from 'swagger-ui-express';
 import express, { Application } from 'express';
 import cookieParser from 'cookie-parser';
-import compression from 'compression';
 import timeout from 'connect-timeout';
+import compression from 'compression';
 import { swaggerSpec } from './utils/swagger';
 import { sampleRoutes } from './routes/sample.route';
 import { healthRoutes } from './routes/health.route';

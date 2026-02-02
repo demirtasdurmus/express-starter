@@ -160,7 +160,18 @@ This document tracks all planned improvements and enhancements for the Express S
   - Error middleware checks `req.timedout` or `res.headersSent` to prevent double-send
   - Note: Long-running handlers should check `req.timedout` before expensive operations
 
-### ❌ 14. API Versioning Strategy
+### ✅ 14. API Response Pagination Helper
+
+- **Status**: ✅ Completed
+- **Priority**: Low
+- **Impact**: Manual pagination implementation
+- **Implementation**: `src/utils/get-pagination-meta.ts`
+- **Notes**:
+  - Parse `page` and `limit` query params
+  - Calculate offset
+  - Return pagination metadata in response
+
+### ❌ 15. API Versioning Strategy
 
 - **Status**: ❌ Not Started
 - **Priority**: Medium
@@ -170,7 +181,7 @@ This document tracks all planned improvements and enhancements for the Express S
   - Header-based versioning (`Accept: application/vnd.api+json;version=1`)
 - **Note**: Choose one approach and document it
 
-### ❌ 15. Environment-based Swagger UI Protection
+### ❌ 16. Environment-based Swagger UI Protection
 
 - **Status**: ❌ Not Started
 - **Priority**: High
@@ -179,17 +190,6 @@ This document tracks all planned improvements and enhancements for the Express S
   - Add authentication middleware for `/api-docs` in production
   - Or conditionally disable Swagger UI in production
   - Options: Basic auth, API key, or disable entirely
-
-### ❌ 16. API Response Pagination Helper
-
-- **Status**: ❌ Not Started
-- **Priority**: Low
-- **Impact**: Manual pagination implementation
-- **Needed**: Add pagination utility/middleware
-- **Features**:
-  - Parse `page` and `limit` query params
-  - Calculate offset
-  - Return pagination metadata in response
 
 ### ❌ 17. Metrics/Observability
 

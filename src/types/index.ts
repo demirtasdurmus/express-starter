@@ -2,15 +2,11 @@ export type TValidationMap = 'params' | 'query' | 'body';
 
 export type TLanguage = 'en' | 'tr';
 
-export type ServerResponse<T extends Record<string, unknown> = Record<string, unknown>> =
-  | {
-      success: true;
-      payload: T | undefined;
-    }
-  | {
-      success: false;
-      error: T;
-    };
+export type TPaginationMeta = {
+  page: number;
+  totalPages: number;
+  totalCount: number;
+};
 
 export type BaseErrorIssue = {
   field?: string;
@@ -23,9 +19,8 @@ export type BaseErrorData = {
   originalError?: unknown;
 };
 
-export type ErrorResponseDetails = {
+export type ErrorResponse = {
   name: string;
-  statusCode: number;
   message: string;
   issues?: BaseErrorData['issues'];
   stack?: BaseErrorData['stack'];

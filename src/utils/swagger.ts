@@ -3,7 +3,7 @@ import { env } from '../env';
 import { apiConfig } from '../config';
 
 const devServer = {
-  url: `http://${env.HOST}:${env.PORT}`,
+  url: `http://localhost:${env.PORT}`,
 };
 
 const productionServer = {

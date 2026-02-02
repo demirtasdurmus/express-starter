@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import {
   createSampleRequestBodySchema,
+  getSamplesQuerySchema,
   sampleIdParamsSchema,
   updateSampleRequestBodySchema,
 } from '../schemas/sample.schema';
@@ -14,13 +15,27 @@ import {
 } from '../controllers/sample.controller';
 
 const router = Router();
+
 /**
  * @swagger
  * /api/samples:
  *   get:
- *     summary: Get a greeting message
+ *     summary: Get samples
  *     tags: [Samples]
- *     description: Returns a simple greeting message
+ *     description: Returns samples with pagination
+ *     parameters:
+ *       - name: page
+ *         in: query
+ *         required: false
+ *         schema:
+ *           type: number
+ *           example: 1
+ *       - name: limit
+ *         in: query
+ *         required: false
+ *         schema:
+ *           type: number
+ *           example: 10
  *     responses:
  *       200:
  *         description: Successful response
@@ -29,31 +44,37 @@ const router = Router();
  *             schema:
  *               type: object
  *               required:
- *                 - success
- *                 - payload
+ *                 - page
+ *                 - totalPages
+ *                 - totalCount
+ *                 - samples
  *               properties:
- *                 success:
- *                   type: boolean
- *                   example: true
- *                 payload:
- *                   type: object
- *                   required:
- *                     - samples
- *                   properties:
- *                     samples:
- *                       type: array
- *                       items:
- *                         type: object
- *                         properties:
- *                           id:
- *                             type: string
- *                             example: "123e4567-e89b-12d3-a456-426614174000"
- *                           name:
- *                             type: string
- *                             example: "Sample 1"
+ *                 page:
+ *                   type: number
+ *                   example: 1
+ *                 totalPages:
+ *                   type: number
+ *                   example: 10
+ *                 totalCount:
+ *                   type: number
+ *                   example: 100
+ *                 samples:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                         example: "123e4567-e89b-12d3-a456-426614174000"
+ *                       name:
+ *                         type: string
+ *                         example: "Sample 1"
  */
-
-router.get('/', getSamplesController);
+router.get(
+  '/',
+  validate({ validationMap: 'query', schema: getSamplesQuerySchema }),
+  getSamplesController,
+);
 
 /**
  * @swagger
@@ -82,26 +103,15 @@ router.get('/', getSamplesController);
  *             schema:
  *               type: object
  *               required:
- *                 - success
- *                 - payload
+ *                 - id
+ *                 - name
  *               properties:
- *                 success:
- *                   type: boolean
- *                   example: true
- *                 payload:
- *                   type: object
- *                   required:
- *                     - sample
- *                   properties:
- *                     sample:
- *                       type: object
- *                       properties:
- *                         id:
- *                           type: string
- *                           example: "123e4567-e89b-12d3-a456-426614174000"
- *                         name:
- *                           type: string
- *                           example: "Sample 1"
+ *                 id:
+ *                   type: string
+ *                   example: "123e4567-e89b-12d3-a456-426614174000"
+ *                 name:
+ *                   type: string
+ *                   example: "Sample 1"
  */
 router.post(
   '/',
@@ -131,56 +141,16 @@ router.post(
  *             schema:
  *               type: object
  *               required:
- *                 - success
- *                 - payload
+ *                 - id
+ *                 - name
  *               properties:
- *                 success:
- *                   type: boolean
- *                   example: true
- *                 payload:
- *                   type: object
- *                   required:
- *                     - sample
- *                   properties:
- *                     sample:
- *                       type: object
- *                       properties:
- *                         id:
- *                           type: string
- *                           example: "123e4567-e89b-12d3-a456-426614174000"
- *                         name:
- *                           type: string
- *                           example: "Sample 1"
- *       404:
- *         description: Sample not found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               required:
- *                 - success
- *                 - error
- *               properties:
- *                 success:
- *                   type: boolean
- *                   example: false
- *                 error:
- *                   type: object
- *                   required:
- *                     - name
- *                     - statusCode
- *                     - message
- *                   properties:
- *                     name:
- *                       type: string
- *                       example: "NotFoundError"
- *                     statusCode:
- *                       type: number
- *                       example: 404
- *                     message:
- *                       type: string
- *                       example: "Sample not found"
- * */
+ *                 id:
+ *                   type: string
+ *                   example: "123e4567-e89b-12d3-a456-426614174000"
+ *                 name:
+ *                   type: string
+ *                   example: "Sample 1"
+ */
 router.get(
   '/:id',
   validate({ validationMap: 'params', schema: sampleIdParamsSchema }),
@@ -221,56 +191,16 @@ router.get(
  *             schema:
  *               type: object
  *               required:
- *                 - success
- *                 - payload
+ *                 - id
+ *                 - name
  *               properties:
- *                 success:
- *                   type: boolean
- *                   example: true
- *                 payload:
- *                   type: object
- *                   required:
- *                     - sample
- *                   properties:
- *                     sample:
- *                       type: object
- *                       properties:
- *                         id:
- *                           type: string
- *                           example: "123e4567-e89b-12d3-a456-426614174000"
- *                         name:
- *                           type: string
- *                           example: "Sample 1"
- *       404:
- *         description: Sample not found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               required:
- *                 - success
- *                 - error
- *               properties:
- *                 success:
- *                   type: boolean
- *                   example: false
- *                 error:
- *                   type: object
- *                   required:
- *                     - name
- *                     - statusCode
- *                     - message
- *                   properties:
- *                     name:
- *                       type: string
- *                       example: "NotFoundError"
- *                     statusCode:
- *                       type: number
- *                       example: 404
- *                     message:
- *                       type: string
- *                       example: "Sample not found"
- * */
+ *                 id:
+ *                   type: string
+ *                   example: "123e4567-e89b-12d3-a456-426614174000"
+ *                 name:
+ *                   type: string
+ *                   example: "Sample 1"
+ */
 router.patch(
   '/:id',
   validate({ validationMap: 'params', schema: sampleIdParamsSchema }),
@@ -293,48 +223,9 @@ router.patch(
  *           type: string
  *           example: "123e4567-e89b-12d3-a456-426614174000"
  *     responses:
- *       200:
- *         description: Successful response
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               required:
- *                 - success
- *               properties:
- *                 success:
- *                   type: boolean
- *                   example: true
- *       404:
- *         description: Sample not found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               required:
- *                 - success
- *                 - error
- *               properties:
- *                 success:
- *                   type: boolean
- *                   example: false
- *                 error:
- *                   type: object
- *                   required:
- *                     - name
- *                     - statusCode
- *                     - message
- *                   properties:
- *                     name:
- *                       type: string
- *                       example: "NotFoundError"
- *                     statusCode:
- *                       type: number
- *                       example: 404
- *                     message:
- *                       type: string
- *                       example: "Sample not found"
- * */
+ *       204:
+ *         description: No content
+ */
 router.delete(
   '/:id',
   validate({ validationMap: 'params', schema: sampleIdParamsSchema }),

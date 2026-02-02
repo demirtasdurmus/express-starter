@@ -1,8 +1,13 @@
 import { RequestHandler } from 'express';
 import { applyCacheHeaders, isStaticFile } from '../utils/cache';
+import { env } from '../env';
 import { apiConfig } from '../config';
 
 export const cacheControlMiddleware: RequestHandler = (req, res, next) => {
+  if (env.NODE_ENV !== 'production') {
+    return next();
+  }
+
   /**
    * If the cache control is already set, apply it.
    */
