@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { paginationValuesSchema } from './shared.schema';
 
 /**
  * Note: Custom error messages use i18n translation keys.
@@ -9,6 +10,8 @@ export const sampleIdParamsSchema = z.object({
   id: z.uuid('validation.sample.invalidId'),
 });
 
+export const getSamplesQuerySchema = paginationValuesSchema;
+
 export const createSampleRequestBodySchema = z.object({
   name: z.string().min(1, 'validation.sample.nameRequired'),
 });
@@ -18,5 +21,6 @@ export const updateSampleRequestBodySchema = z.object({
 });
 
 export type TSampleIdParams = z.infer<typeof sampleIdParamsSchema>;
+export type TGetSamplesQuery = z.infer<typeof getSamplesQuerySchema>;
 export type TCreateSampleRequestBody = z.infer<typeof createSampleRequestBodySchema>;
 export type TUpdateSampleRequestBody = z.infer<typeof updateSampleRequestBodySchema>;

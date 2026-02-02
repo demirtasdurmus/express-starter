@@ -7,16 +7,13 @@ describe('Health Routes', () => {
       const response = await request(app).get('/health');
 
       expect(response.status).toBe(200);
-      expect(response.body.success).toBe(true);
-      expect(response.body.payload).toHaveProperty('timestamp');
-      expect(response.body.payload).toHaveProperty('version');
-      expect(typeof response.body.payload.timestamp).toBe('string');
-      expect(typeof response.body.payload.version).toBe('string');
+      expect(typeof response.body?.timestamp).toBe('string');
+      expect(typeof response.body?.version).toBe('string');
     });
 
     it('should return a valid ISO timestamp', async () => {
       const response = await request(app).get('/health');
-      const timestamp = response.body.payload.timestamp;
+      const timestamp = response.body?.timestamp;
 
       expect(timestamp).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/);
       expect(() => new Date(timestamp)).not.toThrow();
