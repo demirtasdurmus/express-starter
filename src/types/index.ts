@@ -8,11 +8,6 @@ export type TPaginationMeta = {
   totalCount: number;
 };
 
-export type TPaginatedResponse<T> = {
-  data: T[];
-  meta: TPaginationMeta;
-};
-
 export type BaseErrorIssue = {
   field?: string;
   detail?: string;
