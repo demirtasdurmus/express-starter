@@ -6,15 +6,16 @@ services:
     image: express-starter-template:latest
     container_name: express-starter-template
     restart: unless-stopped
-    ports:
-      - '${PORT}:${PORT}'
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.app.loadbalancer.server.port=${PORT}
     environment:
       - NODE_ENV=${NODE_ENV}
       - PORT=${PORT}
       - HOST=${HOST}
       - CORS_ORIGIN=${CORS_ORIGIN}
     networks:
-      - express-network
+      - coolify
     healthcheck:
       test:
         [
@@ -37,5 +38,5 @@ services:
           memory: 256M
 
 networks:
-  express-network:
-    driver: bridge
+  coolify:
+    external: true
