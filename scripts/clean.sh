@@ -21,6 +21,7 @@ EXCLUDES=(
   ".cursor"
   ".env"
   ".env.production"
+  ".claude/settings.local.json"
 )
 
 EXCLUDE_ARGS=()
