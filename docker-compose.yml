@@ -6,15 +6,11 @@ services:
     image: express-starter-template:latest
     container_name: express-starter-template
     restart: unless-stopped
-    ports:
-      - '${PORT}:${PORT}'
     environment:
       - NODE_ENV=${NODE_ENV}
       - PORT=${PORT}
       - HOST=${HOST}
       - CORS_ORIGIN=${CORS_ORIGIN}
-    networks:
-      - express-network
     healthcheck:
       test:
         [
@@ -35,7 +31,3 @@ services:
         reservations:
           cpus: '0.5'
           memory: 256M
-
-networks:
-  express-network:
-    driver: bridge
