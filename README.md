@@ -154,7 +154,6 @@ The starter includes CRUD endpoints for a sample resource that demonstrates:
 - `pino` and `pino-http` - Structured logging library
 - `zod` - Data validation with built-in i18n support
 - `i18next`, `i18next-fs-backend`, `i18next-http-middleware` - Internationalization
-- `http-status` - Error library construction
 - `swagger-jsdoc` and `swagger-ui-express` - Swagger documentation and UI
 
 ### Development
