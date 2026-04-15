@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import { TFunction } from 'i18next';
-import httpStatus from 'http-status';
 import { BaseErrorData, BaseErrorIssue } from '../types';
 
 /**
@@ -13,172 +12,76 @@ export class BaseError extends Error {
   public readonly isOperational: boolean;
   public readonly data?: BaseErrorData;
 
-  constructor(
-    name: string,
-    statusCode: number,
-    message: string,
-    isOperational = true,
-    data?: BaseErrorData,
-  ) {
+  constructor(statusCode: number, message: string, isOperational = true, data?: BaseErrorData) {
     super(message);
 
-    /**
-     * Maintains proper stacktrace for where our error was thrown (only available on V8)
-     */
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, this.constructor);
-    }
-
-    this.name = name;
+    this.name = new.target.name;
     this.statusCode = statusCode;
     this.isOperational = isOperational;
     this.data = data;
 
     /**
+     * Maintains proper stacktrace for where our error was thrown (only available on V8)
+     */
+    Error.captureStackTrace?.(this, this.constructor);
+    /**
      * Set the prototype explicitly to maintain instanceof checks
      */
-    Object.setPrototypeOf(this, BaseError.prototype);
+    Object.setPrototypeOf(this, new.target.prototype);
   }
 }
 
 export class BadRequestError extends BaseError {
-  private static readonly statusCode = httpStatus.BAD_REQUEST;
-
   constructor(message: string, data?: BaseErrorData, isOperational?: boolean) {
-    super(
-      httpStatus[`${BadRequestError.statusCode}_NAME`],
-      BadRequestError.statusCode,
-      message,
-      isOperational,
-      data,
-    );
-
-    Object.setPrototypeOf(this, BadRequestError.prototype);
+    super(400, message, isOperational, data);
   }
 }
 
 export class UnauthorizedError extends BaseError {
-  private static readonly statusCode = httpStatus.UNAUTHORIZED;
-
   constructor(message: string, data?: BaseErrorData, isOperational?: boolean) {
-    super(
-      httpStatus[`${UnauthorizedError.statusCode}_NAME`],
-      UnauthorizedError.statusCode,
-      message,
-      isOperational,
-      data,
-    );
-
-    Object.setPrototypeOf(this, UnauthorizedError.prototype);
+    super(401, message, isOperational, data);
   }
 }
 
 export class ForbiddenError extends BaseError {
-  private static readonly statusCode = httpStatus.FORBIDDEN;
-
   constructor(message: string, data?: BaseErrorData, isOperational?: boolean) {
-    super(
-      httpStatus[`${ForbiddenError.statusCode}_NAME`],
-      ForbiddenError.statusCode,
-      message,
-      isOperational,
-      data,
-    );
-
-    Object.setPrototypeOf(this, ForbiddenError.prototype);
+    super(403, message, isOperational, data);
   }
 }
 
 export class NotFoundError extends BaseError {
-  private static readonly statusCode = httpStatus.NOT_FOUND;
-
   constructor(message: string, data?: BaseErrorData, isOperational?: boolean) {
-    super(
-      httpStatus[`${NotFoundError.statusCode}_NAME`],
-      NotFoundError.statusCode,
-      message,
-      isOperational,
-      data,
-    );
-
-    Object.setPrototypeOf(this, NotFoundError.prototype);
+    super(404, message, isOperational, data);
   }
 }
 
 export class ConflictError extends BaseError {
-  private static readonly statusCode = httpStatus.CONFLICT;
-
   constructor(message: string, data?: BaseErrorData, isOperational?: boolean) {
-    super(
-      httpStatus[`${ConflictError.statusCode}_NAME`],
-      ConflictError.statusCode,
-      message,
-      isOperational,
-      data,
-    );
-
-    Object.setPrototypeOf(this, ConflictError.prototype);
+    super(409, message, isOperational, data);
   }
 }
 
 export class UnprocessableEntityError extends BaseError {
-  private static readonly statusCode = httpStatus.UNPROCESSABLE_ENTITY;
-
   constructor(message: string, data?: BaseErrorData, isOperational?: boolean) {
-    super(
-      httpStatus[`${UnprocessableEntityError.statusCode}_NAME`],
-      UnprocessableEntityError.statusCode,
-      message,
-      isOperational,
-      data,
-    );
-
-    Object.setPrototypeOf(this, UnprocessableEntityError.prototype);
+    super(422, message, isOperational, data);
   }
 }
 
 export class TooManyRequestsError extends BaseError {
-  private static readonly statusCode = httpStatus.TOO_MANY_REQUESTS;
-
   constructor(message: string, data?: BaseErrorData, isOperational?: boolean) {
-    super(
-      httpStatus[`${TooManyRequestsError.statusCode}_NAME`],
-      TooManyRequestsError.statusCode,
-      message,
-      isOperational,
-      data,
-    );
-    Object.setPrototypeOf(this, TooManyRequestsError.prototype);
+    super(429, message, isOperational, data);
   }
 }
 
 export class InternalServerError extends BaseError {
-  private static readonly statusCode = httpStatus.INTERNAL_SERVER_ERROR;
-
   constructor(message: string, data?: BaseErrorData, isOperational?: boolean) {
-    super(
-      httpStatus[`${InternalServerError.statusCode}_NAME`],
-      InternalServerError.statusCode,
-      message,
-      isOperational,
-      data,
-    );
-    Object.setPrototypeOf(this, InternalServerError.prototype);
+    super(500, message, isOperational, data);
   }
 }
 
 export class ServiceUnavailableError extends BaseError {
-  private static readonly statusCode = httpStatus.SERVICE_UNAVAILABLE;
-
   constructor(message: string, data?: BaseErrorData, isOperational?: boolean) {
-    super(
-      httpStatus[`${ServiceUnavailableError.statusCode}_NAME`],
-      ServiceUnavailableError.statusCode,
-      message,
-      isOperational,
-      data,
-    );
-    Object.setPrototypeOf(this, ServiceUnavailableError.prototype);
+    super(503, message, isOperational, data);
   }
 }
 
