@@ -78,10 +78,10 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/api/samples', sampleRoutes);
 
-app.use(errorMiddleware);
-
 app.all(/.*/, (_req, res) => {
   res.status(404).end();
 });
+
+app.use(errorMiddleware);
 
 export { app };
