@@ -35,9 +35,9 @@
     "postinstall": "pnpm build"
   },
   "devDependencies": {
-    "@commitlint/cli": "^20.5.2",
-    "@commitlint/config-conventional": "^20.5.0",
-    "@commitlint/prompt-cli": "^20.5.2",
+    "@commitlint/cli": "^20.5.3",
+    "@commitlint/config-conventional": "^20.5.3",
+    "@commitlint/prompt-cli": "^20.5.3",
     "@lingual/i18n-check": "^0.9.4",
     "@types/compression": "^1.8.1",
     "@types/connect-timeout": "^1.9.0",
@@ -65,7 +65,7 @@
     "ts-jest": "^29.4.9",
     "tsc-files": "^1.1.4",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.59.0"
+    "typescript-eslint": "^8.59.1"
   },
   "dependencies": {
     "compression": "^1.8.1",
@@ -83,7 +83,7 @@
     "pino-http": "^11.0.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
-    "zod": "^4.3.6"
+    "zod": "^4.4.1"
   },
   "pnpm": {
     "overrides": {
