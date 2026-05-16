@@ -15,18 +15,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
 
-      - name: Enable Corepack
-        run: corepack enable
-
-      - name: Load & Cache Dependencies
-        uses: ./.github/actions/cached-deps
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Run Linting Rules
         run: pnpm lint
@@ -36,18 +37,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
 
-      - name: Enable Corepack
-        run: corepack enable
-
-      - name: Load & Cache Dependencies
-        uses: ./.github/actions/cached-deps
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Run Unit Tests
         run: pnpm test
@@ -65,18 +67,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
 
-      - name: Enable Corepack
-        run: corepack enable
-
-      - name: Load & Cache Dependencies
-        uses: ./.github/actions/cached-deps
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Build
         run: pnpm build
