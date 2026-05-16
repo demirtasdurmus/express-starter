@@ -1,10 +1,12 @@
 {
   "common": {
     "somethingWentWrong": "Something went wrong",
-    "validationFailed": "Validation failed"
+    "validationFailed": "Validation failed",
+    "notFound": "Not found"
   },
   "samples": {
-    "notFound": "Sample not found"
+    "notFound": "Sample not found",
+    "toManyRequests": "Too many requests"
   },
   "validation": {
     "sample": {

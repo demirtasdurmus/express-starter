@@ -1,9 +1,9 @@
-import { RequestHandler } from 'express';
-import { applyCacheHeaders, isStaticFile } from '../utils/cache';
+import { RequestHandler, Response } from 'express';
+import { isStaticFile } from '../utils/isStaticFile';
 import { env } from '../env';
 import { apiConfig } from '../config';
 
-export const cacheControlMiddleware: RequestHandler = (req, res, next) => {
+export const cacheControl: RequestHandler = (req, res, next) => {
   if (env.NODE_ENV !== 'production') {
     return next();
   }
@@ -69,3 +69,27 @@ export const cacheControlMiddleware: RequestHandler = (req, res, next) => {
   res.setHeader('Cache-Control', 'no-cache');
   next();
 };
+
+/**
+ * Override default Cache-Control for this response (used by cache-control middleware).
+ * Call before sending the response (e.g. in a controller).
+ *
+ * @param res - Express response object
+ * @param directives - Cache-Control value (e.g. 'no-cache', 'public, max-age=3600')
+ * @param vary - Optional Vary header (e.g. 'Accept-Encoding')
+ */
+export function setCacheControl(res: Response, directives: string, vary?: string): void {
+  res.locals.cacheControl = directives;
+  if (vary) res.locals.vary = vary;
+}
+
+/**
+ * Apply Cache-Control headers to a response.
+ * @param res - The response object.
+ * @param cacheControl - The Cache-Control value.
+ * @param vary - The Vary header value.
+ */
+export function applyCacheHeaders(res: Response, cacheControl: string, vary?: string): void {
+  res.setHeader('Cache-Control', cacheControl);
+  if (vary) res.setHeader('Vary', vary);
+}

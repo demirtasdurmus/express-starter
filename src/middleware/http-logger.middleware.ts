@@ -1,9 +1,9 @@
 import { pinoHttp } from 'pino-http';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { randomUUID } from 'crypto';
-import { logger } from '../utils/logger';
-import { isStaticFile } from '../utils/cache';
-import { apiConfig } from '../config';
+import { isStaticFile } from '../utils/isStaticFile';
+import { logger } from '../lib/logger';
+import { isProductionLike } from '../env';
 
 /**
  * HTTP logger middleware with request ID generation
@@ -15,7 +15,7 @@ export function httpLogger({
 }: {
   skipPaths?: string[];
 } = {}): RequestHandler {
-  return apiConfig.isProdLikeEnvironment
+  return isProductionLike
     ? pinoHttp({
         logger,
         genReqId: (_req: Request, res: Response) => {
