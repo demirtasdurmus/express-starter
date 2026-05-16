@@ -2,14 +2,19 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 
 /**
- * Minifies static assets (JS and CSS) for production builds
- * Only runs when NODE_ENV is 'production'
+ * Minifies static assets (JS and CSS) for production builds.
+ * Runs only when MINIFY_ASSETS=true.
  */
 
 const path = require('path');
-const { existsSync } = require('fs');
+const fs = require('fs');
+const { existsSync } = fs;
+const fsPromises = fs.promises;
+const postcss = require('postcss');
 const dotenv = require('dotenv');
+const cssnano = require('cssnano');
 const { execSync } = require('child_process');
+
 dotenv.config();
 
 const isProduction = process.env.MINIFY_ASSETS === 'true';
@@ -26,29 +31,34 @@ const nodeModulesBin = path.join(process.cwd(), 'node_modules', '.bin');
 
 console.log('🔨 Minifying static assets...');
 
-try {
-  // Minify JavaScript
-  if (existsSync(jsFile)) {
-    console.log('  → Minifying main.js...');
-    const terserPath = path.join(nodeModulesBin, 'terser');
-    execSync(`"${terserPath}" "${jsFile}" -o "${jsFile}" --compress --mangle`, {
-      stdio: 'inherit',
-    });
-    console.log('  ✅ main.js minified');
-  }
-
-  // Minify CSS
-  if (existsSync(cssFile)) {
-    console.log('  → Minifying style.css...');
-    const cssnanoPath = path.join(nodeModulesBin, 'cssnano');
-    execSync(`"${cssnanoPath}" "${cssFile}" "${cssFile}"`, {
-      stdio: 'inherit',
-    });
-    console.log('  ✅ style.css minified');
-  }
-
-  console.log('✨ Asset minification complete!');
-} catch (error) {
-  console.error('❌ Error minifying assets:', error.message);
-  process.exit(1);
+async function minifyCss(filePath) {
+  const css = await fsPromises.readFile(filePath, 'utf8');
+  const result = await postcss([cssnano()]).process(css, { from: filePath });
+  await fsPromises.writeFile(filePath, result.css, 'utf8');
 }
+
+(async () => {
+  try {
+    // Minify JavaScript
+    if (existsSync(jsFile)) {
+      console.log('  → Minifying main.js...');
+      const terserPath = path.join(nodeModulesBin, 'terser');
+      execSync(`"${terserPath}" "${jsFile}" -o "${jsFile}" --compress --mangle`, {
+        stdio: 'inherit',
+      });
+      console.log('  ✅ main.js minified');
+    }
+
+    // Minify CSS (PostCSS + cssnano; replaces deprecated cssnano-cli stack)
+    if (existsSync(cssFile)) {
+      console.log('  → Minifying style.css...');
+      await minifyCss(cssFile);
+      console.log('  ✅ style.css minified');
+    }
+
+    console.log('✨ Asset minification complete!');
+  } catch (error) {
+    console.error('❌ Error minifying assets:', error.message);
+    process.exit(1);
+  }
+})();
