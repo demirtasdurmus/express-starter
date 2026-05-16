@@ -167,7 +167,7 @@ The starter includes CRUD endpoints for a sample resource that demonstrates:
 - `supertest` - HTTP testing
 - `tsc-files` - TypeScript files checker
 - `terser` - JavaScript minifier
-- `cssnano-cli` - CSS minifier
+- `postcss` & `cssnano` - CSS minification (used by `scripts/minify-assets.js` when `MINIFY_ASSETS=true`)
 
 ## 🚀 Deployment
 
