@@ -16,7 +16,8 @@
     "ncurc",
     "pnpx",
     "timedout",
-    "toplevel"
+    "toplevel",
+    "unrs"
   ],
   "i18n-ally.localesPaths": ["locales"],
   "i18n-ally.keystyle": "nested"
