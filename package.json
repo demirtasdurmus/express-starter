@@ -63,7 +63,6 @@
     "supertest": "^7.2.2",
     "terser": "^5.47.1",
     "ts-jest": "^29.4.9",
-    "tsc-files": "^1.1.4",
     "tsx": "^4.22.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.3"
