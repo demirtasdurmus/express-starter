@@ -4,7 +4,6 @@ import express, { Application } from 'express';
 import cookieParser from 'cookie-parser';
 import timeout from 'connect-timeout';
 import compression from 'compression';
-import { swaggerSpec } from './utils/swagger';
 import { sampleRoutes } from './routes/sample.route';
 import { healthRoutes } from './routes/health.route';
 import { rateLimit } from './middleware/rate-limit.middleware';
@@ -14,6 +13,7 @@ import { helmet } from './middleware/helmet.middleware';
 import { errorHandler } from './middleware/error-handler.middleware';
 import { cors } from './middleware/cors.middleware';
 import { cacheControl } from './middleware/cache-control.middleware';
+import { swaggerSpec } from './lib/swagger';
 import { NotFoundError } from './lib/error';
 import { apiConfig } from './config';
 
