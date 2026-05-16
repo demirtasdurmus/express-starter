@@ -13,13 +13,21 @@ export const errorHandler: ErrorRequestHandler<unknown, ProblemDetail> = (err, r
 
   // A non awaiting promise is rejected, but the response has already been sent
   if (res.headersSent) {
-    logger.error({ ...problemDetail, requestId: req.headers['x-request-id'] }, error.message);
+    logger.error(
+      {
+        ...problemDetail,
+        stack: error.stack,
+        cause: error.cause,
+        requestId: req.headers['x-request-id'],
+      },
+      error.message,
+    );
 
     return;
   }
 
   // Store error in teh locals object for detailed logging
-  res.locals.error = { ...problemDetail };
+  res.locals.error = { ...problemDetail, stack: error.stack, cause: error.cause };
 
   // Translate user-facing fields
   problemDetail.detail = req.t(error.message as unknown as ParseKeys);

@@ -34,7 +34,7 @@ export function serializeError(err: unknown): BaseError {
   } else if (err instanceof Error) {
     return new InternalServerError(err.message, { cause: err });
   } else {
-    return new InternalServerError(String(err));
+    return new InternalServerError(String(err), { cause: err });
   }
 }
 
