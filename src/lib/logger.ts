@@ -1,5 +1,5 @@
 import pino from 'pino';
-import { env } from '../env';
+import { env, isProductionLike } from '../env';
 import { apiConfig } from '../config';
 
 /**
@@ -8,8 +8,8 @@ import { apiConfig } from '../config';
  */
 export const logger = pino({
   enabled: env.NODE_ENV !== 'test',
-  level: apiConfig.isProdLikeEnvironment ? 'info' : 'debug',
-  base: apiConfig.isProdLikeEnvironment
+  level: isProductionLike ? 'info' : 'debug',
+  base: isProductionLike
     ? {
         service: apiConfig.title,
         env: env.NODE_ENV,
@@ -17,7 +17,7 @@ export const logger = pino({
       }
     : {},
   timestamp: pino.stdTimeFunctions.isoTime,
-  transport: apiConfig.isProdLikeEnvironment
+  transport: isProductionLike
     ? undefined
     : {
         target: 'pino-pretty',

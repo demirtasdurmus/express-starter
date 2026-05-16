@@ -8,21 +8,22 @@ export type TPaginationMeta = {
   totalCount: number;
 };
 
-export type BaseErrorIssue = {
-  field?: string;
-  detail?: string;
-};
+export interface ProblemDetail {
+  type: string;
+  status: number;
+  title: string;
+  detail: string;
+  instance?: string;
+  [key: string]: unknown;
+}
 
-export type BaseErrorData = {
-  issues?: BaseErrorIssue[];
-  stack?: string;
-  originalError?: unknown;
-};
+export interface BaseErrorOptions {
+  title?: string;
+  extensions?: Record<string, unknown>;
+  cause?: unknown;
+}
 
-export type ErrorResponse = {
-  name: string;
+export interface FieldError {
+  field: string;
   message: string;
-  issues?: BaseErrorData['issues'];
-  stack?: BaseErrorData['stack'];
-  originalError?: BaseErrorData['originalError'];
-};
+}

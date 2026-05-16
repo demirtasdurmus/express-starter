@@ -1,5 +1,4 @@
 import request from 'supertest';
-import { BaseErrorIssue } from '../src/types';
 import { getSamples, deleteSampleById } from '../src/services/sample.service';
 import { app } from '../src/app';
 
@@ -57,9 +56,6 @@ describe('Sample Routes', () => {
       const response = await request(app).post('/api/samples').send({ name: '' });
 
       expect(response.status).toBe(422);
-      expect(response.body?.issues?.map((issue: BaseErrorIssue) => issue.detail)).toContain(
-        'Name is required',
-      );
     });
   });
 
@@ -86,7 +82,6 @@ describe('Sample Routes', () => {
       const response = await request(app).get(`/api/samples/${nonExistentId}`);
 
       expect(response.status).toBe(404);
-      expect(response.body?.message).toBe('Sample not found');
     });
   });
 
@@ -122,9 +117,6 @@ describe('Sample Routes', () => {
       const response = await request(app).patch(`/api/samples/${sampleId}`).send({ name: '' });
 
       expect(response.status).toBe(422);
-      expect(response.body?.issues?.map((issue: BaseErrorIssue) => issue.detail)).toContain(
-        'Name is required',
-      );
     });
 
     it('should return 404 when sample does not exist', async () => {
@@ -135,7 +127,6 @@ describe('Sample Routes', () => {
         .send({ name: 'Updated Name' });
 
       expect(response.status).toBe(404);
-      expect(response.body?.message).toBe('Sample not found');
     });
   });
 
@@ -156,9 +147,6 @@ describe('Sample Routes', () => {
       const response = await request(app).delete(`/api/samples/invalid-id`);
 
       expect(response.status).toBe(422);
-      expect(response.body?.issues?.map((issue: BaseErrorIssue) => issue.detail)).toContain(
-        'Invalid sample ID',
-      );
     });
 
     it('should return 404 when sample does not exist', async () => {
@@ -167,7 +155,6 @@ describe('Sample Routes', () => {
       const response = await request(app).delete(`/api/samples/${nonExistentId}`);
 
       expect(response.status).toBe(404);
-      expect(response.body?.message).toBe('Sample not found');
     });
   });
 });

@@ -1,12 +1,13 @@
-import rateLimit from 'express-rate-limit';
-import { TooManyRequestsError } from '../utils/error';
+import { ParseKeys } from 'i18next';
+import expressRateLimit from 'express-rate-limit';
+import { TooManyRequestsError } from '../lib/error';
 import { apiConfig } from '../config';
 
-export const apiRateLimiter = rateLimit({
+export const rateLimit = expressRateLimit({
   ...apiConfig.apiRateLimit,
   standardHeaders: true,
   legacyHeaders: false,
   handler: (_req, _res, _next) => {
-    throw new TooManyRequestsError('Too many requests from this IP, please try again later.');
+    throw new TooManyRequestsError('samples.toManyRequests' satisfies ParseKeys);
   },
 });

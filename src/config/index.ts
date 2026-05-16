@@ -1,12 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { TLanguage } from '../types';
-import { env } from '../env';
+import { env, isProductionLike } from '../env';
 
 export const apiConfig = {
   title: 'Express Starter API',
   version: JSON.parse(readFileSync('package.json', 'utf8'))?.version || '1.0.0',
   requestBodyLimit: '10mb',
-  isProdLikeEnvironment: env.NODE_ENV === 'production',
   /**
    * Trust proxy configuration for correctly identifying client IPs
    * - Number: Specifies exact number of proxy hops (e.g., 1 for nginx, 2 for ALB + CloudFront)
@@ -17,12 +16,12 @@ export const apiConfig = {
   trustProxy: env.TRUST_PROXY_HOPS,
   apiRateLimit: {
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: env.NODE_ENV === 'production' ? 100 : 1000,
+    max: isProductionLike ? 100 : 1000,
   },
   cors: {
     allowedOrigins: env.CORS_ORIGIN
       ? env.CORS_ORIGIN?.split(',').map((o) => o.trim())
-      : env.NODE_ENV === 'production'
+      : isProductionLike
         ? []
         : [`http://${env.HOST}:${env.PORT}`],
     allowedHeaders: ['Content-Type', 'Authorization'],

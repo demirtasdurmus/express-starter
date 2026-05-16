@@ -1,7 +1,7 @@
-import cors from 'cors';
+import corsMiddleware from 'cors';
 import { apiConfig } from '../config';
 
-export const corsMiddleware = cors({
+export const cors = corsMiddleware({
   origin: (origin, callback) => {
     /**
      * Allow requests with no origin (like mobile apps, curl, Postman)

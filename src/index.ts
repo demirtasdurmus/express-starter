@@ -1,6 +1,6 @@
 import { createServer } from 'http';
 import { shutdownGracefully } from './utils/shutdown-gracefully';
-import { logger } from './utils/logger';
+import { logger } from './lib/logger';
 import { env } from './env';
 import { apiConfig } from './config';
 import { app } from './app';

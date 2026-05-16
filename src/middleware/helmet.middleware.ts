@@ -1,6 +1,6 @@
-import helmet from 'helmet';
+import helmetMiddleware from 'helmet';
 
-export const helmetMiddleware = helmet({
+export const helmet = helmetMiddleware({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],

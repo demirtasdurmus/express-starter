@@ -1,5 +1,5 @@
 import swaggerJsdoc from 'swagger-jsdoc';
-import { env } from '../env';
+import { env, isProductionLike } from '../env';
 import { apiConfig } from '../config';
 
 const devServer = {
@@ -18,7 +18,7 @@ export const swaggerSpec = swaggerJsdoc({
       version: apiConfig.version,
       description: `API documentation for ${apiConfig.title}`,
     },
-    servers: [apiConfig.isProdLikeEnvironment ? productionServer : devServer],
+    servers: [isProductionLike ? productionServer : devServer],
   },
   apis: ['./dist/routes/*.js', './dist/controllers/*.js'],
 });

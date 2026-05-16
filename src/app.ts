@@ -1,4 +1,5 @@
 import swaggerUi from 'swagger-ui-express';
+import { ParseKeys } from 'i18next';
 import express, { Application } from 'express';
 import cookieParser from 'cookie-parser';
 import timeout from 'connect-timeout';
@@ -6,20 +7,18 @@ import compression from 'compression';
 import { swaggerSpec } from './utils/swagger';
 import { sampleRoutes } from './routes/sample.route';
 import { healthRoutes } from './routes/health.route';
-import { apiRateLimiter } from './middleware/rate-limit.middleware';
-import { i18nMiddleware } from './middleware/i18n.middleware';
+import { rateLimit } from './middleware/rate-limit.middleware';
+import { i18n } from './middleware/i18n.middleware';
 import { httpLogger } from './middleware/http-logger.middleware';
-import { helmetMiddleware } from './middleware/helmet.middleware';
-import { errorMiddleware } from './middleware/error.middleware';
-import { corsMiddleware } from './middleware/cors.middleware';
-import { cacheControlMiddleware } from './middleware/cache-control.middleware';
+import { helmet } from './middleware/helmet.middleware';
+import { errorHandler } from './middleware/error-handler.middleware';
+import { cors } from './middleware/cors.middleware';
+import { cacheControl } from './middleware/cache-control.middleware';
+import { NotFoundError } from './lib/error';
 import { apiConfig } from './config';
 
 const app: Application = express();
 
-/**
- * Middleware execution order should be respected
- */
 app.disable('x-powered-by');
 
 /**
@@ -40,8 +39,8 @@ app.set('trust proxy', apiConfig.trustProxy);
  */
 app.set('etag', 'weak');
 
-app.use(helmetMiddleware);
-app.use(corsMiddleware);
+app.use(helmet);
+app.use(cors);
 
 /**
  * @see https://expressjs.com/en/resources/middleware/timeout.html
@@ -55,14 +54,12 @@ app.use(express.urlencoded({ extended: true, limit: apiConfig.requestBodyLimit }
 
 app.use(cookieParser());
 
-app.use(i18nMiddleware);
+app.use(i18n);
 
 app.use(compression());
 
-/**
- * Must be after compression to set Vary: Accept-Encoding
- */
-app.use(cacheControlMiddleware);
+// Must be after compression to set Vary: Accept-Encoding
+app.use(cacheControl);
 
 app.use(
   express.static('public', {
@@ -72,16 +69,18 @@ app.use(
 
 app.use('/health', healthRoutes);
 
-app.use('/api', apiRateLimiter);
+app.use('/api', rateLimit);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/api/samples', sampleRoutes);
 
-app.all(/.*/, (_req, res) => {
-  res.status(404).end();
+app.all('/*splat', (req, _res, _next) => {
+  throw new NotFoundError('common.notFound' satisfies ParseKeys, {
+    extensions: { method: req.method },
+  });
 });
 
-app.use(errorMiddleware);
+app.use(errorHandler);
 
 export { app };

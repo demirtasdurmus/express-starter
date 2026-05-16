@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ParseKeys } from 'i18next';
 
 /**
  * Note: Custom error messages use i18n translation keys.
@@ -6,7 +7,7 @@ import { z } from 'zod';
  * Keys must exist in locales/{lang}/translation.json
  */
 export const sampleIdParamsSchema = z.object({
-  id: z.uuid('validation.sample.invalidId'),
+  id: z.uuid('validation.sample.invalidId' satisfies ParseKeys),
 });
 
 export const getSamplesQuerySchema = z.object({
@@ -15,11 +16,11 @@ export const getSamplesQuerySchema = z.object({
 });
 
 export const createSampleRequestBodySchema = z.object({
-  name: z.string().min(1, 'validation.sample.nameRequired'),
+  name: z.string().min(1, 'validation.sample.nameRequired' satisfies ParseKeys),
 });
 
 export const updateSampleRequestBodySchema = z.object({
-  name: z.string().min(1, 'validation.sample.nameRequired'),
+  name: z.string().min(1, 'validation.sample.nameRequired' satisfies ParseKeys),
 });
 
 export type TSampleIdParams = z.infer<typeof sampleIdParamsSchema>;

@@ -1,6 +1,6 @@
+import { ParseKeys } from 'i18next';
 import { RequestHandler } from 'express';
 import { getPaginationMeta } from '../utils/get-pagination-meta';
-import { NotFoundError } from '../utils/error';
 import { TGetSamplesResponse, TSample } from '../types/sample';
 import {
   createSample,
@@ -15,6 +15,7 @@ import {
   TSampleIdParams,
   TUpdateSampleRequestBody,
 } from '../schemas/sample.schema';
+import { NotFoundError } from '../lib/error';
 
 export const getSamplesController: RequestHandler<unknown, TGetSamplesResponse> = (req, res) => {
   const query = req.query as TGetSamplesQuery;
@@ -42,7 +43,7 @@ export const getSampleByIdController: RequestHandler<TSampleIdParams, TSample> =
   const sample = getSampleById(req.params.id);
 
   if (!sample) {
-    throw new NotFoundError(req.t('samples.notFound'));
+    throw new NotFoundError('samples.notFound' satisfies ParseKeys);
   }
 
   res.status(200).json(sample);

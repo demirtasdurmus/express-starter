@@ -1,8 +1,9 @@
 import { z } from 'zod';
+import { ParseKeys } from 'i18next';
 import { RequestHandler } from 'express';
 import { parseWithZod } from '../utils/parse-with-zod';
-import { translateAndTransformZodIssue, UnprocessableEntityError } from '../utils/error';
 import { TValidationMap } from '../types';
+import { transformZodIssueToFieldError, UnprocessableEntityError } from '../lib/error';
 
 type TValidateOptions<T> = {
   validationMap: TValidationMap;
@@ -18,9 +19,10 @@ export function validate<T>({ validationMap, schema }: TValidateOptions<T>): Req
       object: req[validationMap],
       schema,
       onError: (error) => {
-        throw new UnprocessableEntityError(req.t('common.validationFailed'), {
-          issues: error.issues.map((issue) => translateAndTransformZodIssue(issue, req.t)),
-        });
+        throw new UnprocessableEntityError(
+          'common.validationFailed' satisfies ParseKeys,
+          error.issues.map((issue) => transformZodIssueToFieldError(issue)),
+        );
       },
       onSuccess: (data) => {
         if (validationMap === 'query') {

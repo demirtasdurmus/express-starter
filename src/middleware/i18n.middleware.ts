@@ -52,9 +52,7 @@ i18next
  * i18n middleware that attaches translation function to request
  * This middleware must be placed after cookie-parser and before routes
  */
-export const i18nMiddleware = i18nextHttpMiddleware.handle(i18next, {
+export const i18n = i18nextHttpMiddleware.handle(i18next, {
   ignoreRoutes: ['/health', '/api-docs'],
   removeLngFromUrl: false,
 });
-
-export { i18next };

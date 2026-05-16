@@ -1,10 +1,12 @@
 {
   "common": {
     "somethingWentWrong": "Bir şeyler yanlış gitti",
-    "validationFailed": "Geçersiz veri"
+    "validationFailed": "Geçersiz veri",
+    "notFound": "Bulunamadı"
   },
   "samples": {
-    "notFound": "Örnek bulunamadı"
+    "notFound": "Örnek bulunamadı",
+    "toManyRequests": "Çok fazla istek"
   },
   "validation": {
     "sample": {
