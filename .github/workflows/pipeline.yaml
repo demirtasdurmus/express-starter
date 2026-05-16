@@ -8,7 +8,7 @@ on:
 
 env:
   PORT: 3000
-  NODE_VERSION: 22
+  NODE_VERSION: 24
 
 jobs:
   Linting:

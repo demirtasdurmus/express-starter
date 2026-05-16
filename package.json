@@ -10,7 +10,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=24.0.0"
   },
   "main": "dist/index.js",
   "scripts": {
@@ -45,7 +45,7 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
-    "@types/node": "^22.19.19",
+    "@types/node": "^24.12.4",
     "@types/supertest": "^6.0.3",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",

@@ -58,7 +58,7 @@ coverage/           # Coverage reports
 
 ### Prerequisites
 
-- Node.js (v22 or higher)
+- Node.js (v24 or higher)
 - pnpm
 
 ### Installation
