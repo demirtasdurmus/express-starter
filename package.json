@@ -67,7 +67,7 @@
     "ts-jest": "^29.4.9",
     "tsc-files": "^1.1.4",
     "typescript": "^6.0.3",
-    "typescript-eslint": "8.59.3"
+    "typescript-eslint": "^8.59.3"
   },
   "dependencies": {
     "compression": "^1.8.1",
