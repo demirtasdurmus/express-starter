@@ -11,13 +11,17 @@ export const errorHandler: ErrorRequestHandler<unknown, ProblemDetail> = (err, r
 
   const problemDetail = error.toProblemDetail(instance);
 
+  const loggableObject = {
+    ...problemDetail,
+    stack: error.stack,
+    cause: error.cause,
+  };
+
   // A non awaiting promise is rejected, but the response has already been sent
   if (res.headersSent) {
     logger.error(
       {
-        ...problemDetail,
-        stack: error.stack,
-        cause: error.cause,
+        ...loggableObject,
         requestId: req.headers['x-request-id'],
       },
       error.message,
@@ -27,7 +31,7 @@ export const errorHandler: ErrorRequestHandler<unknown, ProblemDetail> = (err, r
   }
 
   // Store error in teh locals object for detailed logging
-  res.locals.error = { ...problemDetail, stack: error.stack, cause: error.cause };
+  res.locals.error = loggableObject;
 
   // Translate user-facing fields
   problemDetail.detail = req.t(error.message as unknown as ParseKeys);

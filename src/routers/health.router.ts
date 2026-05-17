@@ -3,4 +3,4 @@ import { getHealthController } from '../controllers/health.controller';
 
 const router = Router().get('/', getHealthController);
 
-export { router as healthRoutes };
+export { router as healthRouter };

@@ -4,8 +4,8 @@ import express, { Application } from 'express';
 import cookieParser from 'cookie-parser';
 import timeout from 'connect-timeout';
 import compression from 'compression';
-import { sampleRoutes } from './routes/sample.route';
-import { healthRoutes } from './routes/health.route';
+import { sampleRouter } from './routers/sample.router';
+import { healthRouter } from './routers/health.router';
 import { rateLimit } from './middleware/rate-limit.middleware';
 import { i18n } from './middleware/i18n.middleware';
 import { httpLogger } from './middleware/http-logger.middleware';
@@ -67,13 +67,13 @@ app.use(
   }),
 );
 
-app.use('/health', healthRoutes);
+app.use('/health', healthRouter);
 
 app.use('/api', rateLimit);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use('/api/samples', sampleRoutes);
+app.use('/api/samples', sampleRouter);
 
 app.all('/*splat', (req, _res, _next) => {
   throw new NotFoundError('common.notFound' satisfies ParseKeys, {
