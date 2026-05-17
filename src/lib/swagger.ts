@@ -20,5 +20,10 @@ export const swaggerSpec = swaggerJsdoc({
     },
     servers: [isProductionLike ? productionServer : devServer],
   },
-  apis: ['./dist/routes/*.js', './dist/controllers/*.js'],
+  apis: [
+    './dist/routers/*.js',
+    './dist/controllers/*.js',
+    './src/routers/*.ts',
+    './src/controllers/*.ts',
+  ],
 });
