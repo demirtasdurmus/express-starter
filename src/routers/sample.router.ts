@@ -232,4 +232,4 @@ router.delete(
   deleteSampleByIdController,
 );
 
-export { router as sampleRoutes };
+export { router as sampleRouter };
