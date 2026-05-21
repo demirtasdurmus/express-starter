@@ -19,6 +19,7 @@ A modern, production-ready Express.js starter template with TypeScript, comprehe
 - **Request ID** - Automatic request ID generation and tracking via `X-Request-ID` header
 - **API Documentation** - Swagger/OpenAPI documentation with interactive UI at `/api-docs`
 - **Docker Support** - Production-ready Dockerfile and docker-compose.yml for easy containerization
+- **Bundler Support** - Optional `tsup`-based build for monorepo/workspace setups alongside the default `tsc` workflow
 - **Testing** - Jest with unit and integration test configurations
 - **Code Quality** - ESLint, Prettier, and Husky for code formatting and linting
 - **Development** - Hot reload with TypeScript watch mode
@@ -50,7 +51,8 @@ public/             # Static files
   └── index.html    # HTML file
 scripts/            # Build and utility scripts
 __tests__/          # Integration tests
-dist/               # Compiled JavaScript output
+dist/               # Compiled JavaScript output (tsc)
+dist-bundle/        # Bundled output (tsup)
 coverage/           # Coverage reports
 ```
 
@@ -133,6 +135,31 @@ The starter includes CRUD endpoints for a sample resource that demonstrates:
 - Error handling
 - Swagger/OpenAPI documentation
 
+## 📦 Bundle Workflow (tsup)
+
+An optional `tsup`-based workflow is available alongside the default `tsc` build — useful for monorepo/workspace setups where sharing internal packages across apps is common.
+
+|             | `tsc`                 | `tsup`                                  |
+| ----------- | --------------------- | --------------------------------------- |
+| Output      | `dist/`               | `dist-bundle/`                          |
+| Format      | CJS                   | ESM + CJS                               |
+| Monorepo DX | Manual package builds | Internal packages bundled automatically |
+
+```bash
+# Development
+pnpm dev:bundle       # watch mode + runs bundled output
+
+# Production
+pnpm build:bundle     # tsup build (MINIFY_ASSETS=true to also minify static assets)
+pnpm start:bundle     # starts dist-bundle/index.mjs
+```
+
+#### Docker (bundle)
+
+```bash
+docker build -f Dockerfile.bundle -t express-starter-bundle .
+```
+
 ## 🔧 Configuration
 
 - **TypeScript**: Configured in `tsconfig.json` with strict settings
@@ -168,6 +195,7 @@ The starter includes CRUD endpoints for a sample resource that demonstrates:
 - `tsc-files` - TypeScript files checker
 - `terser` - JavaScript minifier
 - `postcss` & `cssnano` - CSS minification (used by `scripts/minify-assets.js` when `MINIFY_ASSETS=true`)
+- `tsup` - Bundler for the optional bundle workflow
 
 ## 🚀 Deployment
 
