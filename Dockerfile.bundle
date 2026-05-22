@@ -38,4 +38,4 @@ COPY --from=builder --chown=nodejs:nodejs /app/public ./public
 
 USER nodejs
 
-CMD ["pm2-runtime", "start", "dist-bundle/index.js", "--name", "express-starter-template"]
+CMD ["pm2-runtime", "start", "dist-bundle/index.cjs", "--name", "express-starter-template"]
