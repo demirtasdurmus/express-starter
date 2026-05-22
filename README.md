@@ -98,7 +98,6 @@ pnpm dev:bundle       # watch mode + runs bundled output
 
 # Production
 pnpm build:bundle     # tsdown build (MINIFY_ASSETS=true to also minify static assets)
-pnpm start:bundle     # starts dist-bundle/index.cjs
 ```
 
 ### Adding New Routes

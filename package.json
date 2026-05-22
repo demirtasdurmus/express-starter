@@ -20,7 +20,6 @@
     "build": "tsc --pretty -p tsconfig.build.json && node scripts/minify-assets.js",
     "build:bundle": "tsdown && node scripts/minify-assets.js",
     "start": "node --enable-source-maps dist/index.js",
-    "start:bundle": "node dist-bundle/index.cjs",
     "test": "jest",
     "test:watch": "jest --watchAll",
     "test:int": "jest --config ./jest-int.config.ts",
