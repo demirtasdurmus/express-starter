@@ -43,7 +43,7 @@ pnpm dev
 - **Request ID** - Automatic request ID generation and tracking via `X-Request-ID` header
 - **API Documentation** - Swagger/OpenAPI documentation with interactive UI at `/api-docs`
 - **Docker Support** - Production-ready Dockerfile and docker-compose.yml for easy containerization
-- **Bundler Support** - Optional `tsup`-based build for monorepo/workspace setups alongside the default `tsc` workflow
+- **Bundler Support** - Optional [tsdown](https://github.com/rolldown/tsdown)-based build for monorepo/workspace setups alongside the default `tsc` workflow
 - **Testing** - Jest with unit and integration test configurations
 - **Code Quality** - ESLint, Prettier, and Husky for code formatting and linting
 - **Development** - Hot reload with TypeScript watch mode
@@ -76,20 +76,20 @@ public/             # Static files
 scripts/            # Build and utility scripts
 __tests__/          # Integration tests
 dist/               # Compiled JavaScript output (tsc)
-dist-bundle/        # Bundled output (tsup)
+dist-bundle/        # Bundled output (tsdown)
 coverage/           # Coverage reports
 ```
 
 ## 🏗️ Development
 
-### 📦 Bundle Workflow (tsup)
+### 📦 Bundle Workflow (tsdown)
 
-An optional `tsup`-based workflow is available alongside the default `tsc` build — useful for monorepo/workspace setups where sharing internal packages across apps is common.
+An optional [`tsdown`](https://github.com/rolldown/tsdown)-based workflow is available alongside the default `tsc` build — useful for monorepo/workspace setups where sharing internal packages across apps is common.
 
-|             | `tsc`                 | `tsup`                                  |
+|             | `tsc`                 | `tsdown`                                |
 | ----------- | --------------------- | --------------------------------------- |
 | Output      | `dist/`               | `dist-bundle/`                          |
-| Format      | CJS                   | CJS(Can be configured to ESM if needed) |
+| Format      | CJS                   | CJS (configure `format` for ESM, etc.)  |
 | Monorepo DX | Manual package builds | Internal packages bundled automatically |
 
 ```bash
@@ -97,7 +97,7 @@ An optional `tsup`-based workflow is available alongside the default `tsc` build
 pnpm dev:bundle       # watch mode + runs bundled output
 
 # Production
-pnpm build:bundle     # tsup build (MINIFY_ASSETS=true to also minify static assets)
+pnpm build:bundle     # tsdown build (MINIFY_ASSETS=true to also minify static assets)
 pnpm start:bundle     # starts dist-bundle/index.js
 ```
 
