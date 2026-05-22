@@ -2,6 +2,30 @@
 
 A modern, production-ready Express.js starter template with TypeScript, comprehensive testing, and development tooling.
 
+## 🛠️ Getting Started
+
+### Prerequisites
+
+- Node.js (v24 or higher)
+- pnpm
+
+### Installation
+
+```bash
+# Clone the repository
+git clone git@github.com:demirtasdurmus/express-starter.git
+cd express-starter
+
+# Install dependencies
+pnpm install
+
+# Create .env file and update the values if needed
+cp .env.example .env
+
+# Start the development server with hot reload
+pnpm dev
+```
+
 ## 🚀 Features
 
 - **TypeScript** - Full TypeScript support with strict configuration
@@ -35,7 +59,7 @@ src/
 ├── controllers/     # Request handlers
 ├── env/             # Environment variables
 ├── middleware/      # Custom middleware
-├── routes/          # Route definitions
+├── routers/         # Router definitions
 ├── schemas/         # Zod validation schemas
 ├── services/        # Business logic
 ├── types/           # TypeScript type definitions
@@ -56,29 +80,34 @@ dist-bundle/        # Bundled output (tsup)
 coverage/           # Coverage reports
 ```
 
-## 🛠️ Getting Started
+## 🏗️ Development
 
-### Prerequisites
+### 📦 Bundle Workflow (tsup)
 
-- Node.js (v24 or higher)
-- pnpm
+An optional `tsup`-based workflow is available alongside the default `tsc` build — useful for monorepo/workspace setups where sharing internal packages across apps is common.
 
-### Installation
+|             | `tsc`                 | `tsup`                                  |
+| ----------- | --------------------- | --------------------------------------- |
+| Output      | `dist/`               | `dist-bundle/`                          |
+| Format      | CJS                   | CJS(Can be configured to ESM if needed) |
+| Monorepo DX | Manual package builds | Internal packages bundled automatically |
 
 ```bash
-# Clone the repository
-git clone git@github.com:demirtasdurmus/express-starter.git
-cd express-starter
+# Development
+pnpm dev:bundle       # watch mode + runs bundled output
 
-# Install dependencies
-pnpm install
-
-# Create .env file and update the values if needed
-cp .env.example .env
-
-# Start the development server with hot reload
-pnpm dev
+# Production
+pnpm build:bundle     # tsup build (MINIFY_ASSETS=true to also minify static assets)
+pnpm start:bundle     # starts dist-bundle/index.js
 ```
+
+### Adding New Routes
+
+1. Create a controller in `src/controllers/`
+2. Create a service in `src/services/` (if needed)
+3. Create Zod validation schemas in `src/schemas/` for request validation
+4. Define routes in `src/routes/` with validation middleware and OpenAPI specification
+5. Import and use in `src/app.ts`
 
 ## 🧪 Testing
 
@@ -98,104 +127,6 @@ pnpm test:int
 # Generate coverage report
 pnpm test:coverage
 ```
-
-## 🏗️ Development
-
-### Adding New Routes
-
-1. Create a controller in `src/controllers/`
-2. Create a service in `src/services/` (if needed)
-3. Create Zod validation schemas in `src/schemas/` for request validation
-4. Define routes in `src/routes/` with validation middleware and OpenAPI specification
-5. Import and use in `src/app.ts`
-
-#### Request Validation
-
-The starter includes a reusable validation middleware that uses Zod schemas:
-
-```typescript
-import { createSampleSchema } from '../schemas/sample';
-import { validate } from '../middleware/validate.middleware';
-
-router.post('/', validate({ validationMap: 'body', schema: createSampleSchema }), createController);
-```
-
-The `validate` middleware supports:
-
-- `body` - Validates request body
-- `params` - Validates URL parameters
-- `query` - Validates query string parameters
-
-### Example API Endpoint
-
-The starter includes CRUD endpoints for a sample resource that demonstrates:
-
-- MVC pattern (Model-View-Controller)
-- Request validation with Zod schemas
-- Error handling
-- Swagger/OpenAPI documentation
-
-## 📦 Bundle Workflow (tsup)
-
-An optional `tsup`-based workflow is available alongside the default `tsc` build — useful for monorepo/workspace setups where sharing internal packages across apps is common.
-
-|             | `tsc`                 | `tsup`                                  |
-| ----------- | --------------------- | --------------------------------------- |
-| Output      | `dist/`               | `dist-bundle/`                          |
-| Format      | CJS                   | ESM + CJS                               |
-| Monorepo DX | Manual package builds | Internal packages bundled automatically |
-
-```bash
-# Development
-pnpm dev:bundle       # watch mode + runs bundled output
-
-# Production
-pnpm build:bundle     # tsup build (MINIFY_ASSETS=true to also minify static assets)
-pnpm start:bundle     # starts dist-bundle/index.mjs
-```
-
-#### Docker (bundle)
-
-```bash
-docker build -f Dockerfile.bundle -t express-starter-bundle .
-```
-
-## 🔧 Configuration
-
-- **TypeScript**: Configured in `tsconfig.json` with strict settings
-- **ESLint**: Code linting rules in `eslint.config.mts`
-- **Prettier**: Code formatting in `.prettierrc`
-- **Jest**: Testing configuration in `jest.config.ts` and `jest-int.config.ts`
-
-## 📦 Dependencies
-
-### Production
-
-- `express` - Web framework
-- `dotenv` - Load env variables
-- `helmet` - Security headers middleware
-- `cors` - Cross-Origin Resource Sharing middleware
-- `express-rate-limit` - Rate limiting middleware
-- `compression` - Response compression middleware
-- `cookie-parser` - Parse cookies for language persistence
-- `pino` and `pino-http` - Structured logging library
-- `zod` - Data validation with built-in i18n support
-- `i18next`, `i18next-fs-backend`, `i18next-http-middleware` - Internationalization
-- `swagger-jsdoc` and `swagger-ui-express` - Swagger documentation and UI
-
-### Development
-
-- `typescript` - TypeScript compiler
-- `jest` - Testing framework
-- `eslint` - Code linting
-- `prettier` - Code formatting
-- `pino-pretty` - Pretty printing for Pino logs in development
-- `husky` - Git hooks
-- `supertest` - HTTP testing
-- `tsc-files` - TypeScript files checker
-- `terser` - JavaScript minifier
-- `postcss` & `cssnano` - CSS minification (used by `scripts/minify-assets.js` when `MINIFY_ASSETS=true`)
-- `tsup` - Bundler for the optional bundle workflow
 
 ## 🚀 Deployment
 
