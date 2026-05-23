@@ -134,7 +134,7 @@ pnpm test:coverage
 1. Build the project: `pnpm build` (static assets are minified in production builds)
 2. Set environment variables (especially `NODE_ENV=production` and `CORS_ORIGIN`)
 3. Start the server: `pnpm start`
-4. The server will run on the port specified in the `PORT` environment variable (default: 8080)
+4. The server will run on the port specified in the `PORT` environment variable (default: 9000)
 
 ### Docker Deployment
 
@@ -146,7 +146,7 @@ The project includes production-ready Docker configuration:
 
    ```bash
    NODE_ENV=production
-   PORT=8080
+   PORT=9000
    HOST=0.0.0.0
    CORS_ORIGIN=*
    ```
@@ -160,7 +160,9 @@ The project includes production-ready Docker configuration:
 3. View logs:
 
    ```bash
-   docker logs express-starter-template
+   docker logs <container_name> -f
+    # or
+   docker-compose logs -f
    ```
 
 4. Stop the container:
@@ -173,16 +175,16 @@ The project includes production-ready Docker configuration:
 1. Build the image:
 
    ```bash
-   docker build -t express-starter-template .
+   docker build -t express-starter .
    ```
 
 2. Run the container:
    ```bash
    docker run -d \
-     --name express-starter-template \
-     -p 8080:8080 \
+     --name express-starter \
+     -p 9000:9000 \
      -e NODE_ENV=production \
-     -e PORT=8080 \
+     -e PORT=9000 \
      -e HOST=0.0.0.0 \
      -e CORS_ORIGIN=* \
      express-starter-template
