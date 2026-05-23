@@ -1,4 +1,4 @@
-name: Quality Checking, Testing, Building
+name: Pipeline
 
 on:
   pull_request:
