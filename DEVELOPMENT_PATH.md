@@ -133,6 +133,7 @@ This document tracks all planned improvements and enhancements for the Express S
   - Resource limits and restart policies
 - **Notes**:
   - Uses Alpine Linux for smaller image size
+  - Dockerfiles activate pnpm via Corepack with the **same patch version as `package.json` → `packageManager`**
   - Swagger documentation works in production (uses dist/ paths)
   - Asset minification runs automatically when NODE_ENV=production
   - Health check endpoint configured for container orchestration

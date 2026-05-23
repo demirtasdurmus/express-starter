@@ -1,9 +1,10 @@
 ########################################################
 # Build stage
+# Keep Corepack's pnpm version aligned with package.json "packageManager".
 ########################################################
 FROM node:24-alpine AS builder
 
-RUN corepack enable && corepack prepare pnpm@11.1.2 --activate
+RUN corepack enable && corepack prepare pnpm@11.2.2 --activate
 
 WORKDIR /app
 
@@ -19,7 +20,7 @@ RUN MINIFY_ASSETS=true pnpm build
 ########################################################
 FROM node:24-alpine
 
-RUN corepack enable && corepack prepare pnpm@11.1.2 --activate
+RUN corepack enable && corepack prepare pnpm@11.2.2 --activate
 
 RUN npm config set update-notifier false
 RUN addgroup -g 1001 -S nodejs && \
@@ -27,7 +28,7 @@ RUN addgroup -g 1001 -S nodejs && \
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --prod --frozen-lockfile --ignore-scripts
 
 COPY --from=builder --chown=nodejs:nodejs /app/dist ./dist
