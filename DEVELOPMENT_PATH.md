@@ -124,9 +124,9 @@ This document tracks all planned improvements and enhancements for the Express S
   - `.dockerignore` - Excludes unnecessary files from build context
 - **Features**:
   - Multi-stage build (builder + production stages)
-  - PM2 for process management
+  - Node runs the app directly; container restart policy supervises the process (`restart: unless-stopped` in Compose)
   - Non-root user (nodejs) for security
-  - Health checks with wget/curl support
+  - Health checks use `node`/`http.get` against `/health` (no wget/curl in the image)
   - Automatic asset minification in production builds
   - Production dependencies only in final image
   - Environment variable configuration

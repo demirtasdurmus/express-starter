@@ -16,11 +16,11 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx --watch --enable-source-maps --tsconfig tsconfig.build.json src/index.ts",
-    "dev:bundle": "tsdown --watch --on-success \"node --enable-source-maps dist-bundle/index.cjs\"",
+    "dev:bundle": "tsdown --watch --on-success \"node --enable-source-maps dist-bundle/index.mjs\"",
     "build": "tsc --pretty -p tsconfig.build.json && node scripts/minify-assets.js",
     "build:bundle": "tsdown && node scripts/minify-assets.js",
     "start": "node --enable-source-maps dist/index.js",
-    "start:bundle": "node --enable-source-maps dist-bundle/index.cjs",
+    "start:bundle": "node --enable-source-maps dist-bundle/index.mjs",
     "test": "jest",
     "test:watch": "jest --watchAll",
     "test:int": "jest --config ./jest-int.config.ts",
