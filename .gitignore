@@ -5,6 +5,8 @@ dist
 dist-bundle
 coverage
 
+.eslintcache
+
 .env*
 !.env.example
 

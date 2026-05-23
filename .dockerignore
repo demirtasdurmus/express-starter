@@ -54,6 +54,7 @@ eslint.config.mts
 .prettierignore
 .lintstagedrc*
 .commitlintrc*
+.eslintcache
 
 # Config files
 .ncurc.js
