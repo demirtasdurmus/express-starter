@@ -4,6 +4,10 @@ services:
       context: .
       dockerfile: Dockerfile.bundle
     restart: unless-stopped
+    # Required so Coolify/Traefik discovers the container port (non-HTTP/80 apps).
+    # Host/container use the same ${PORT}; override in Coolify if needed.
+    ports:
+      - '${PORT:-9000}:${PORT:-9000}'
     environment:
       - NODE_ENV=${NODE_ENV:-production}
       - PORT=${PORT:-9000}
