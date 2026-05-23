@@ -25,5 +25,8 @@ export const swaggerSpec = swaggerJsdoc({
     './dist/controllers/*.js',
     './src/routers/*.ts',
     './src/controllers/*.ts',
+    // For bundled outputs
+    './dist-bundle/*.cjs',
+    './dist-bundle/*.mjs',
   ],
 });
