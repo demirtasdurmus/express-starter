@@ -15,8 +15,8 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "dev": "tsx --watch --enable-source-maps --tsconfig tsconfig.build.json src/index.ts",
-    "dev:bundle": "tsdown --watch --on-success \"node --enable-source-maps dist-bundle/index.mjs\"",
+    "dev": "DISABLE_SHUTDOWN_LISTENERS=1 tsx --watch --enable-source-maps --tsconfig tsconfig.build.json src/index.ts",
+    "dev:bundle": "tsdown --watch --on-success \"DISABLE_SHUTDOWN_LISTENERS=1 node --enable-source-maps dist-bundle/index.mjs\"",
     "build": "tsc --pretty -p tsconfig.build.json && node scripts/minify-assets.js",
     "build:bundle": "tsdown && node scripts/minify-assets.js",
     "start": "node --enable-source-maps dist/index.js",

@@ -14,13 +14,15 @@ server.listen(PORT, HOST, () => {
   logger.info(`API documentation available at http://${HOST}:${PORT}/api-docs`);
 });
 
-process.on('SIGINT', () => shutdownGracefully({ signalOrEvent: 'SIGINT', server }));
-process.on('SIGTERM', () => shutdownGracefully({ signalOrEvent: 'SIGTERM', server }));
+if (!env.DISABLE_SHUTDOWN_LISTENERS) {
+  process.on('SIGINT', () => shutdownGracefully({ signalOrEvent: 'SIGINT', server }));
+  process.on('SIGTERM', () => shutdownGracefully({ signalOrEvent: 'SIGTERM', server }));
 
-process.on('uncaughtException', (error) => {
-  shutdownGracefully({ signalOrEvent: 'uncaughtException', server, error });
-});
+  process.on('uncaughtException', (error) => {
+    shutdownGracefully({ signalOrEvent: 'uncaughtException', server, error });
+  });
 
-process.on('unhandledRejection', (reason, promise) => {
-  shutdownGracefully({ signalOrEvent: 'unhandledRejection', server, reason, promise });
-});
+  process.on('unhandledRejection', (reason, promise) => {
+    shutdownGracefully({ signalOrEvent: 'unhandledRejection', server, reason, promise });
+  });
+}
