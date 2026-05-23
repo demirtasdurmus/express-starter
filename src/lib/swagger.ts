@@ -7,7 +7,7 @@ const devServer = {
 };
 
 const productionServer = {
-  url: `https://express-template.durmusdemirtas.com`,
+  url: `https://express-starter.durmusdemirtas.com`,
 };
 
 export const swaggerSpec = swaggerJsdoc({
