@@ -6,7 +6,7 @@ A modern, production-ready Express.js starter template with TypeScript, comprehe
 
 ### Prerequisites
 
-- Node.js (v24 or higher)
+- Node.js (v22 or higher)
 - pnpm
 
 ### Installation
