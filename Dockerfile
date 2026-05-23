@@ -22,8 +22,6 @@ FROM node:24-alpine
 RUN corepack enable && corepack prepare pnpm@11.1.2 --activate
 
 RUN npm config set update-notifier false
-RUN npm install -g pm2@6
-
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nodejs -u 1001
 
@@ -38,4 +36,4 @@ COPY --from=builder --chown=nodejs:nodejs /app/public ./public
 
 USER nodejs
 
-CMD ["pm2-runtime", "start", "dist/index.js", "--name", "express-starter-template"]
+CMD ["node", "--enable-source-maps", "dist/index.js"]
