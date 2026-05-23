@@ -1,9 +1,26 @@
-import { Server } from 'http';
-import { logger } from '../lib/logger';
+import type { Server } from 'node:http';
+import { logger } from './logger';
+
+/**
+ * Registers process hooks for graceful HTTP server shutdown on signals and fatal errors.
+ * Call once after `server.listen` (typically gated by `DISABLE_SHUTDOWN_LISTENERS` from `env`).
+ */
+export function registerShutdownListeners(server: Server) {
+  process.on('SIGINT', () => void shutdownGracefully({ signalOrEvent: 'SIGINT', server }));
+  process.on('SIGTERM', () => void shutdownGracefully({ signalOrEvent: 'SIGTERM', server }));
+
+  process.on('uncaughtException', (error) => {
+    void shutdownGracefully({ signalOrEvent: 'uncaughtException', server, error });
+  });
+
+  process.on('unhandledRejection', (reason, promise) => {
+    void shutdownGracefully({ signalOrEvent: 'unhandledRejection', server, reason, promise });
+  });
+}
 
 let isShuttingDown = false;
 
-type ShutdownGracefully = {
+type ShutdownGracefullyArgs = {
   signalOrEvent: NodeJS.Signals | 'uncaughtException' | 'unhandledRejection';
   server: Server;
   error?: unknown;
@@ -11,13 +28,13 @@ type ShutdownGracefully = {
   promise?: Promise<unknown>;
 };
 
-export async function shutdownGracefully({
+async function shutdownGracefully({
   signalOrEvent,
   server,
   error,
   reason,
   promise,
-}: ShutdownGracefully) {
+}: ShutdownGracefullyArgs) {
   if (isShuttingDown) {
     logger.warn(`${signalOrEvent} received again, forcing exit`);
     process.exit(1);
@@ -46,8 +63,8 @@ export async function shutdownGracefully({
     logger.warn('Graceful shutdown completed');
     clearTimeout(shutdownTimeout);
     process.exit(0);
-  } catch (error) {
-    logger.error(error, 'Error during graceful shutdown');
+  } catch (err) {
+    logger.error(err, 'Error during graceful shutdown');
     clearTimeout(shutdownTimeout);
     process.exit(1);
   }

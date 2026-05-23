@@ -1,5 +1,5 @@
-import { createServer } from 'http';
-import { shutdownGracefully } from './utils/shutdown-gracefully';
+import { createServer } from 'node:http';
+import { registerShutdownListeners } from './lib/shutdownListeners';
 import { logger } from './lib/logger';
 import { env } from './env';
 import { apiConfig } from './config';
@@ -14,13 +14,6 @@ server.listen(PORT, HOST, () => {
   logger.info(`API documentation available at http://${HOST}:${PORT}/api-docs`);
 });
 
-process.on('SIGINT', () => shutdownGracefully({ signalOrEvent: 'SIGINT', server }));
-process.on('SIGTERM', () => shutdownGracefully({ signalOrEvent: 'SIGTERM', server }));
-
-process.on('uncaughtException', (error) => {
-  shutdownGracefully({ signalOrEvent: 'uncaughtException', server, error });
-});
-
-process.on('unhandledRejection', (reason, promise) => {
-  shutdownGracefully({ signalOrEvent: 'unhandledRejection', server, reason, promise });
-});
+if (!env.DISABLE_SHUTDOWN_LISTENERS) {
+  registerShutdownListeners(server);
+}

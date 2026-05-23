@@ -105,7 +105,7 @@ pnpm build:bundle     # tsdown build (MINIFY_ASSETS=true to also minify static a
 1. Create a controller in `src/controllers/`
 2. Create a service in `src/services/` (if needed)
 3. Create Zod validation schemas in `src/schemas/` for request validation
-4. Define routes in `src/routes/` with validation middleware and OpenAPI specification
+4. Define routes in `src/routers/` with validation middleware and OpenAPI specification
 5. Import and use in `src/app.ts`
 
 ## 🧪 Testing
@@ -142,14 +142,7 @@ The project includes production-ready Docker configuration:
 
 #### Using Docker Compose (Recommended)
 
-1. Create a `.env` file with your environment variables:
-
-   ```bash
-   NODE_ENV=production
-   PORT=9000
-   HOST=0.0.0.0
-   CORS_ORIGIN=*
-   ```
+1. Update your `.env` file with production values:
 
 2. Build and start the container:
 
@@ -187,7 +180,7 @@ The project includes production-ready Docker configuration:
      -e PORT=9000 \
      -e HOST=0.0.0.0 \
      -e CORS_ORIGIN=* \
-     express-starter-template
+     express-starter
    ```
 
 ### Production Considerations
