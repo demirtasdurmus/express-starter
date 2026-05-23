@@ -86,11 +86,10 @@ coverage/           # Coverage reports
 
 An optional [`tsdown`](https://github.com/rolldown/tsdown)-based workflow is available alongside the default `tsc` build — useful for monorepo/workspace setups where sharing internal packages across apps is common.
 
-|             | `tsc`                 | `tsdown`                                |
-| ----------- | --------------------- | --------------------------------------- |
-| Output      | `dist/`               | `dist-bundle/`                          |
-| Format      | CJS                   | CJS (configure `format` for ESM, etc.)  |
-| Monorepo DX | Manual package builds | Internal packages bundled automatically |
+|        | `tsc`   | `tsdown`       |
+| ------ | ------- | -------------- |
+| Output | `dist/` | `dist-bundle/` |
+| Format | CJS     | ESM            |
 
 ```bash
 # Development
