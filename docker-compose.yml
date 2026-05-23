@@ -2,20 +2,14 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
-    image: express-starter-template:latest
-    container_name: express-starter-template
+      dockerfile: Dockerfile.bundle
     restart: unless-stopped
-    labels:
-      - traefik.enable=true
-      - traefik.http.services.app.loadbalancer.server.port=${PORT}
     environment:
-      - NODE_ENV=${NODE_ENV}
-      - PORT=${PORT}
-      - HOST=${HOST}
-      - CORS_ORIGIN=${CORS_ORIGIN}
-    networks:
-      - coolify
+      - NODE_ENV=${NODE_ENV:-production}
+      - PORT=${PORT:-9000}
+      - HOST=${HOST:-0.0.0.0}
+      - CORS_ORIGIN=${CORS_ORIGIN:-https://express-template.durmusdemirtas.com}
+      - TRUST_PROXY_HOPS={TRUST_PROXY_HOPS:-1}
     healthcheck:
       test:
         [
@@ -36,7 +30,3 @@ services:
         reservations:
           cpus: '0.5'
           memory: 256M
-
-networks:
-  coolify:
-    external: true
