@@ -2,7 +2,10 @@
 
 node_modules
 dist
+dist-bundle
 coverage
 
 .env*
 !.env.example
+
+cspell.json

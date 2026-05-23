@@ -16,7 +16,9 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx --watch --enable-source-maps --tsconfig tsconfig.build.json src/index.ts",
+    "dev:bundle": "tsdown --watch --on-success \"node --enable-source-maps dist-bundle/index.cjs\"",
     "build": "tsc --pretty -p tsconfig.build.json && node scripts/minify-assets.js",
+    "build:bundle": "tsdown && node scripts/minify-assets.js",
     "start": "node --enable-source-maps dist/index.js",
     "test": "jest",
     "test:watch": "jest --watchAll",
@@ -63,6 +65,7 @@
     "supertest": "^7.2.2",
     "terser": "^5.47.1",
     "ts-jest": "^29.4.9",
+    "tsdown": "^0.22.0",
     "tsx": "^4.22.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.3"
