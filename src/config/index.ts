@@ -14,6 +14,7 @@ export const apiConfig = {
    * @see https://expressjs.com/en/guide/behind-proxies.html
    */
   trustProxy: env.TRUST_PROXY_HOPS,
+  trustedCloudflareProxy: true, // Set it to false if your server is not behind Cloudflare Proxy
   apiRateLimit: {
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: isProductionLike ? 100 : 1000,
