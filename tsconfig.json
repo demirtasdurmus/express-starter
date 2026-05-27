@@ -36,6 +36,6 @@
     "coverage",
     "coverage-int",
     "scripts",
-    ".ncurc.js"
+    ".ncurc.mjs"
   ]
 }
