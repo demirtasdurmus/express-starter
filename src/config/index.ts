@@ -15,6 +15,10 @@ export const apiConfig = {
    */
   trustProxy: env.TRUST_PROXY_HOPS,
   trustedCloudflareProxy: true, // Set it to false if your server is not behind Cloudflare Proxy
+  globalRateLimit: {
+    windowMs: 15 * 60 * 1000,
+    max: isProductionLike ? 300 : 3000,
+  },
   apiRateLimit: {
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: isProductionLike ? 100 : 1000,
@@ -53,4 +57,5 @@ export const apiConfig = {
   timeout: {
     request: 30000,
   },
+  internalSkipPaths: ['/health', '/api-docs', '/__webpack_hmr'] as string[],
 } as const;
