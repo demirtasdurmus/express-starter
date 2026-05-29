@@ -24,4 +24,4 @@ minimumReleaseAgeExclude:
   - tsdown@0.22.1
 
 overrides:
-  qs: '>=6.14.1'
+  'qs': '>=6.15.2'
