@@ -9,6 +9,19 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - swagger-jsdoc@6.3.0
   - i18next@26.3.0
+  - '@commitlint/cli@21.0.2'
+  - '@commitlint/config-conventional@21.0.2'
+  - '@commitlint/is-ignored@21.0.2'
+  - '@commitlint/lint@21.0.2'
+  - '@commitlint/load@21.0.2'
+  - '@commitlint/message@21.0.2'
+  - '@commitlint/parse@21.0.2'
+  - '@commitlint/prompt-cli@21.0.2'
+  - '@commitlint/prompt@21.0.2'
+  - '@commitlint/read@21.0.2'
+  - '@commitlint/rules@21.0.2'
+  - '@commitlint/top-level@21.0.2'
+  - tsdown@0.22.1
 
 overrides:
   qs: '>=6.14.1'
