@@ -1,7 +1,7 @@
 import { pinoHttp } from 'pino-http';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { randomUUID } from 'crypto';
-import { isStaticFile } from '../utils/isStaticFile';
+import { shouldSkipPath } from '../utils/should-skip-path';
 import { logger } from '../lib/logger';
 import { isProductionLike } from '../env';
 
@@ -10,11 +10,7 @@ import { isProductionLike } from '../env';
  * - Development: Clean, readable logs for better DX
  * - Production: Structured JSON logs for monitoring
  */
-export function httpLogger({
-  skipPaths,
-}: {
-  skipPaths?: string[];
-} = {}): RequestHandler {
+export function httpLogger(): RequestHandler {
   return isProductionLike
     ? pinoHttp({
         logger,
@@ -23,7 +19,7 @@ export function httpLogger({
         },
         autoLogging: {
           ignore: (req: Request) => {
-            return shouldSkipPath(skipPaths, req.url);
+            return shouldSkipPath(req.url);
           },
         },
         customLogLevel: (_req, res, err) => {
@@ -39,19 +35,15 @@ export function httpLogger({
           };
         },
       })
-    : devHttpLogger({ skipPaths });
+    : devHttpLogger();
 }
 
-function devHttpLogger({
-  skipPaths,
-}: {
-  skipPaths?: string[];
-} = {}) {
+function devHttpLogger() {
   return (req: Request, res: Response, next: NextFunction): void => {
     const start = Date.now();
     const requestId = generateAndSetRequestId(res);
 
-    if (shouldSkipPath(skipPaths, req.url)) {
+    if (shouldSkipPath(req.url)) {
       return next();
     }
 
@@ -85,16 +77,4 @@ function generateAndSetRequestId(res: Response) {
   const requestId = randomUUID();
   res.setHeader('X-Request-ID', requestId);
   return requestId;
-}
-
-function shouldSkipPath(skipPaths: string[] = [], url?: string): boolean {
-  if (!url) return false;
-
-  // Skip explicitly configured paths
-  if (skipPaths.some((path) => url.includes(path))) {
-    return true;
-  }
-
-  // Skip static files (common static file extensions)
-  return isStaticFile(url);
 }

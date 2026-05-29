@@ -1,5 +1,5 @@
 import { RequestHandler, Response } from 'express';
-import { isStaticFile } from '../utils/isStaticFile';
+import { isStaticFile } from '../utils/is-static-file';
 import { env } from '../env';
 import { apiConfig } from '../config';
 

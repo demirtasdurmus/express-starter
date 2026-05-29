@@ -6,7 +6,7 @@ import timeout from 'connect-timeout';
 import compression from 'compression';
 import { sampleRouter } from './routers/sample.router';
 import { healthRouter } from './routers/health.router';
-import { rateLimit } from './middleware/rate-limit.middleware';
+import { globalRateLimit, apiRateLimit } from './middleware/rate-limit.middleware';
 import { i18n } from './middleware/i18n.middleware';
 import { httpLogger } from './middleware/http-logger.middleware';
 import { helmet } from './middleware/helmet.middleware';
@@ -47,7 +47,9 @@ app.use(cors);
  */
 app.use(timeout(apiConfig.timeout.request, { respond: true }));
 
-app.use(httpLogger({ skipPaths: ['/health', '/api-docs', '/__webpack_hmr'] }));
+app.use(httpLogger());
+
+app.use(globalRateLimit);
 
 app.use(express.json({ limit: apiConfig.requestBodyLimit }));
 app.use(express.urlencoded({ extended: true, limit: apiConfig.requestBodyLimit }));
@@ -69,7 +71,7 @@ app.use(
 
 app.use('/health', healthRouter);
 
-app.use('/api', rateLimit);
+app.use('/api', apiRateLimit);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
