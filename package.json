@@ -67,9 +67,9 @@
     "terser": "^5.48.0",
     "ts-jest": "^29.4.11",
     "tsdown": "^0.22.1",
-    "tsx": "^4.22.3",
+    "tsx": "^4.22.4",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.60.0"
+    "typescript-eslint": "^8.60.1"
   },
   "dependencies": {
     "compression": "^1.8.1",
@@ -80,7 +80,7 @@
     "express": "^5.2.1",
     "express-rate-limit": "^8.5.2",
     "helmet": "^8.2.0",
-    "i18next": "^26.3.0",
+    "i18next": "^26.3.1",
     "i18next-fs-backend": "^2.6.6",
     "i18next-http-middleware": "^3.9.7",
     "pino": "^10.3.1",
