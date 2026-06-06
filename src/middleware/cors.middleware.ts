@@ -1,5 +1,6 @@
 import corsMiddleware from 'cors';
-import { apiConfig } from '../config';
+
+import { apiConfig } from '@/config';
 
 export const cors = corsMiddleware({
   origin: (origin, callback) => {

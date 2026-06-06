@@ -37,4 +37,4 @@ COPY --from=builder --chown=nodejs:nodejs /app/public ./public
 
 USER nodejs
 
-CMD ["node", "--enable-source-maps", "dist/index.js"]
+CMD ["node", "--enable-source-maps", "dist/index.mjs"]

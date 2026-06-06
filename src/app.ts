@@ -1,21 +1,22 @@
-import swaggerUi from 'swagger-ui-express';
-import { ParseKeys } from 'i18next';
-import express, { Application } from 'express';
-import cookieParser from 'cookie-parser';
-import timeout from 'connect-timeout';
 import compression from 'compression';
-import { sampleRouter } from './routers/sample.router';
-import { healthRouter } from './routers/health.router';
-import { globalRateLimit, apiRateLimit } from './middleware/rate-limit.middleware';
-import { i18n } from './middleware/i18n.middleware';
-import { httpLogger } from './middleware/http-logger.middleware';
-import { helmet } from './middleware/helmet.middleware';
-import { errorHandler } from './middleware/error-handler.middleware';
-import { cors } from './middleware/cors.middleware';
-import { cacheControl } from './middleware/cache-control.middleware';
-import { swaggerSpec } from './lib/swagger';
-import { NotFoundError } from './lib/error';
-import { apiConfig } from './config';
+import timeout from 'connect-timeout';
+import cookieParser from 'cookie-parser';
+import express, { Application } from 'express';
+import { ParseKeys } from 'i18next';
+import swaggerUi from 'swagger-ui-express';
+
+import { apiConfig } from '@/config';
+import { NotFoundError } from '@/lib/error';
+import { swaggerSpec } from '@/lib/swagger';
+import { cacheControl } from '@/middleware/cache-control.middleware';
+import { cors } from '@/middleware/cors.middleware';
+import { errorHandler } from '@/middleware/error-handler.middleware';
+import { helmet } from '@/middleware/helmet.middleware';
+import { httpLogger } from '@/middleware/http-logger.middleware';
+import { i18n } from '@/middleware/i18n.middleware';
+import { apiRateLimit, globalRateLimit } from '@/middleware/rate-limit.middleware';
+import { healthRouter } from '@/routers/health.router';
+import { sampleRouter } from '@/routers/sample.router';
 
 const app: Application = express();
 

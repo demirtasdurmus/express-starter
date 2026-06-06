@@ -7,8 +7,25 @@
   "bracketSpacing": true,
   "trailingComma": "all",
   "endOfLine": "auto",
-  "plugins": ["prettier-plugin-sort-imports"],
-  "sortingMethod": "alphabetical",
-  "sortingOrder": "ascending",
-  "importTypeOrder": ["NPMPackages", "localImports"]
+  "plugins": ["@ianvs/prettier-plugin-sort-imports"],
+  "importOrder": [
+    "^(node/(.*)$)|^(node$)",
+    "<THIRD_PARTY_MODULES>",
+    "",
+    "^types$",
+    "^@/types(/(.*))?$",
+    "^@/config(/(.*))?$",
+    "^@/controllers(/(.*))?$",
+    "^@/env(/(.*))?$",
+    "^@/lib(/(.*))?$",
+    "^@/middleware(/(.*))?$",
+    "^@/routers(/(.*))?$",
+    "^@/schemas(/(.*))?$",
+    "^@/services(/(.*))?$",
+    "^@/utils(/(.*))?$",
+    "^@/app(/(.*))?$",
+    "",
+    "^[./]"
+  ],
+  "importOrderParserPlugins": ["typescript", "decorators-legacy"]
 }

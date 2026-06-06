@@ -5,7 +5,7 @@ import {
   getSampleById,
   getSamples,
   updateSampleById,
-} from './sample.service';
+} from '@/services/sample.service';
 
 describe('Sample Service', () => {
   beforeEach(() => {

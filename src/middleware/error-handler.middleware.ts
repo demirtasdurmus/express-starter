@@ -1,9 +1,10 @@
-import { ParseKeys } from 'i18next';
 import { ErrorRequestHandler } from 'express';
-import { ProblemDetail, FieldError } from '../types';
-import { logger } from '../lib/logger';
-import { isUnprocessableEntityError, serializeError } from '../lib/error';
-import { isProductionLike } from '../env';
+import { ParseKeys } from 'i18next';
+
+import { FieldError, ProblemDetail } from '@/types';
+import { isProductionLike } from '@/env';
+import { isUnprocessableEntityError, serializeError } from '@/lib/error';
+import { logger } from '@/lib/logger';
 
 export const errorHandler: ErrorRequestHandler<unknown, ProblemDetail> = (err, req, res, _next) => {
   const instance = req.originalUrl;

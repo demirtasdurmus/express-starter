@@ -6,7 +6,6 @@ yarn-error.log
 
 # Build output
 dist
-dist-bundle
 
 # Environment files
 .env
@@ -58,6 +57,5 @@ eslint.config.mts
 
 # Docker
 Dockerfile
-Dockerfile.bundle
 docker-compose.yml
 .dockerignore

@@ -1,5 +1,6 @@
 import type { Server } from 'node:http';
-import { logger } from './logger';
+
+import { logger } from '@/lib/logger';
 
 /**
  * Registers process hooks for graceful HTTP server shutdown on signals and fatal errors.

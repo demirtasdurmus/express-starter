@@ -1,4 +1,4 @@
-import { env } from './env';
+import { env } from '@/env/env';
 
 export const isProductionLike = ['production', 'staging'].includes(env.NODE_ENV);
 export const isDevelopmentLike = ['development', 'test'].includes(env.NODE_ENV);

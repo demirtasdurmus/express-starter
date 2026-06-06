@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
-import { TLanguage } from '../types';
-import { env, isProductionLike } from '../env';
+
+import { TLanguage } from '@/types';
+import { env, isProductionLike } from '@/env';
 
 export const apiConfig = {
   title: 'Express Starter API',
@@ -58,4 +59,8 @@ export const apiConfig = {
     request: 30000,
   },
   internalSkipPaths: ['/health', '/api-docs', '/__webpack_hmr'] as string[],
+  apiDocs: {
+    devURL: `http://localhost:${env.PORT}`,
+    prodURL: 'https://express-starter.durmusdemirtas.com',
+  },
 } as const;

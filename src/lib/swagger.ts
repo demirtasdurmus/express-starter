@@ -1,13 +1,14 @@
 import swaggerJsdoc from 'swagger-jsdoc';
-import { env, isProductionLike } from '../env';
-import { apiConfig } from '../config';
+
+import { apiConfig } from '@/config';
+import { isProductionLike } from '@/env';
 
 const devServer = {
-  url: `http://localhost:${env.PORT}`,
+  url: apiConfig.apiDocs.devURL,
 };
 
 const productionServer = {
-  url: `https://express-starter.durmusdemirtas.com`,
+  url: apiConfig.apiDocs.prodURL,
 };
 
 export const swaggerSpec = swaggerJsdoc({
@@ -20,13 +21,5 @@ export const swaggerSpec = swaggerJsdoc({
     },
     servers: [isProductionLike ? productionServer : devServer],
   },
-  apis: [
-    './dist/routers/*.js',
-    './dist/controllers/*.js',
-    './src/routers/*.ts',
-    './src/controllers/*.ts',
-    // For bundled outputs
-    './dist-bundle/*.cjs',
-    './dist-bundle/*.mjs',
-  ],
+  apis: ['./src/routers/*.ts', './src/controllers/*.ts', './dist/*.mjs', './dist/*.cjs'],
 });

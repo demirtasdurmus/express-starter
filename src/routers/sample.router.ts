@@ -1,18 +1,19 @@
 import { Router } from 'express';
-import {
-  createSampleRequestBodySchema,
-  getSamplesQuerySchema,
-  sampleIdParamsSchema,
-  updateSampleRequestBodySchema,
-} from '../schemas/sample.schema';
-import { validate } from '../middleware/validate.middleware';
+
 import {
   createSampleController,
   deleteSampleByIdController,
   getSampleByIdController,
   getSamplesController,
   updateSampleByIdController,
-} from '../controllers/sample.controller';
+} from '@/controllers/sample.controller';
+import { validate } from '@/middleware/validate.middleware';
+import {
+  createSampleRequestBodySchema,
+  getSamplesQuerySchema,
+  sampleIdParamsSchema,
+  updateSampleRequestBodySchema,
+} from '@/schemas/sample.schema';
 
 const router = Router();
 

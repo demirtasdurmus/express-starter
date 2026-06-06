@@ -1,5 +1,7 @@
 import 'i18next';
-import { apiConfig } from '../config';
+
+import { apiConfig } from '@/config';
+
 import translation from '../../locales/en/translation.json';
 
 /**

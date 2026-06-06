@@ -1,6 +1,9 @@
-import z from 'zod';
+// prettier-ignore
 import 'dotenv/config';
-import { parseWithZod } from '../utils/parse-with-zod';
+
+import z from 'zod';
+
+import { parseWithZod } from '@/utils/parse-with-zod';
 
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'staging', 'production', 'test']).default('development'),
@@ -16,7 +19,7 @@ const envSchema = z.object({
       const parsed = Number.parseInt(val, 10);
       return Number.isNaN(parsed) ? 1 : parsed;
     }),
-  /** When true, skips SIGTERM/SIGINT/error process hooks (recommended for tsx/tsdown --watch parent processes). */
+  /** When true, skips SIGTERM/SIGINT/error process hooks (recommended for tsdown --watch parent processes). */
   DISABLE_SHUTDOWN_LISTENERS: z
     .string()
     .optional()
