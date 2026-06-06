@@ -1,13 +1,14 @@
 import swaggerJsdoc from 'swagger-jsdoc';
-import { env, isProductionLike } from '@/env';
+
 import { apiConfig } from '@/config';
+import { isProductionLike } from '@/env';
 
 const devServer = {
-  url: `http://localhost:${env.PORT}`,
+  url: apiConfig.apiDocs.devURL,
 };
 
 const productionServer = {
-  url: `https://express-starter.durmusdemirtas.com`,
+  url: apiConfig.apiDocs.prodURL,
 };
 
 export const swaggerSpec = swaggerJsdoc({

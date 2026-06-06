@@ -1,8 +1,9 @@
 import { createServer } from 'node:http';
-import { registerShutdownListeners } from '@/lib/shutdownListeners';
-import { logger } from '@/lib/logger';
-import { env } from '@/env';
+
 import { apiConfig } from '@/config';
+import { env } from '@/env';
+import { logger } from '@/lib/logger';
+import { registerShutdownListeners } from '@/lib/shutdownListeners';
 import { app } from '@/app';
 
 const server = createServer(app);

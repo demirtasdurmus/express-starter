@@ -1,8 +1,9 @@
-import { ParseKeys } from 'i18next';
 import expressRateLimit, { ipKeyGenerator, ValueDeterminingMiddleware } from 'express-rate-limit';
-import { shouldSkipPath } from '@/utils/should-skip-path';
-import { TooManyRequestsError } from '@/lib/error';
+import { ParseKeys } from 'i18next';
+
 import { apiConfig } from '@/config';
+import { TooManyRequestsError } from '@/lib/error';
+import { shouldSkipPath } from '@/utils/should-skip-path';
 
 const keyGenerator: ValueDeterminingMiddleware<string> = (req) => {
   const cfConnectingIp = req.headers['cf-connecting-ip'];

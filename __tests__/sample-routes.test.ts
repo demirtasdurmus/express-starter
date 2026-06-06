@@ -1,5 +1,6 @@
 import request from 'supertest';
-import { getSamples, deleteSampleById } from '@/services/sample.service';
+
+import { deleteSampleById, getSamples } from '@/services/sample.service';
 import { app } from '@/app';
 
 describe('Sample Routes', () => {

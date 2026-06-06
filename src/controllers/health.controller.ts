@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express';
+
 import { THealthResponse } from '@/types/health';
 import { apiConfig } from '@/config';
 

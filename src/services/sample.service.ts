@@ -1,4 +1,5 @@
 import { randomUUID } from 'crypto';
+
 import { TSample } from '@/types/sample';
 
 const samples = new Map<string, string>();

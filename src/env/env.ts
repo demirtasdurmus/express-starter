@@ -1,5 +1,8 @@
-import z from 'zod';
+// prettier-ignore
 import 'dotenv/config';
+
+import z from 'zod';
+
 import { parseWithZod } from '@/utils/parse-with-zod';
 
 const envSchema = z.object({

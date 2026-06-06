@@ -1,7 +1,8 @@
 import { RequestHandler, Response } from 'express';
-import { isStaticFile } from '@/utils/is-static-file';
-import { env } from '@/env';
+
 import { apiConfig } from '@/config';
+import { env } from '@/env';
+import { isStaticFile } from '@/utils/is-static-file';
 
 export const cacheControl: RequestHandler = (req, res, next) => {
   if (env.NODE_ENV !== 'production') {

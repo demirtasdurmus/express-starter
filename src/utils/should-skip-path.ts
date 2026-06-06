@@ -1,5 +1,5 @@
-import { isStaticFile } from '@/utils/is-static-file';
 import { apiConfig } from '@/config';
+import { isStaticFile } from '@/utils/is-static-file';
 
 export function shouldSkipPath(url: string): boolean {
   // Skip explicitly configured paths
