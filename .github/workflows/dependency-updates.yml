@@ -9,6 +9,8 @@ on:
 
 env:
   NODE_VERSION: 24
+  # @see https://github.com/scarf-sh/scarf-js
+  SCARF_ANALYTICS: false
 
 jobs:
   update-dependencies:
