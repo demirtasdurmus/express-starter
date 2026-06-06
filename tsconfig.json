@@ -35,7 +35,6 @@
     "public",
     "coverage",
     "coverage-int",
-    "scripts",
-    ".ncurc.mjs"
+    "scripts"
   ]
 }

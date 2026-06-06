@@ -56,9 +56,6 @@ eslint.config.mts
 .commitlintrc*
 .eslintcache
 
-# Config files
-.ncurc.js
-
 # Docker
 Dockerfile
 Dockerfile.bundle
