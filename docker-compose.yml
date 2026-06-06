@@ -2,7 +2,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile.bundle
+      dockerfile: Dockerfile
     restart: unless-stopped
     # Required so Coolify/Traefik discovers the container port (non-HTTP/80 apps).
     # Host/container use the same ${PORT}; override in Coolify if needed.

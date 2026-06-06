@@ -13,14 +13,11 @@
   "engines": {
     "node": ">=22.0.0"
   },
-  "main": "dist/index.js",
+  "main": "dist/index.mjs",
   "scripts": {
-    "dev": "DISABLE_SHUTDOWN_LISTENERS=1 tsx --watch --enable-source-maps --tsconfig tsconfig.build.json src/index.ts",
-    "dev:bundle": "tsdown --watch --on-success \"DISABLE_SHUTDOWN_LISTENERS=1 node --enable-source-maps dist-bundle/index.mjs\"",
-    "build": "tsc --pretty -p tsconfig.build.json && node scripts/minify-assets.js",
-    "build:bundle": "tsdown && node scripts/minify-assets.js",
-    "start": "node --enable-source-maps dist/index.js",
-    "start:bundle": "node --enable-source-maps dist-bundle/index.mjs",
+    "dev": "tsdown --watch --on-success \"DISABLE_SHUTDOWN_LISTENERS=1 node --enable-source-maps dist/index.mjs\"",
+    "build": "tsdown && node scripts/minify-assets.js",
+    "start": "node --enable-source-maps dist/index.mjs",
     "test": "jest",
     "test:watch": "jest --watchAll",
     "test:int": "jest --config ./jest-int.config.ts",
@@ -66,7 +63,6 @@
     "terser": "^5.48.0",
     "ts-jest": "^29.4.11",
     "tsdown": "^0.22.2",
-    "tsx": "^4.22.4",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.60.1"
   },

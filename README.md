@@ -43,10 +43,10 @@ pnpm dev
 - **Request ID** - Automatic request ID generation and tracking via `X-Request-ID` header
 - **API Documentation** - Swagger/OpenAPI documentation with interactive UI at `/api-docs`
 - **Docker Support** - Production-ready Dockerfile and docker-compose.yml for easy containerization
-- **Bundler Support** - Optional [tsdown](https://github.com/rolldown/tsdown)-based build for monorepo/workspace setups alongside the default `tsc` workflow
+- **Build (tsdown)** - [tsdown](https://github.com/rolldown/tsdown) bundles the app for dev and production with path alias support
 - **Testing** - Jest with unit and integration test configurations
 - **Code Quality** - ESLint, Prettier, and Husky for code formatting and linting
-- **Development** - Hot reload with TypeScript watch mode
+- **Development** - Hot reload via tsdown watch mode
 - **Architecture** - Clean MVC structure with controllers, services, and middleware
 - **Static Files** - Built-in static file serving
 - **Error Handling** - Comprehensive error handling with proper HTTP status codes
@@ -75,28 +75,19 @@ public/             # Static files
   └── index.html    # HTML file
 scripts/            # Build and utility scripts
 __tests__/          # Integration tests
-dist/               # Compiled JavaScript output (tsc)
-dist-bundle/        # Bundled output (tsdown)
+dist/               # Bundled output (tsdown)
 coverage/           # Coverage reports
 ```
 
 ## 🏗️ Development
 
-### 📦 Bundle Workflow (tsdown)
-
-An optional [`tsdown`](https://github.com/rolldown/tsdown)-based workflow is available alongside the default `tsc` build — useful for monorepo/workspace setups where sharing internal packages across apps is common.
-
-|        | `tsc`   | `tsdown`       |
-| ------ | ------- | -------------- |
-| Output | `dist/` | `dist-bundle/` |
-| Format | CJS     | ESM            |
+The project uses [tsdown](https://github.com/rolldown/tsdown) for development, production builds, and path alias resolution (`@/` → `src/`). Type checking is handled separately via `tsc --noEmit`.
 
 ```bash
-# Development
-pnpm dev:bundle       # watch mode + runs bundled output
-
-# Production
-pnpm build:bundle     # tsdown build (MINIFY_ASSETS=true to also minify static assets)
+pnpm dev              # tsdown watch + runs bundled output
+pnpm build            # production bundle (MINIFY_ASSETS=true to also minify static assets)
+pnpm start            # run production bundle
+pnpm typecheck        # TypeScript type check only
 ```
 
 ### Adding New Routes
@@ -130,7 +121,7 @@ pnpm test:coverage
 
 ### Local Deployment
 
-1. Build the project: `pnpm build` (static assets are minified in production builds)
+1. Build the project: `pnpm build` (static assets are minified when `MINIFY_ASSETS=true`)
 2. Set environment variables (especially `NODE_ENV=production` and `CORS_ORIGIN`)
 3. Start the server: `pnpm start`
 4. The server will run on the port specified in the `PORT` environment variable (default: 9000)

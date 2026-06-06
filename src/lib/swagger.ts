@@ -21,13 +21,5 @@ export const swaggerSpec = swaggerJsdoc({
     },
     servers: [isProductionLike ? productionServer : devServer],
   },
-  apis: [
-    './dist/routers/*.js',
-    './dist/controllers/*.js',
-    './src/routers/*.ts',
-    './src/controllers/*.ts',
-    // For bundled outputs
-    './dist-bundle/*.cjs',
-    './dist-bundle/*.mjs',
-  ],
+  apis: ['./src/routers/*.ts', './src/controllers/*.ts', './dist/*.mjs', './dist/*.cjs'],
 });

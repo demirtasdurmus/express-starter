@@ -19,7 +19,7 @@ const envSchema = z.object({
       const parsed = Number.parseInt(val, 10);
       return Number.isNaN(parsed) ? 1 : parsed;
     }),
-  /** When true, skips SIGTERM/SIGINT/error process hooks (recommended for tsx/tsdown --watch parent processes). */
+  /** When true, skips SIGTERM/SIGINT/error process hooks (recommended for tsdown --watch parent processes). */
   DISABLE_SHUTDOWN_LISTENERS: z
     .string()
     .optional()
