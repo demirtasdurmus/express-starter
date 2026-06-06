@@ -6,6 +6,10 @@ on:
 
   workflow_dispatch:
 
+permissions:
+  contents: read
+  actions: write
+
 env:
   PORT: 3000
   NODE_VERSION: 24
