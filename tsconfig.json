@@ -26,7 +26,12 @@
     "types": ["jest", "node"],
 
     /* @see https://aka.ms/ts6  */
-    "rootDir": "."
+    "rootDir": ".",
+
+    /* Path aliases — resolved by tsdown during bundle builds; tsc emit keeps them as-is */
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "exclude": [
     "dist",

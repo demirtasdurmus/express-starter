@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { ParseKeys } from 'i18next';
 import { RequestHandler } from 'express';
-import { parseWithZod } from '../utils/parse-with-zod';
-import { TValidationMap } from '../types';
-import { transformZodIssueToFieldError, UnprocessableEntityError } from '../lib/error';
+import { parseWithZod } from '@/utils/parse-with-zod';
+import { TValidationMap } from '@/types';
+import { transformZodIssueToFieldError, UnprocessableEntityError } from '@/lib/error';
 
 type TValidateOptions<T> = {
   validationMap: TValidationMap;

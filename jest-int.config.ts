@@ -15,6 +15,9 @@ const config: Config = {
   },
   testEnvironment: 'node',
   rootDir: '.',
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
+  },
   setupFilesAfterEnv: ['<rootDir>/__tests__/setup.ts'],
   testMatch: ['<rootDir>/__tests__/**/*.test.ts', '<rootDir>/__tests__/**/*.spec.ts'],
   coverageDirectory: '<rootDir>/coverage',

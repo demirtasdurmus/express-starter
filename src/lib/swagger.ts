@@ -1,6 +1,6 @@
 import swaggerJsdoc from 'swagger-jsdoc';
-import { env, isProductionLike } from '../env';
-import { apiConfig } from '../config';
+import { env, isProductionLike } from '@/env';
+import { apiConfig } from '@/config';
 
 const devServer = {
   url: `http://localhost:${env.PORT}`,

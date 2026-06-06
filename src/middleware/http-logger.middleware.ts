@@ -1,9 +1,9 @@
 import { pinoHttp } from 'pino-http';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { randomUUID } from 'crypto';
-import { shouldSkipPath } from '../utils/should-skip-path';
-import { logger } from '../lib/logger';
-import { isProductionLike } from '../env';
+import { shouldSkipPath } from '@/utils/should-skip-path';
+import { logger } from '@/lib/logger';
+import { isProductionLike } from '@/env';
 
 /**
  * HTTP logger middleware with request ID generation

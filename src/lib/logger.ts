@@ -1,6 +1,6 @@
 import pino from 'pino';
-import { env, isProductionLike } from '../env';
-import { apiConfig } from '../config';
+import { env, isProductionLike } from '@/env';
+import { apiConfig } from '@/config';
 
 /**
  * Structured logger using Pino

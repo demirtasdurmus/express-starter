@@ -4,15 +4,15 @@ import {
   getSamplesQuerySchema,
   sampleIdParamsSchema,
   updateSampleRequestBodySchema,
-} from '../schemas/sample.schema';
-import { validate } from '../middleware/validate.middleware';
+} from '@/schemas/sample.schema';
+import { validate } from '@/middleware/validate.middleware';
 import {
   createSampleController,
   deleteSampleByIdController,
   getSampleByIdController,
   getSamplesController,
   updateSampleByIdController,
-} from '../controllers/sample.controller';
+} from '@/controllers/sample.controller';
 
 const router = Router();
 

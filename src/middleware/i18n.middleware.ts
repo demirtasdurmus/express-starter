@@ -2,7 +2,7 @@ import i18nextHttpMiddleware from 'i18next-http-middleware';
 import i18nextFsBackend from 'i18next-fs-backend';
 import i18next from 'i18next';
 import path from 'node:path';
-import { apiConfig } from '../config';
+import { apiConfig } from '@/config';
 
 /**
  * @see https://www.i18next.com/

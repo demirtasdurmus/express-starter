@@ -1,4 +1,4 @@
-import { TPaginationMeta } from '../types';
+import { TPaginationMeta } from '@/types';
 
 /**
  * Get the pagination meta data

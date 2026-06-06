@@ -1,21 +1,21 @@
 import { ParseKeys } from 'i18next';
 import { RequestHandler } from 'express';
-import { getPaginationMeta } from '../utils/get-pagination-meta';
-import { TGetSamplesResponse, TSample } from '../types/sample';
+import { getPaginationMeta } from '@/utils/get-pagination-meta';
+import { TGetSamplesResponse, TSample } from '@/types/sample';
 import {
   createSample,
   deleteSampleById,
   getSampleById,
   getSamples,
   updateSampleById,
-} from '../services/sample.service';
+} from '@/services/sample.service';
 import {
   TCreateSampleRequestBody,
   TGetSamplesQuery,
   TSampleIdParams,
   TUpdateSampleRequestBody,
-} from '../schemas/sample.schema';
-import { NotFoundError } from '../lib/error';
+} from '@/schemas/sample.schema';
+import { NotFoundError } from '@/lib/error';
 
 export const getSamplesController: RequestHandler<unknown, TGetSamplesResponse> = (req, res) => {
   const query = req.query as TGetSamplesQuery;

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { parseWithZod } from './parse-with-zod';
+import { parseWithZod } from '@/utils/parse-with-zod';
 
 describe('parseWithZod', () => {
   it('should call onSuccess with parsed data when validation passes', () => {

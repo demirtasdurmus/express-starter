@@ -15,6 +15,9 @@ const config: Config = {
   },
   testEnvironment: 'node',
   rootDir: './src',
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/$1',
+  },
 };
 
 export default config;
