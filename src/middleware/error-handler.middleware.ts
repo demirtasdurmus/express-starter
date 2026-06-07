@@ -1,10 +1,10 @@
-import { ErrorRequestHandler } from 'express';
-import { ParseKeys } from 'i18next';
+import type { ErrorRequestHandler } from 'express';
+import type { ParseKeys } from 'i18next';
 
-import { FieldError, ProblemDetail } from '@/types';
 import { isProductionLike } from '@/env';
 import { isUnprocessableEntityError, serializeError } from '@/lib/error';
 import { logger } from '@/lib/logger';
+import type { FieldError, ProblemDetail } from '@/types';
 
 export const errorHandler: ErrorRequestHandler<unknown, ProblemDetail> = (err, req, res, _next) => {
   const instance = req.originalUrl;

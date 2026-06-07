@@ -1,7 +1,7 @@
-import { z } from 'zod';
+import type { z } from 'zod';
 
-import { FieldError } from '@/types';
 import { BaseError, InternalServerError, UnprocessableEntityError } from '@/lib/error/baseError';
+import type { FieldError } from '@/types';
 
 /**
  * Checks if an error is a BaseError.

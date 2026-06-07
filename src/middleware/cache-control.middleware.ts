@@ -1,4 +1,4 @@
-import { RequestHandler, Response } from 'express';
+import type { RequestHandler, Response } from 'express';
 
 import { apiConfig } from '@/config';
 import { env } from '@/env';

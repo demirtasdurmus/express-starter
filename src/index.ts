@@ -1,10 +1,10 @@
 import { createServer } from 'node:http';
 
+import { app } from '@/app';
 import { apiConfig } from '@/config';
 import { env } from '@/env';
 import { logger } from '@/lib/logger';
 import { registerShutdownListeners } from '@/lib/shutdownListeners';
-import { app } from '@/app';
 
 const server = createServer(app);
 const PORT = env.PORT;

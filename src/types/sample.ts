@@ -1,4 +1,4 @@
-import { TPaginationMeta } from '@/types';
+import type { TPaginationMeta } from '@/types';
 
 export type TSample = {
   id: string;

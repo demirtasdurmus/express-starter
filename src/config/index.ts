@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 
-import { TLanguage } from '@/types';
 import { env, isProductionLike } from '@/env';
+import type { TLanguage } from '@/types';
 
 export const apiConfig = {
   title: 'Express Starter API',

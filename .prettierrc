@@ -8,24 +8,6 @@
   "trailingComma": "all",
   "endOfLine": "auto",
   "plugins": ["@ianvs/prettier-plugin-sort-imports"],
-  "importOrder": [
-    "^(node/(.*)$)|^(node$)",
-    "<THIRD_PARTY_MODULES>",
-    "",
-    "^types$",
-    "^@/types(/(.*))?$",
-    "^@/config(/(.*))?$",
-    "^@/controllers(/(.*))?$",
-    "^@/env(/(.*))?$",
-    "^@/lib(/(.*))?$",
-    "^@/middleware(/(.*))?$",
-    "^@/routers(/(.*))?$",
-    "^@/schemas(/(.*))?$",
-    "^@/services(/(.*))?$",
-    "^@/utils(/(.*))?$",
-    "^@/app(/(.*))?$",
-    "",
-    "^[./]"
-  ],
+  "importOrder": ["^(node/(.*)$)|^(node$)", "<THIRD_PARTY_MODULES>", "", "^@/", "", "^[./]"],
   "importOrderParserPlugins": ["typescript", "decorators-legacy"]
 }

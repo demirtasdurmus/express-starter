@@ -1,9 +1,9 @@
-import { RequestHandler } from 'express';
-import { ParseKeys } from 'i18next';
+import type { RequestHandler } from 'express';
+import type { ParseKeys } from 'i18next';
 import { z } from 'zod';
 
-import { TValidationMap } from '@/types';
 import { transformZodIssueToFieldError, UnprocessableEntityError } from '@/lib/error';
+import type { TValidationMap } from '@/types';
 import { parseWithZod } from '@/utils/parse-with-zod';
 
 type TValidateOptions<T> = {
