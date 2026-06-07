@@ -1,8 +1,8 @@
 import 'i18next';
 
-import { apiConfig } from '@/config';
+import type { apiConfig } from '@/config';
 
-import translation from '../../locales/en/translation.json';
+import type translation from '../../locales/en/translation.json';
 
 /**
  * Type-safe i18next configuration

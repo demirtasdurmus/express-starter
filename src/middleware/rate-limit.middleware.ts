@@ -1,5 +1,6 @@
-import expressRateLimit, { ipKeyGenerator, ValueDeterminingMiddleware } from 'express-rate-limit';
-import { ParseKeys } from 'i18next';
+import type { ValueDeterminingMiddleware } from 'express-rate-limit';
+import expressRateLimit, { ipKeyGenerator } from 'express-rate-limit';
+import type { ParseKeys } from 'i18next';
 
 import { apiConfig } from '@/config';
 import { TooManyRequestsError } from '@/lib/error';

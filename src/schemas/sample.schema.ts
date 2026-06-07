@@ -1,4 +1,4 @@
-import { ParseKeys } from 'i18next';
+import type { ParseKeys } from 'i18next';
 import { z } from 'zod';
 
 /**

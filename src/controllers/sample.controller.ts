@@ -1,9 +1,8 @@
-import { RequestHandler } from 'express';
-import { ParseKeys } from 'i18next';
+import type { RequestHandler } from 'express';
+import type { ParseKeys } from 'i18next';
 
-import { TGetSamplesResponse, TSample } from '@/types/sample';
 import { NotFoundError } from '@/lib/error';
-import {
+import type {
   TCreateSampleRequestBody,
   TGetSamplesQuery,
   TSampleIdParams,
@@ -16,6 +15,7 @@ import {
   getSamples,
   updateSampleById,
 } from '@/services/sample.service';
+import type { TGetSamplesResponse, TSample } from '@/types/sample';
 import { getPaginationMeta } from '@/utils/get-pagination-meta';
 
 export const getSamplesController: RequestHandler<unknown, TGetSamplesResponse> = (req, res) => {

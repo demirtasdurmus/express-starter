@@ -1,4 +1,4 @@
-import { BaseErrorOptions, FieldError, ProblemDetail } from '@/types';
+import type { BaseErrorOptions, FieldError, ProblemDetail } from '@/types';
 
 /**
  * RFC9457 compliant error class

@@ -1,4 +1,4 @@
-import { TFunction } from 'i18next';
+import type { i18n as I18nInstance, TFunction } from 'i18next';
 
 /**
  * This declaration extends the Express Request interface to include additional properties
@@ -28,7 +28,7 @@ declare global {
       /**
        * i18next instance attached to the request
        */
-      i18n: import('i18next').i18n;
+      i18n: I18nInstance;
     }
   }
 }

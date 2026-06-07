@@ -1,8 +1,9 @@
 import compression from 'compression';
 import timeout from 'connect-timeout';
 import cookieParser from 'cookie-parser';
-import express, { Application } from 'express';
-import { ParseKeys } from 'i18next';
+import type { Application } from 'express';
+import express from 'express';
+import type { ParseKeys } from 'i18next';
 import swaggerUi from 'swagger-ui-express';
 
 import { apiConfig } from '@/config';
