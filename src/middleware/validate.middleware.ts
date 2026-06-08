@@ -1,6 +1,6 @@
 import type { RequestHandler } from 'express';
 import type { ParseKeys } from 'i18next';
-import { z } from 'zod';
+import type { z } from 'zod';
 
 import { transformZodIssueToFieldError, UnprocessableEntityError } from '@/lib/error';
 import type { TValidationMap } from '@/types';
@@ -13,16 +13,13 @@ type TValidateOptions<T> = {
 
 export function validate<T>({ validationMap, schema }: TValidateOptions<T>): RequestHandler {
   return (req, _res, next) => {
-    // Set Zod's locale based on the detected request language
-    setZodLocale(req.language);
-
     parseWithZod({
       object: req[validationMap],
       schema,
       onError: (error) => {
         throw new UnprocessableEntityError(
           'common.validationFailed' satisfies ParseKeys,
-          error.issues.map((issue) => transformZodIssueToFieldError(issue)),
+          error.issues.map(transformZodIssueToFieldError),
         );
       },
       onSuccess: (data) => {
@@ -42,23 +39,4 @@ export function validate<T>({ validationMap, schema }: TValidateOptions<T>): Req
       },
     });
   };
-}
-
-/**
- * Set Zod locale based on request language.
- * Uses Zod v4's built-in locale system.
- */
-function setZodLocale(language: string): void {
-  /**
-   * Map i18next language codes to Zod locale functions
-   */
-  const localeMap: Record<string, () => ReturnType<typeof z.locales.en>> = {
-    tr: z.locales.tr,
-    en: z.locales.en,
-  };
-
-  const localeConfig = localeMap[language] ?? localeMap['en'];
-  if (localeConfig) {
-    z.config(localeConfig());
-  }
 }

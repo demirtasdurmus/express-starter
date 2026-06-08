@@ -34,16 +34,14 @@ export const errorHandler: ErrorRequestHandler<unknown, ProblemDetail> = (err, r
   // Store error in teh locals object for detailed logging
   res.locals.error = loggableObject;
 
-  // Translate user-facing fields
-  problemDetail.detail = req.t(error.message as unknown as ParseKeys);
+  // Translate user-facing fields (validation messages are i18n keys until this point)
+  problemDetail.detail = req.t(error.message as ParseKeys);
 
-  if (isUnprocessableEntityError(error)) {
-    if (Array.isArray(problemDetail.errors)) {
-      problemDetail.errors = (problemDetail.errors as FieldError[]).map((error) => ({
-        ...error,
-        message: req.t(error.message as unknown as ParseKeys),
-      }));
-    }
+  if (isUnprocessableEntityError(error) && Array.isArray(problemDetail.errors)) {
+    problemDetail.errors = (problemDetail.errors as FieldError[]).map((fieldError) => ({
+      ...fieldError,
+      message: req.t(fieldError.message as ParseKeys),
+    }));
   }
 
   // Mask internal server errors in production

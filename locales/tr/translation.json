@@ -11,7 +11,12 @@
   "validation": {
     "sample": {
       "invalidId": "Geçersiz örnek ID",
-      "nameRequired": "İsim zorunludur"
+      "nameRequired": "İsim zorunludur",
+      "pageInvalid": "Sayfa bir sayı olmalıdır",
+      "pageMin": "Sayfa en az 1 olmalıdır",
+      "limitInvalid": "Limit bir sayı olmalıdır",
+      "limitMin": "Limit en az 1 olmalıdır",
+      "limitMax": "Limit en fazla 100 olmalıdır"
     }
   }
 }

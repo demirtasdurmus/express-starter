@@ -2,25 +2,37 @@ import type { ParseKeys } from 'i18next';
 import { z } from 'zod';
 
 /**
- * Note: Custom error messages use i18n translation keys.
- * These keys are translated in the validate middleware using req.t().
- * Keys must exist in locales/{lang}/translation.json
+ * Validation error messages are i18n keys (`ParseKeys`), translated in the error handler.
+ * @see docs/adr/0001-validation-i18n-keys.md
  */
 export const sampleIdParamsSchema = z.object({
   id: z.uuid('validation.sample.invalidId' satisfies ParseKeys),
 });
 
 export const getSamplesQuerySchema = z.object({
-  page: z.coerce.number().min(1).optional(),
-  limit: z.coerce.number().min(1).max(100).optional(),
+  page: z.coerce
+    .number('validation.sample.pageInvalid' satisfies ParseKeys)
+    .min(1, 'validation.sample.pageMin' satisfies ParseKeys)
+    .default(1)
+    .optional(),
+  limit: z.coerce
+    .number('validation.sample.limitInvalid' satisfies ParseKeys)
+    .min(1, 'validation.sample.limitMin' satisfies ParseKeys)
+    .max(100, 'validation.sample.limitMax' satisfies ParseKeys)
+    .default(10)
+    .optional(),
 });
 
 export const createSampleRequestBodySchema = z.object({
-  name: z.string().min(1, 'validation.sample.nameRequired' satisfies ParseKeys),
+  name: z
+    .string('validation.sample.nameRequired' satisfies ParseKeys)
+    .min(1, 'validation.sample.nameRequired' satisfies ParseKeys),
 });
 
 export const updateSampleRequestBodySchema = z.object({
-  name: z.string().min(1, 'validation.sample.nameRequired' satisfies ParseKeys),
+  name: z
+    .string('validation.sample.nameRequired' satisfies ParseKeys)
+    .min(1, 'validation.sample.nameRequired' satisfies ParseKeys),
 });
 
 export type TSampleIdParams = z.infer<typeof sampleIdParamsSchema>;
