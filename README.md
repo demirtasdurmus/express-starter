@@ -54,6 +54,7 @@ pnpm dev
 ## 📁 Project Structure
 
 ```sh
+docs/                # Documentation and ADRs
 src/
 ├── config/          # Configuration
 ├── controllers/     # Request handlers
