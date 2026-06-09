@@ -7,10 +7,9 @@ import { logger } from '@/lib/logger';
 import type { FieldError, ProblemDetail } from '@/types';
 
 export const errorHandler: ErrorRequestHandler<unknown, ProblemDetail> = (err, req, res, _next) => {
-  const instance = req.originalUrl;
   const error = serializeError(err);
 
-  const problemDetail = error.toProblemDetail(instance);
+  const problemDetail = error.toProblemDetail(req.originalUrl);
 
   const loggableObject = {
     ...problemDetail,
@@ -31,10 +30,10 @@ export const errorHandler: ErrorRequestHandler<unknown, ProblemDetail> = (err, r
     return;
   }
 
-  // Store error in teh locals object for detailed logging
+  // Store error in the response locals for detailed logging
   res.locals.error = loggableObject;
 
-  // Translate user-facing fields (validation messages are i18n keys until this point)
+  // Translate user-facing fields
   problemDetail.detail = req.t(error.message as ParseKeys);
 
   if (isUnprocessableEntityError(error) && Array.isArray(problemDetail.errors)) {
