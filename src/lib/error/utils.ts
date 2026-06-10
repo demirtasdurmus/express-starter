@@ -1,7 +1,28 @@
+import type { ParseKeys } from 'i18next';
 import type { z } from 'zod';
 
-import { BaseError, InternalServerError, UnprocessableEntityError } from '@/lib/error/baseError';
+import {
+  BadRequestError,
+  BaseError,
+  InternalServerError,
+  UnprocessableEntityError,
+} from '@/lib/error/baseError';
 import type { FieldError } from '@/types';
+
+type BodyParserError = Error & {
+  type: string;
+  status: number;
+  statusCode: number;
+};
+
+function isBodyParserError(error: unknown): error is BodyParserError {
+  return (
+    error instanceof Error &&
+    'type' in error &&
+    typeof error.type === 'string' &&
+    error.type.startsWith('entity.parse.')
+  );
+}
 
 /**
  * Checks if an error is a BaseError.
@@ -32,11 +53,17 @@ export function isUnprocessableEntityError(error: unknown): error is Unprocessab
 export function serializeError(err: unknown): BaseError {
   if (isBaseError(err)) {
     return err;
-  } else if (err instanceof Error) {
-    return new InternalServerError(err.message, { cause: err });
-  } else {
-    return new InternalServerError(String(err), { cause: err });
   }
+
+  if (isBodyParserError(err)) {
+    return new BadRequestError('common.invalidJson' satisfies ParseKeys, { cause: err });
+  }
+
+  if (err instanceof Error) {
+    return new InternalServerError(err.message, { cause: err });
+  }
+
+  return new InternalServerError(String(err), { cause: err });
 }
 
 /**

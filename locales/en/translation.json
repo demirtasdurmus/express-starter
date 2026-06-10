@@ -2,7 +2,8 @@
   "common": {
     "somethingWentWrong": "Something went wrong",
     "validationFailed": "Validation failed",
-    "notFound": "Not found"
+    "notFound": "Not found",
+    "invalidJson": "Request body contains invalid JSON"
   },
   "samples": {
     "notFound": "Sample not found",
