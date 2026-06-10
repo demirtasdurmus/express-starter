@@ -58,6 +58,17 @@ describe('Sample Routes', () => {
 
       expect(response.status).toBe(422);
     });
+
+    it('should return 400 when request body is invalid JSON', async () => {
+      const response = await request(app)
+        .post('/api/samples')
+        .set('Content-Type', 'application/json')
+        .send('{\n  "name": \n}');
+
+      expect(response.status).toBe(400);
+      expect(response.headers['content-type']).toMatch(/application\/problem\+json/);
+      expect(response.body?.detail).toBe('Request body contains invalid JSON');
+    });
   });
 
   describe('GET /api/samples/:id', () => {

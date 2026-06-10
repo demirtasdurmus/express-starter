@@ -44,21 +44,20 @@ app.set('etag', 'weak');
 app.use(helmet);
 app.use(cors);
 
+app.use(httpLogger());
+
+app.use(cookieParser());
+app.use(i18n);
+
 /**
  * @see https://expressjs.com/en/resources/middleware/timeout.html
  */
 app.use(timeout(apiConfig.timeout.request, { respond: true }));
 
-app.use(httpLogger());
-
 app.use(globalRateLimit);
 
 app.use(express.json({ limit: apiConfig.requestBodyLimit }));
 app.use(express.urlencoded({ extended: true, limit: apiConfig.requestBodyLimit }));
-
-app.use(cookieParser());
-
-app.use(i18n);
 
 app.use(compression());
 

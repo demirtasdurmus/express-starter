@@ -2,7 +2,8 @@
   "common": {
     "somethingWentWrong": "Bir şeyler yanlış gitti",
     "validationFailed": "Geçersiz veri",
-    "notFound": "Bulunamadı"
+    "notFound": "Bulunamadı",
+    "invalidJson": "İstek gövdesi geçersiz JSON içeriyor"
   },
   "samples": {
     "notFound": "Örnek bulunamadı",
