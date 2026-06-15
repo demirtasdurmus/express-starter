@@ -215,21 +215,21 @@ This document tracks all planned improvements and enhancements for the Express S
   - OpenTelemetry tracing
   - Docker observability stack
 
-### ❌ 18. Database Integration Example
+### 💤 18. Database Integration Example
 
-- **Status**: ❌ Not Started
-- **Priority**: Low
-- **Impact**: No database setup example
-- **Needed**: Add example with Prisma/TypeORM/Drizzle
-- **Note**: Optional but common in production APIs
+- **Status**: 💤 Deferred
+- **Priority**: Optional
+- **Decision**: Keep out of the core template for now
+- **Reason**: Database/ORM&ODM choice is highly opinionated (Drizzle, Prisma, TypeORM, MongoDB, SQLite, PostgreSQL, MySQL, etc.)
+- **Future idea**: Add as a separate example branch, guide, or recipe
 
-### ❌ 19. Authentication/Authorization Example
+### 💤 19. Authentication/Authorization Example
 
-- **Status**: ❌ Not Started
-- **Priority**: Low
-- **Impact**: No auth pattern (JWT, sessions, etc.)
-- **Needed**: Add example auth middleware/strategy
-- **Options**: JWT, Passport.js, or custom implementation
+- **Status**: 💤 Deferred
+- **Priority**: Optional
+- **Decision**: Keep out of the core template for now
+- **Reason**: Auth strategy is highly opinionated (JWT, sessions, OAuth, external providers like Firebase, Auth0, Better Auth, etc.)
+- **Future idea**: Add as a separate example branch, guide, or recipe
 
 ---
 
@@ -239,6 +239,7 @@ This document tracks all planned improvements and enhancements for the Express S
   - ✅ Completed
   - ⚠️ Partial/In Progress
   - ❌ Not Started
+  - 💤 Deferred
 
 - This TODO list is based on industry-standard Express.js boilerplate requirements
 - Items are prioritized by security impact and production readiness
