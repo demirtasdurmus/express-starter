@@ -172,27 +172,46 @@ This document tracks all planned improvements and enhancements for the Express S
   - Calculate offset
   - Return pagination metadata in response
 
-### ❌ 15. API Versioning Strategy
+### ✅ 15. API Versioning Strategy
+
+- **Status**: ✅ Completed
+- **Priority**: Medium
+- **Impact**: No versioning pattern
+- **Note**:
+  - Current API base path: `/api/v1`
+  - Only major versions are exposed in URLs (`v1`, `v2`)
+  - Minor/patch changes remain within the same major version
+  - Swagger/OpenAPI uses `/api/v1` as the server base URL
+
+## 🟢 Low Priority (Nice to Have)
+
+### ❌ 16. Database Integration Example
+
+- **Status**: ❌ Not Started
+- **Priority**: Low
+- **Impact**: No database setup example
+- **Needed**: Add example with Prisma/TypeORM/Drizzle
+- **Note**: Optional but common in production APIs
+
+### ❌ 17. Authentication/Authorization Example
+
+- **Status**: ❌ Not Started
+- **Priority**: Low
+- **Impact**: No auth pattern (JWT, sessions, etc.)
+- **Needed**: Add example auth middleware/strategy
+- **Options**: JWT, Passport.js, or custom implementation
+
+### ❌ 18. Environment-based Swagger UI Protection
 
 - **Status**: ❌ Not Started
 - **Priority**: Medium
-- **Impact**: No versioning pattern
-- **Needed**:
-  - Add `/api/v1/` structure, or
-  - Header-based versioning (`Accept: application/vnd.api+json;version=1`)
-- **Note**: Choose one approach and document it
-
-### ❌ 16. Environment-based Swagger UI Protection
-
-- **Status**: ❌ Not Started
-- **Priority**: High
 - **Impact**: Swagger UI exposed in production
 - **Needed**:
   - Add authentication middleware for `/api-docs` in production
   - Or conditionally disable Swagger UI in production
   - Options: Basic auth, API key, or disable entirely
 
-### ❌ 17. Metrics/Observability
+### ❌ 19. Metrics/Observability
 
 - **Status**: ❌ Not Started
 - **Priority**: Low
@@ -202,24 +221,6 @@ This document tracks all planned improvements and enhancements for the Express S
   - Prometheus metrics endpoint
   - OpenTelemetry integration
   - Custom metrics middleware
-
-## 🟢 Low Priority (Nice to Have)
-
-### ❌ 18. Database Integration Example
-
-- **Status**: ❌ Not Started
-- **Priority**: Medium
-- **Impact**: No database setup example
-- **Needed**: Add example with Prisma/TypeORM/Drizzle
-- **Note**: Optional but common in production APIs
-
-### ❌ 19. Authentication/Authorization Example
-
-- **Status**: ❌ Not Started
-- **Priority**: Medium
-- **Impact**: No auth pattern (JWT, sessions, etc.)
-- **Needed**: Add example auth middleware/strategy
-- **Options**: JWT, Passport.js, or custom implementation
 
 ---
 

@@ -60,7 +60,9 @@ export const apiConfig = {
   },
   internalSkipPaths: ['/health', '/api-docs', '/__webpack_hmr'] as string[],
   apiDocs: {
-    devURL: `http://localhost:${env.PORT}`,
-    prodURL: 'https://express-starter.durmusdemirtas.com',
+    v1: {
+      devURL: `http://localhost:${env.PORT}/api/v1`,
+      prodURL: 'https://express-starter.durmusdemirtas.com/api/v1',
+    },
   },
 } as const;

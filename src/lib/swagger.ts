@@ -4,11 +4,13 @@ import { apiConfig } from '@/config';
 import { isProductionLike } from '@/env';
 
 const devServer = {
-  url: apiConfig.apiDocs.devURL,
+  url: apiConfig.apiDocs.v1.devURL,
+  description: 'Development server V1',
 };
 
 const productionServer = {
-  url: apiConfig.apiDocs.prodURL,
+  url: apiConfig.apiDocs.v1.prodURL,
+  description: 'Production server V1',
 };
 
 export const swaggerSpec = swaggerJsdoc({
@@ -21,5 +23,5 @@ export const swaggerSpec = swaggerJsdoc({
     },
     servers: [isProductionLike ? productionServer : devServer],
   },
-  apis: ['./src/routers/*.ts', './src/controllers/*.ts', './dist/*.mjs', './dist/*.cjs'],
+  apis: ['./src/routes/**/*.ts', './src/controllers/*.ts', './dist/*.mjs', './dist/*.cjs'],
 });

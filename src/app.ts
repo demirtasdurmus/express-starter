@@ -2,7 +2,7 @@ import compression from 'compression';
 import timeout from 'connect-timeout';
 import cookieParser from 'cookie-parser';
 import type { Application } from 'express';
-import express from 'express';
+import express, { type Response } from 'express';
 import type { ParseKeys } from 'i18next';
 import swaggerUi from 'swagger-ui-express';
 
@@ -16,8 +16,8 @@ import { helmet } from '@/middleware/helmet.middleware';
 import { httpLogger } from '@/middleware/http-logger.middleware';
 import { i18n } from '@/middleware/i18n.middleware';
 import { apiRateLimit, globalRateLimit } from '@/middleware/rate-limit.middleware';
-import { healthRouter } from '@/routers/health.router';
-import { sampleRouter } from '@/routers/sample.router';
+import { v1Router } from '@/routes/v1';
+import type { THealthResponse } from '@/types/health';
 
 const app: Application = express();
 
@@ -70,13 +70,18 @@ app.use(
   }),
 );
 
-app.use('/health', healthRouter);
-
 app.use('/api', apiRateLimit);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use('/api/samples', sampleRouter);
+app.get('/health', (_req, res: Response<THealthResponse>) => {
+  res.status(200).json({
+    timestamp: new Date().toISOString(),
+    version: apiConfig.version,
+  });
+});
+
+app.use('/api/v1', v1Router);
 
 app.all('/*splat', (req, _res, _next) => {
   throw new NotFoundError('common.notFound' satisfies ParseKeys, {

@@ -3,6 +3,8 @@ import request from 'supertest';
 import { app } from '@/app';
 import { deleteSampleById, getSamples } from '@/services/sample.service';
 
+import { V1_BASE_URL } from './constants';
+
 describe('Sample Routes', () => {
   beforeEach(() => {
     const allSamples = getSamples();
@@ -13,9 +15,9 @@ describe('Sample Routes', () => {
     });
   });
 
-  describe('GET /api/samples', () => {
+  describe('GET /samples', () => {
     it('should return an empty array when no samples exist', async () => {
-      const response = await request(app).get('/api/samples');
+      const response = await request(app).get(`${V1_BASE_URL}/samples`);
 
       expect(response.status).toBe(200);
       expect(response.body?.samples).toEqual([]);
@@ -23,13 +25,13 @@ describe('Sample Routes', () => {
 
     it('should return all samples', async () => {
       const createResponse1 = await request(app)
-        .post('/api/samples?page=1&limit=10')
+        .post(`${V1_BASE_URL}/samples?page=1&limit=10`)
         .send({ name: 'Sample 1' });
       const createResponse2 = await request(app)
-        .post('/api/samples?page=1&limit=10')
+        .post(`${V1_BASE_URL}/samples?page=1&limit=10`)
         .send({ name: 'Sample 2' });
 
-      const response = await request(app).get('/api/samples');
+      const response = await request(app).get(`${V1_BASE_URL}/samples`);
 
       expect(response.status).toBe(200);
       expect(response.body?.samples).toHaveLength(2);
@@ -38,9 +40,11 @@ describe('Sample Routes', () => {
     });
   });
 
-  describe('POST /api/samples', () => {
+  describe('POST /samples', () => {
     it('should create a sample', async () => {
-      const response = await request(app).post('/api/samples').send({ name: 'Test Sample' });
+      const response = await request(app)
+        .post(`${V1_BASE_URL}/samples`)
+        .send({ name: 'Test Sample' });
 
       expect(response.status).toBe(201);
       expect(response.body?.id).toBeTruthy();
@@ -48,20 +52,20 @@ describe('Sample Routes', () => {
     });
 
     it('should return 422 when validation fails', async () => {
-      const response = await request(app).post('/api/samples').send({});
+      const response = await request(app).post(`${V1_BASE_URL}/samples`).send({});
 
       expect(response.status).toBe(422);
     });
 
     it('should return 422 when validation fails with proper custom error messages', async () => {
-      const response = await request(app).post('/api/samples').send({ name: '' });
+      const response = await request(app).post(`${V1_BASE_URL}/samples`).send({ name: '' });
 
       expect(response.status).toBe(422);
     });
 
     it('should return 400 when request body is invalid JSON', async () => {
       const response = await request(app)
-        .post('/api/samples')
+        .post(`${V1_BASE_URL}/samples`)
         .set('Content-Type', 'application/json')
         .send('{\n  "name": \n}');
 
@@ -71,19 +75,21 @@ describe('Sample Routes', () => {
     });
   });
 
-  describe('GET /api/samples/:id', () => {
+  describe('GET /samples/:id', () => {
     it('should return a sample when it exists', async () => {
-      const createResponse = await request(app).post('/api/samples').send({ name: 'Test Sample' });
+      const createResponse = await request(app)
+        .post(`${V1_BASE_URL}/samples`)
+        .send({ name: 'Test Sample' });
       const sampleId = createResponse.body.id;
 
-      const response = await request(app).get(`/api/samples/${sampleId}`);
+      const response = await request(app).get(`${V1_BASE_URL}/samples/${sampleId}`);
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual(createResponse.body);
     });
 
     it('should return 422 when id is not a valid UUID', async () => {
-      const response = await request(app).get('/api/samples/invalid-id-format');
+      const response = await request(app).get(`${V1_BASE_URL}/samples/invalid-id-format`);
 
       expect(response.status).toBe(422);
     });
@@ -91,21 +97,21 @@ describe('Sample Routes', () => {
     it('should return 404 when sample does not exist', async () => {
       const nonExistentId = '00000000-0000-0000-0000-000000000000';
 
-      const response = await request(app).get(`/api/samples/${nonExistentId}`);
+      const response = await request(app).get(`${V1_BASE_URL}/samples/${nonExistentId}`);
 
       expect(response.status).toBe(404);
     });
   });
 
-  describe('PATCH /api/samples/:id', () => {
+  describe('PATCH /samples/:id', () => {
     it('should update an existing sample', async () => {
       const createResponse = await request(app)
-        .post('/api/samples')
+        .post(`${V1_BASE_URL}/samples`)
         .send({ name: 'Original Name' });
       const sampleId = createResponse.body.id;
 
       const response = await request(app)
-        .patch(`/api/samples/${sampleId}`)
+        .patch(`${V1_BASE_URL}/samples/${sampleId}`)
         .send({ name: 'Updated Name' });
 
       expect(response.status).toBe(200);
@@ -114,19 +120,25 @@ describe('Sample Routes', () => {
     });
 
     it('should return 422 when validation fails', async () => {
-      const createResponse = await request(app).post('/api/samples').send({ name: 'Test Sample' });
+      const createResponse = await request(app)
+        .post(`${V1_BASE_URL}/samples`)
+        .send({ name: 'Test Sample' });
       const sampleId = createResponse.body.id;
 
-      const response = await request(app).patch(`/api/samples/${sampleId}`).send({});
+      const response = await request(app).patch(`${V1_BASE_URL}/samples/${sampleId}`).send({});
 
       expect(response.status).toBe(422);
     });
 
     it('should return 422 when validation fails with proper custom error messages', async () => {
-      const createResponse = await request(app).post('/api/samples').send({ name: 'Test Name' });
+      const createResponse = await request(app)
+        .post(`${V1_BASE_URL}/samples`)
+        .send({ name: 'Test Name' });
       const sampleId = createResponse.body.id;
 
-      const response = await request(app).patch(`/api/samples/${sampleId}`).send({ name: '' });
+      const response = await request(app)
+        .patch(`${V1_BASE_URL}/samples/${sampleId}`)
+        .send({ name: '' });
 
       expect(response.status).toBe(422);
     });
@@ -135,28 +147,30 @@ describe('Sample Routes', () => {
       const nonExistentId = '00000000-0000-0000-0000-000000000000';
 
       const response = await request(app)
-        .patch(`/api/samples/${nonExistentId}`)
+        .patch(`${V1_BASE_URL}/samples/${nonExistentId}`)
         .send({ name: 'Updated Name' });
 
       expect(response.status).toBe(404);
     });
   });
 
-  describe('DELETE /api/samples/:id', () => {
+  describe('DELETE /samples/:id', () => {
     it('should delete an existing sample', async () => {
-      const createResponse = await request(app).post('/api/samples').send({ name: 'Test Sample' });
+      const createResponse = await request(app)
+        .post(`${V1_BASE_URL}/samples`)
+        .send({ name: 'Test Sample' });
       const sampleId = createResponse.body.id;
 
-      const response = await request(app).delete(`/api/samples/${sampleId}`);
+      const response = await request(app).delete(`${V1_BASE_URL}/samples/${sampleId}`);
 
       expect(response.status).toBe(204);
 
-      const getResponse = await request(app).get(`/api/samples/${sampleId}`);
+      const getResponse = await request(app).get(`${V1_BASE_URL}/samples/${sampleId}`);
       expect(getResponse.status).toBe(404);
     });
 
     it('should return 422 when an invalid ID is provided with proper custom error messages', async () => {
-      const response = await request(app).delete(`/api/samples/invalid-id`);
+      const response = await request(app).delete(`${V1_BASE_URL}/samples/invalid-id`);
 
       expect(response.status).toBe(422);
     });
@@ -164,7 +178,7 @@ describe('Sample Routes', () => {
     it('should return 404 when sample does not exist', async () => {
       const nonExistentId = '00000000-0000-0000-0000-000000000000';
 
-      const response = await request(app).delete(`/api/samples/${nonExistentId}`);
+      const response = await request(app).delete(`${V1_BASE_URL}/samples/${nonExistentId}`);
 
       expect(response.status).toBe(404);
     });

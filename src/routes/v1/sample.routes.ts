@@ -19,7 +19,7 @@ const router = Router();
 
 /**
  * @swagger
- * /api/samples:
+ * /samples:
  *   get:
  *     summary: Get samples
  *     tags: [Samples]
@@ -79,7 +79,7 @@ router.get(
 
 /**
  * @swagger
- * /api/samples:
+ * /samples:
  *   post:
  *     summary: Create a sample
  *     tags: [Samples]
@@ -122,7 +122,7 @@ router.post(
 
 /**
  * @swagger
- * /api/samples/{id}:
+ * /samples/{id}:
  *   get:
  *     summary: Get a sample by ID
  *     tags: [Samples]
@@ -160,7 +160,7 @@ router.get(
 
 /**
  * @swagger
- * /api/samples/{id}:
+ * /samples/{id}:
  *   patch:
  *     summary: Update a sample by ID
  *     tags: [Samples]
@@ -211,7 +211,7 @@ router.patch(
 
 /**
  * @swagger
- * /api/samples/{id}:
+ * /samples/{id}:
  *   delete:
  *     summary: Delete a sample by ID
  *     tags: [Samples]
