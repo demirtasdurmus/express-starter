@@ -10,6 +10,8 @@ services:
       - HOST=${HOST:-0.0.0.0}
       - CORS_ORIGIN=${CORS_ORIGIN:-https://express-starter.durmusdemirtas.com}
       - TRUST_PROXY_HOPS=${TRUST_PROXY_HOPS:-1}
+      - API_DOCS_USERNAME=${API_DOCS_USERNAME}
+      - API_DOCS_PASSWORD=${API_DOCS_PASSWORD}
     healthcheck:
       test:
         - CMD

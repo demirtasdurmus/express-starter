@@ -41,7 +41,7 @@ pnpm dev
 - **Health Check** - Health check endpoint at `/health` for load balancers and monitoring
 - **Structured Logging** - Pino-based structured logging with JSON output in production
 - **Request ID** - Automatic request ID generation and tracking via `X-Request-ID` header
-- **API Documentation** - Swagger/OpenAPI documentation with interactive UI at `/api-docs`
+- **API Documentation** - Swagger/OpenAPI documentation with interactive UI at `/api-docs` (protected with HTTP Basic Auth in production and staging)
 - **Docker Support** - Production-ready Dockerfile and docker-compose.yml for easy containerization
 - **Build (tsdown)** - [tsdown](https://github.com/rolldown/tsdown) bundles the app for dev and production with path alias support
 - **Testing** - Jest with unit and integration test configurations
@@ -123,7 +123,7 @@ pnpm test:coverage
 ### Local Deployment
 
 1. Build the project: `pnpm build` (static assets are minified when `MINIFY_ASSETS=true`)
-2. Set environment variables (especially `NODE_ENV=production` and `CORS_ORIGIN`)
+2. Set environment variables (especially `NODE_ENV=production`, `CORS_ORIGIN`, `API_DOCS_USERNAME`, and `API_DOCS_PASSWORD`)
 3. Start the server: `pnpm start`
 4. The server will run on the port specified in the `PORT` environment variable (default: 9000)
 
@@ -171,6 +171,8 @@ The project includes production-ready Docker configuration:
      -e PORT=9000 \
      -e HOST=0.0.0.0 \
      -e CORS_ORIGIN=* \
+     -e API_DOCS_USERNAME=your-username \
+     -e API_DOCS_PASSWORD=your-password \
      express-starter
    ```
 
@@ -179,7 +181,7 @@ The project includes production-ready Docker configuration:
 - Set `NODE_ENV=production` for optimized error handling, security and static asset minification
 - Set `HOST=0.0.0.0` when running in Docker to allow external connections
 - Configure `CORS_ORIGIN` with your frontend domain(s) (avoid using `*` in production)
-- Consider protecting the `/api-docs` endpoint in production (Swagger UI)
+- Set `API_DOCS_USERNAME` and `API_DOCS_PASSWORD` to protect `/api-docs` with HTTP Basic Auth in production and staging (the app fails to start if either is missing in those environments; development and test remain public)
 - Ensure HTTPS is configured at the reverse proxy/load balancer level
 - Monitor rate limiting and adjust limits based on your traffic patterns
 - Configure `DEFAULT_LANGUAGE` and `SUPPORTED_LANGUAGES` based on your target audience

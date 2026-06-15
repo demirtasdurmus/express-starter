@@ -185,33 +185,18 @@ This document tracks all planned improvements and enhancements for the Express S
 
 ## 🟢 Low Priority (Nice to Have)
 
-### ❌ 16. Database Integration Example
+### ✅ 16. Environment-based Swagger UI Protection
 
-- **Status**: ❌ Not Started
-- **Priority**: Low
-- **Impact**: No database setup example
-- **Needed**: Add example with Prisma/TypeORM/Drizzle
-- **Note**: Optional but common in production APIs
-
-### ❌ 17. Authentication/Authorization Example
-
-- **Status**: ❌ Not Started
-- **Priority**: Low
-- **Impact**: No auth pattern (JWT, sessions, etc.)
-- **Needed**: Add example auth middleware/strategy
-- **Options**: JWT, Passport.js, or custom implementation
-
-### ❌ 18. Environment-based Swagger UI Protection
-
-- **Status**: ❌ Not Started
+- **Status**: ✅ Completed
 - **Priority**: Medium
 - **Impact**: Swagger UI exposed in production
-- **Needed**:
-  - Add authentication middleware for `/api-docs` in production
-  - Or conditionally disable Swagger UI in production
-  - Options: Basic auth, API key, or disable entirely
+- **Implemented**:
+  - HTTP Basic Auth middleware for `/api-docs` in production and staging
+  - Credentials via `API_DOCS_USERNAME` and `API_DOCS_PASSWORD` environment variables
+  - Fail-fast validation when credentials are missing in production-like environments
+  - Development and test environments remain publicly accessible
 
-### ❌ 19. Metrics/Observability
+### ❌ 17. Metrics/Observability
 
 - **Status**: ❌ Not Started
 - **Priority**: Low
@@ -221,6 +206,22 @@ This document tracks all planned improvements and enhancements for the Express S
   - Prometheus metrics endpoint
   - OpenTelemetry integration
   - Custom metrics middleware
+
+### ❌ 18. Database Integration Example
+
+- **Status**: ❌ Not Started
+- **Priority**: Low
+- **Impact**: No database setup example
+- **Needed**: Add example with Prisma/TypeORM/Drizzle
+- **Note**: Optional but common in production APIs
+
+### ❌ 19. Authentication/Authorization Example
+
+- **Status**: ❌ Not Started
+- **Priority**: Low
+- **Impact**: No auth pattern (JWT, sessions, etc.)
+- **Needed**: Add example auth middleware/strategy
+- **Options**: JWT, Passport.js, or custom implementation
 
 ---
 
