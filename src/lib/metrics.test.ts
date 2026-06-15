@@ -14,6 +14,7 @@ function createRequest(overrides: Partial<Request> = {}): Request {
 
 describe('shouldSkipMetricsPath', () => {
   it.each([
+    '/',
     '/health',
     '/metrics',
     '/api-docs',
