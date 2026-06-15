@@ -4,10 +4,11 @@ import type { RequestHandler } from 'express';
 import { env } from '@/env';
 
 const WWW_AUTHENTICATE = 'Basic realm="API Docs"';
-const { API_DOCS_USERNAME, API_DOCS_PASSWORD } = env;
 
 export const swaggerAuth: RequestHandler = (req, res, next) => {
-  if (verifySwaggerBasicAuth(req.headers.authorization, API_DOCS_USERNAME, API_DOCS_PASSWORD)) {
+  if (
+    verifySwaggerBasicAuth(req.headers.authorization, env.API_DOCS_USERNAME, env.API_DOCS_PASSWORD)
+  ) {
     return next();
   }
 

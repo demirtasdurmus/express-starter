@@ -1,5 +1,5 @@
-import { env } from '@/env/env';
+import { developmentLikeEnvironments, env, productionLikeEnvironments } from './env';
 
-export const isProductionLike = ['production', 'staging'].includes(env.NODE_ENV);
-export const isDevelopmentLike = ['development', 'test'].includes(env.NODE_ENV);
+export const isProductionLike = productionLikeEnvironments.has(env.NODE_ENV);
+export const isDevelopmentLike = developmentLikeEnvironments.has(env.NODE_ENV);
 export { env };

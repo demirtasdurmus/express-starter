@@ -1,11 +1,11 @@
-// prettier-ignore
 import 'dotenv/config';
 
 import z from 'zod';
 
 import { parseWithZod } from '@/utils/parse-with-zod';
 
-const productionLikeEnvironments = new Set(['production', 'staging']);
+export const productionLikeEnvironments = new Set<EnvType['NODE_ENV']>(['production', 'staging']);
+export const developmentLikeEnvironments = new Set<EnvType['NODE_ENV']>(['development', 'test']);
 
 const envSchema = z
   .object({
