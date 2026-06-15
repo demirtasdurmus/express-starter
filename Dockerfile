@@ -2,9 +2,9 @@
 # Build stage
 # Keep Corepack's pnpm version aligned with package.json "packageManager".
 ########################################################
-FROM node:24-alpine AS builder
+FROM node:22-alpine AS builder
 
-RUN corepack enable && corepack prepare pnpm@11.5.2 --activate
+RUN corepack enable && corepack prepare pnpm@11.6.0 --activate
 
 WORKDIR /app
 
@@ -18,9 +18,9 @@ RUN MINIFY_ASSETS=true pnpm build
 ########################################################
 # Production stage
 ########################################################
-FROM node:24-alpine
+FROM node:22-alpine
 
-RUN corepack enable && corepack prepare pnpm@11.5.2 --activate
+RUN corepack enable && corepack prepare pnpm@11.6.0 --activate
 
 RUN npm config set update-notifier false
 RUN addgroup -g 1001 -S nodejs && \
