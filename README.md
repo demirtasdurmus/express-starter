@@ -60,7 +60,7 @@ src/
 ├── controllers/     # Request handlers
 ├── env/             # Environment variables
 ├── middleware/      # Custom middleware
-├── routers/         # Router definitions
+├── routes/          # Router definitions
 ├── schemas/         # Zod validation schemas
 ├── services/        # Business logic
 ├── types/           # TypeScript type definitions
