@@ -196,16 +196,24 @@ This document tracks all planned improvements and enhancements for the Express S
   - Fail-fast validation when credentials are missing in production-like environments
   - Development and test environments remain publicly accessible
 
-### ❌ 17. Metrics/Observability
+### ✅ 17. Metrics/Observability
 
-- **Status**: ❌ Not Started
+- **Status**: ✅ Completed
 - **Priority**: Low
-- **Impact**: Limited production monitoring
-- **Needed**: Add Prometheus metrics or similar
-- **Options**:
-  - Prometheus metrics endpoint
-  - OpenTelemetry integration
-  - Custom metrics middleware
+- **Impact**: No metrics endpoint
+- **Implemented**:
+  - Prometheus-compatible `/metrics` endpoint
+  - Default Node.js/process metrics via `prom-client`
+  - HTTP request counter
+  - HTTP request duration histogram
+  - Stable route labels to avoid high cardinality
+  - Structured JSON logs remain stdout-based
+- **Out of scope**:
+  - Prometheus server
+  - Grafana dashboards
+  - Loki / log aggregation
+  - OpenTelemetry tracing
+  - Docker observability stack
 
 ### ❌ 18. Database Integration Example
 

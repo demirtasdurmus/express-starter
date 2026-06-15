@@ -9,6 +9,7 @@ import swaggerUi from 'swagger-ui-express';
 import { apiConfig } from '@/config';
 import { isProductionLike } from '@/env';
 import { NotFoundError } from '@/lib/error';
+import { metricsRegistry } from '@/lib/metrics';
 import { swaggerSpec } from '@/lib/swagger';
 import { cacheControl } from '@/middleware/cache-control.middleware';
 import { cors } from '@/middleware/cors.middleware';
@@ -16,6 +17,7 @@ import { errorHandler } from '@/middleware/error-handler.middleware';
 import { helmet } from '@/middleware/helmet.middleware';
 import { httpLogger } from '@/middleware/http-logger.middleware';
 import { i18n } from '@/middleware/i18n.middleware';
+import { metrics } from '@/middleware/metrics.middleware';
 import { apiRateLimit, globalRateLimit } from '@/middleware/rate-limit.middleware';
 import { swaggerAuth } from '@/middleware/swagger-auth.middleware';
 import { v1Router } from '@/routes/v1';
@@ -47,6 +49,7 @@ app.use(helmet);
 app.use(cors);
 
 app.use(httpLogger());
+app.use(metrics);
 
 app.use(cookieParser());
 app.use(i18n);
@@ -85,6 +88,11 @@ app.get('/health', (_req, res: Response<THealthResponse>) => {
     timestamp: new Date().toISOString(),
     version: apiConfig.version,
   });
+});
+
+app.get('/metrics', async (_req, res) => {
+  res.set('Content-Type', metricsRegistry.contentType);
+  res.end(await metricsRegistry.metrics());
 });
 
 app.use('/api/v1', v1Router);

@@ -39,6 +39,7 @@ pnpm dev
 - **Response Compression** - Automatic gzip/deflate compression for improved performance
 - **Asset Minification** - Automatic minification of JavaScript and CSS files in production builds
 - **Health Check** - Health check endpoint at `/health` for load balancers and monitoring
+- **Metrics** - Prometheus-compatible metrics endpoint at `/metrics`
 - **Structured Logging** - Pino-based structured logging with JSON output in production
 - **Request ID** - Automatic request ID generation and tracking via `X-Request-ID` header
 - **API Documentation** - Swagger/OpenAPI documentation with interactive UI at `/api-docs` (protected with HTTP Basic Auth in production and staging)
@@ -117,6 +118,20 @@ pnpm test:int
 # Generate coverage report
 pnpm test:coverage
 ```
+
+### Metrics and Observability
+
+The application exposes Prometheus-compatible metrics at `/metrics`.
+
+Included metrics:
+
+- Default Node.js/process metrics
+- HTTP request count
+- HTTP request duration histogram
+
+The app emits structured JSON logs to stdout in production. External observability infrastructure such as Prometheus, Grafana, Loki, Vector, Promtail, or OpenTelemetry is intentionally not bundled with this starter.
+
+In real deployments, you may want to expose `/metrics` only on an internal network or protect it at the reverse proxy level. This starter leaves `/metrics` public by default.
 
 ## 🚀 Deployment
 
