@@ -3,7 +3,13 @@ import { collectDefaultMetrics, Counter, Histogram, Registry } from 'prom-client
 
 import { isStaticFile } from '@/utils/is-static-file';
 
-export const METRICS_SKIP_PATHS = ['/health', '/metrics', '/api-docs', '/__webpack_hmr'] as const;
+export const METRICS_SKIP_PATHS = [
+  '/health',
+  '/metrics',
+  '/api-docs',
+  '/__webpack_hmr',
+  '/',
+] as const;
 
 export const UNMATCHED_ROUTE_LABEL = '__unmatched__';
 
