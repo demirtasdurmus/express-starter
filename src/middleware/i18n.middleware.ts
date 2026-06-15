@@ -54,6 +54,6 @@ i18next
  * This middleware must be placed after cookie-parser and before routes
  */
 export const i18n = i18nextHttpMiddleware.handle(i18next, {
-  ignoreRoutes: ['/health', '/api-docs'],
+  ignoreRoutes: ['/health', '/metrics', '/api-docs'],
   removeLngFromUrl: false,
 });
