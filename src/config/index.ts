@@ -58,7 +58,7 @@ export const apiConfig = {
   timeout: {
     request: 30000,
   },
-  internalSkipPaths: ['/health', '/api-docs', '/__webpack_hmr'] as string[],
+  internalSkipPaths: ['/health', '/__webpack_hmr'] as string[],
   apiDocs: {
     v1: {
       devURL: `http://localhost:${env.PORT}/api/v1`,

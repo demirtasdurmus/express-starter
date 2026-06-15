@@ -5,27 +5,58 @@ import z from 'zod';
 
 import { parseWithZod } from '@/utils/parse-with-zod';
 
-const envSchema = z.object({
-  NODE_ENV: z.enum(['development', 'staging', 'production', 'test']).default('development'),
-  HOST: z.string().default('localhost'),
-  PORT: z.coerce.number().default(8080),
-  CORS_ORIGIN: z.string().optional(),
-  TRUST_PROXY_HOPS: z
-    .string()
-    .optional()
-    .default('1')
-    .transform((val) => {
-      if (val.toLowerCase() === 'true') return true;
-      const parsed = Number.parseInt(val, 10);
-      return Number.isNaN(parsed) ? 1 : parsed;
-    }),
-  /** When true, skips SIGTERM/SIGINT/error process hooks (recommended for tsdown --watch parent processes). */
-  DISABLE_SHUTDOWN_LISTENERS: z
-    .string()
-    .optional()
-    .default('false')
-    .transform((val) => val === '1' || val.toLowerCase() === 'true'),
-});
+const productionLikeEnvironments = new Set(['production', 'staging']);
+
+const envSchema = z
+  .object({
+    NODE_ENV: z.enum(['development', 'staging', 'production', 'test']).default('development'),
+    HOST: z.string().default('localhost'),
+    PORT: z.coerce.number().default(8080),
+    CORS_ORIGIN: z.string().optional(),
+    API_DOCS_USERNAME: z.string().optional().default(''),
+    API_DOCS_PASSWORD: z.string().optional().default(''),
+    TRUST_PROXY_HOPS: z
+      .string()
+      .optional()
+      .default('1')
+      .transform((val) => {
+        if (val.toLowerCase() === 'true') return true;
+        const parsed = Number.parseInt(val, 10);
+        return Number.isNaN(parsed) ? 1 : parsed;
+      }),
+    /** When true, skips SIGTERM/SIGINT/error process hooks (recommended for tsdown --watch parent processes). */
+    DISABLE_SHUTDOWN_LISTENERS: z
+      .string()
+      .optional()
+      .default('false')
+      .transform((val) => val === '1' || val.toLowerCase() === 'true'),
+  })
+  .superRefine((data, ctx) => {
+    if (!productionLikeEnvironments.has(data.NODE_ENV)) {
+      return;
+    }
+
+    if (data.API_DOCS_USERNAME.trim().length === 0) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'API_DOCS_USERNAME is required when NODE_ENV is production or staging',
+        path: ['API_DOCS_USERNAME'],
+      });
+    }
+
+    if (data.API_DOCS_PASSWORD.trim().length === 0) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'API_DOCS_PASSWORD is required when NODE_ENV is production or staging',
+        path: ['API_DOCS_PASSWORD'],
+      });
+    }
+  })
+  .transform((data) => ({
+    ...data,
+    API_DOCS_USERNAME: data.API_DOCS_USERNAME.trim(),
+    API_DOCS_PASSWORD: data.API_DOCS_PASSWORD.trim(),
+  }));
 
 export type EnvType = z.infer<typeof envSchema>;
 
@@ -36,7 +67,7 @@ parseWithZod({
   schema: envSchema,
   onError: (error) => {
     console.error(
-      'Do you have a .env file? If not, create one by running cp .env.example .env:\n',
+      'Do you have a .env file? If not, create one by running `cp .env.example .env`:\n',
       'Invalid environment variables:\n',
       error.issues.map((issue) => `-> ${issue.message}`).join('\n '),
     );

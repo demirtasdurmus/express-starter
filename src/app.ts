@@ -7,6 +7,7 @@ import type { ParseKeys } from 'i18next';
 import swaggerUi from 'swagger-ui-express';
 
 import { apiConfig } from '@/config';
+import { isProductionLike } from '@/env';
 import { NotFoundError } from '@/lib/error';
 import { swaggerSpec } from '@/lib/swagger';
 import { cacheControl } from '@/middleware/cache-control.middleware';
@@ -16,6 +17,7 @@ import { helmet } from '@/middleware/helmet.middleware';
 import { httpLogger } from '@/middleware/http-logger.middleware';
 import { i18n } from '@/middleware/i18n.middleware';
 import { apiRateLimit, globalRateLimit } from '@/middleware/rate-limit.middleware';
+import { swaggerAuth } from '@/middleware/swagger-auth.middleware';
 import { v1Router } from '@/routes/v1';
 import type { THealthResponse } from '@/types/health';
 
@@ -71,6 +73,10 @@ app.use(
 );
 
 app.use('/api', apiRateLimit);
+
+if (isProductionLike) {
+  app.use('/api-docs', swaggerAuth);
+}
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
