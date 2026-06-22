@@ -60,6 +60,7 @@ src/
 ├── config/          # Configuration
 ├── controllers/     # Request handlers
 ├── env/             # Environment variables
+├── lib/             # Library functions
 ├── middleware/      # Custom middleware
 ├── routes/          # Router definitions
 ├── schemas/         # Zod validation schemas

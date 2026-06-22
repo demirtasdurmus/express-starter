@@ -1,5 +1,4 @@
 import type { RequestHandler } from 'express';
-import type { ParseKeys } from 'i18next';
 
 import { NotFoundError } from '@/lib/error';
 import type {
@@ -44,7 +43,7 @@ export const getSampleByIdController: RequestHandler<TSampleIdParams, TSample> =
   const sample = getSampleById(req.params.id);
 
   if (!sample) {
-    throw new NotFoundError('samples.notFound' satisfies ParseKeys);
+    throw new NotFoundError('samples.notFound');
   }
 
   res.status(200).json(sample);
@@ -58,7 +57,7 @@ export const updateSampleByIdController: RequestHandler<
   const sample = updateSampleById(req.params.id, req.body.name);
 
   if (!sample) {
-    throw new NotFoundError(req.t('samples.notFound'));
+    throw new NotFoundError('samples.notFound');
   }
 
   res.status(200).json(sample);
@@ -68,7 +67,7 @@ export const deleteSampleByIdController: RequestHandler<TSampleIdParams> = (req,
   const deletedSampleId = deleteSampleById(req.params.id);
 
   if (!deletedSampleId) {
-    throw new NotFoundError(req.t('samples.notFound'));
+    throw new NotFoundError('samples.notFound');
   }
 
   res.status(204).json();

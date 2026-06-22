@@ -1,5 +1,4 @@
 import type { RequestHandler } from 'express';
-import type { ParseKeys } from 'i18next';
 import type { z } from 'zod';
 
 import { transformZodIssueToFieldError, UnprocessableEntityError } from '@/lib/error';
@@ -18,7 +17,7 @@ export function validate<T>({ validationMap, schema }: TValidateOptions<T>): Req
       schema,
       onError: (error) => {
         throw new UnprocessableEntityError(
-          'common.validationFailed' satisfies ParseKeys,
+          'common.validationFailed',
           error.issues.map(transformZodIssueToFieldError),
         );
       },

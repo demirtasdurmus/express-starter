@@ -1,3 +1,5 @@
+import type { ParseKeys } from 'i18next';
+
 import type { BaseErrorOptions, FieldError, ProblemDetail } from '@/types';
 
 /**
@@ -36,43 +38,43 @@ export class BaseError extends Error {
  * Generate Subclasses of ApiError for common error scenarios
  */
 export class BadRequestError extends BaseError {
-  constructor(message: string, options?: Omit<BaseErrorOptions, 'title'>) {
+  constructor(message: ParseKeys, options?: Omit<BaseErrorOptions, 'title'>) {
     super(400, message, 'BAD_REQUEST', options);
   }
 }
 
 export class UnauthorizedError extends BaseError {
-  constructor(message: string, options?: Omit<BaseErrorOptions, 'title'>) {
+  constructor(message: ParseKeys, options?: Omit<BaseErrorOptions, 'title'>) {
     super(401, message, 'UNAUTHORIZED', options);
   }
 }
 
 export class ForbiddenError extends BaseError {
-  constructor(message: string, options?: Omit<BaseErrorOptions, 'title'>) {
+  constructor(message: ParseKeys, options?: Omit<BaseErrorOptions, 'title'>) {
     super(403, message, 'FORBIDDEN', options);
   }
 }
 
 export class NotFoundError extends BaseError {
-  constructor(message: string, options?: Omit<BaseErrorOptions, 'title'>) {
+  constructor(message: ParseKeys, options?: Omit<BaseErrorOptions, 'title'>) {
     super(404, message, 'NOT_FOUND', options);
   }
 }
 
 export class ConflictError extends BaseError {
-  constructor(message: string, options?: Omit<BaseErrorOptions, 'title'>) {
+  constructor(message: ParseKeys, options?: Omit<BaseErrorOptions, 'title'>) {
     super(409, message, 'CONFLICT', options);
   }
 }
 
 export class UnprocessableEntityError extends BaseError {
-  constructor(message: string, errors: FieldError[]) {
+  constructor(message: ParseKeys, errors: FieldError[]) {
     super(422, message, 'VALIDATION_ERROR', { extensions: { errors } });
   }
 }
 
 export class TooManyRequestsError extends BaseError {
-  constructor(message: string, options?: Omit<BaseErrorOptions, 'title'>) {
+  constructor(message: ParseKeys, options?: Omit<BaseErrorOptions, 'title'>) {
     super(429, message, 'TOO_MANY_REQUESTS', options);
   }
 }

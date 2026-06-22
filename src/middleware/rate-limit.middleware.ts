@@ -1,6 +1,5 @@
 import type { ValueDeterminingMiddleware } from 'express-rate-limit';
 import expressRateLimit, { ipKeyGenerator } from 'express-rate-limit';
-import type { ParseKeys } from 'i18next';
 
 import { apiConfig } from '@/config';
 import { TooManyRequestsError } from '@/lib/error';
@@ -33,7 +32,7 @@ export const globalRateLimit = expressRateLimit({
   keyGenerator,
   skip: (req) => shouldSkipPath(req.url),
   handler: (_req, _res, _next) => {
-    throw new TooManyRequestsError('samples.toManyRequests' satisfies ParseKeys);
+    throw new TooManyRequestsError('samples.toManyRequests');
   },
 });
 
@@ -43,6 +42,6 @@ export const apiRateLimit = expressRateLimit({
   legacyHeaders: false,
   keyGenerator,
   handler: (_req, _res, _next) => {
-    throw new TooManyRequestsError('samples.toManyRequests' satisfies ParseKeys);
+    throw new TooManyRequestsError('samples.toManyRequests');
   },
 });
