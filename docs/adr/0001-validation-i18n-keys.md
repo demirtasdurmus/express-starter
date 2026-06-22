@@ -23,7 +23,7 @@ Most validators (Zod, Valibot, Joi, Yup) expose a single `message` string that c
 
 ## Decision
 
-1. **Schemas store i18n translation keys only** — use `ParseKeys` and `'validation.*'` keys in Zod error params, not rendered text.
+1. **Schemas store i18n translation keys only** — use `ParseKeys` and `'validation.*'` keys in Zod error params, not rendered text. Zod message params are typed as `string`, so use `satisfies ParseKeys` at schema definition sites (application-thrown errors enforce `ParseKeys` in constructors; see [ADR 0002](./0002-static-i18n-keys-with-error-objects.md)).
 2. **Translate once in the error handler** — `error-handler.middleware.ts` calls `req.t()` on `detail` and `errors[].message` before sending `application/problem+json`.
 3. **Do not use Zod locales or per-request `z.config()`** in validate middleware.
 4. **Log before translation** — `res.locals.error` and structured logs retain keys; clients receive translated responses.
@@ -65,3 +65,4 @@ Keys live in `locales/{lang}/translation.json`.
 - `src/middleware/validate.middleware.ts`
 - `src/middleware/error-handler.middleware.ts`
 - `src/schemas/sample.schema.ts`
+- [ADR 0002: Static i18n keys with error objects](./0002-static-i18n-keys-with-error-objects.md)

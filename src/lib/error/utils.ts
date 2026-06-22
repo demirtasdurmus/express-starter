@@ -1,4 +1,3 @@
-import type { ParseKeys } from 'i18next';
 import type { z } from 'zod';
 
 import {
@@ -56,7 +55,7 @@ export function serializeError(err: unknown): BaseError {
   }
 
   if (isBodyParserError(err)) {
-    return new BadRequestError('common.invalidJson' satisfies ParseKeys, { cause: err });
+    return new BadRequestError('common.invalidJson', { cause: err });
   }
 
   if (err instanceof Error) {

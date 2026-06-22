@@ -3,7 +3,6 @@ import timeout from 'connect-timeout';
 import cookieParser from 'cookie-parser';
 import type { Application } from 'express';
 import express, { type Response } from 'express';
-import type { ParseKeys } from 'i18next';
 import swaggerUi from 'swagger-ui-express';
 
 import { apiConfig } from '@/config';
@@ -98,7 +97,7 @@ app.get('/metrics', async (_req, res) => {
 app.use('/api/v1', v1Router);
 
 app.all('/*splat', (req, _res, _next) => {
-  throw new NotFoundError('common.notFound' satisfies ParseKeys, {
+  throw new NotFoundError('common.notFound', {
     extensions: { method: req.method },
   });
 });
