@@ -1,19 +1,20 @@
 import type { RequestHandler } from 'express';
 
-import { NotFoundError } from '@/lib/error';
+import { ConflictError, NotFoundError } from '@/lib/error';
+import {
+  createSample,
+  deleteSampleById,
+  getSampleById,
+  getSampleByName,
+  getSamples,
+  updateSampleById,
+} from '@/repositories/sample.repository';
 import type {
   TCreateSampleRequestBody,
   TGetSamplesQuery,
   TSampleIdParams,
   TUpdateSampleRequestBody,
 } from '@/schemas/sample.schema';
-import {
-  createSample,
-  deleteSampleById,
-  getSampleById,
-  getSamples,
-  updateSampleById,
-} from '@/services/sample.service';
 import type { TGetSamplesResponse, TSample } from '@/types/sample';
 import { getPaginationMeta } from '@/utils/get-pagination-meta';
 
@@ -34,6 +35,12 @@ export const createSampleController: RequestHandler<unknown, TSample, TCreateSam
   req,
   res,
 ) => {
+  const existingSample = getSampleByName(req.body.name);
+
+  if (existingSample) {
+    throw new ConflictError('samples.alreadyExists');
+  }
+
   const sample = createSample(req.body.name);
 
   res.status(201).json(sample);

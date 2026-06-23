@@ -62,6 +62,7 @@ src/
 ├── env/             # Environment variables
 ├── lib/             # Library functions
 ├── middleware/      # Custom middleware
+├── repositories/    # Data access layer
 ├── routes/          # Router definitions
 ├── schemas/         # Zod validation schemas
 ├── services/        # Business logic

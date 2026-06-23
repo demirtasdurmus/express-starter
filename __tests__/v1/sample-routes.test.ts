@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { app } from '@/app';
-import { deleteSampleById, getSamples } from '@/services/sample.service';
+import { deleteSampleById, getSamples } from '@/repositories/sample.repository';
 
 import { V1_BASE_URL } from './constants';
 
@@ -49,6 +49,16 @@ describe('Sample Routes', () => {
       expect(response.status).toBe(201);
       expect(response.body?.id).toBeTruthy();
       expect(response.body?.name).toBe('Test Sample');
+    });
+
+    it('should return 409 when a sample with the same name already exists', async () => {
+      await request(app).post(`${V1_BASE_URL}/samples`).send({ name: 'Duplicate Sample' });
+
+      const response = await request(app)
+        .post(`${V1_BASE_URL}/samples`)
+        .send({ name: 'Duplicate Sample' });
+
+      expect(response.status).toBe(409);
     });
 
     it('should return 422 when validation fails', async () => {

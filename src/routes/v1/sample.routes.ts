@@ -113,6 +113,8 @@ router.get(
  *                 name:
  *                   type: string
  *                   example: "Sample 1"
+ *      409:
+ *        description: Conflict - Sample with the same name already exists
  */
 router.post(
   '/',

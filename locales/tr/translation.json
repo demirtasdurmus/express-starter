@@ -3,11 +3,12 @@
     "somethingWentWrong": "Bir şeyler yanlış gitti",
     "validationFailed": "Geçersiz veri",
     "notFound": "Bulunamadı",
-    "invalidJson": "İstek gövdesi geçersiz JSON içeriyor"
+    "invalidJson": "İstek gövdesi geçersiz JSON içeriyor",
+    "toManyRequests": "Çok fazla istek"
   },
   "samples": {
     "notFound": "Örnek bulunamadı",
-    "toManyRequests": "Çok fazla istek"
+    "alreadyExists": "Aynı isimde bir örnek zaten mevcut"
   },
   "validation": {
     "sample": {
