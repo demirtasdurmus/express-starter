@@ -70,6 +70,18 @@ const router = Router();
  *                       name:
  *                         type: string
  *                         example: "Sample 1"
+ *       422:
+ *         description: Validation failed
+ *         content:
+ *           application/problem+json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
+ *       429:
+ *         description: Too many requests
+ *         content:
+ *           application/problem+json:
+ *             schema:
+ *               $ref: '#/components/schemas/ProblemDetail'
  */
 router.get(
   '/',
@@ -113,6 +125,30 @@ router.get(
  *                 name:
  *                   type: string
  *                   example: "Sample 1"
+ *       400:
+ *         description: Invalid JSON
+ *         content:
+ *           application/problem+json:
+ *             schema:
+ *               $ref: '#/components/schemas/ProblemDetail'
+ *       409:
+ *         description: Conflict - sample with the same name already exists
+ *         content:
+ *           application/problem+json:
+ *             schema:
+ *               $ref: '#/components/schemas/ProblemDetail'
+ *       422:
+ *         description: Validation failed
+ *         content:
+ *           application/problem+json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
+ *       429:
+ *         description: Too many requests
+ *         content:
+ *           application/problem+json:
+ *             schema:
+ *               $ref: '#/components/schemas/ProblemDetail'
  */
 router.post(
   '/',
@@ -151,6 +187,24 @@ router.post(
  *                 name:
  *                   type: string
  *                   example: "Sample 1"
+ *       404:
+ *         description: Sample not found
+ *         content:
+ *           application/problem+json:
+ *             schema:
+ *               $ref: '#/components/schemas/ProblemDetail'
+ *       422:
+ *         description: Validation failed
+ *         content:
+ *           application/problem+json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
+ *       429:
+ *         description: Too many requests
+ *         content:
+ *           application/problem+json:
+ *             schema:
+ *               $ref: '#/components/schemas/ProblemDetail'
  */
 router.get(
   '/:id',
@@ -201,6 +255,30 @@ router.get(
  *                 name:
  *                   type: string
  *                   example: "Sample 1"
+ *       404:
+ *         description: Sample not found
+ *         content:
+ *           application/problem+json:
+ *             schema:
+ *               $ref: '#/components/schemas/ProblemDetail'
+ *       409:
+ *         description: Conflict - sample with the same name already exists
+ *         content:
+ *           application/problem+json:
+ *             schema:
+ *               $ref: '#/components/schemas/ProblemDetail'
+ *       422:
+ *         description: Validation failed
+ *         content:
+ *           application/problem+json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
+ *       429:
+ *         description: Too many requests
+ *         content:
+ *           application/problem+json:
+ *             schema:
+ *               $ref: '#/components/schemas/ProblemDetail'
  */
 router.patch(
   '/:id',
@@ -226,6 +304,24 @@ router.patch(
  *     responses:
  *       204:
  *         description: No content
+ *       404:
+ *         description: Sample not found
+ *         content:
+ *           application/problem+json:
+ *             schema:
+ *               $ref: '#/components/schemas/ProblemDetail'
+ *       422:
+ *         description: Validation failed
+ *         content:
+ *           application/problem+json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
+ *       429:
+ *         description: Too many requests
+ *         content:
+ *           application/problem+json:
+ *             schema:
+ *               $ref: '#/components/schemas/ProblemDetail'
  */
 router.delete(
   '/:id',

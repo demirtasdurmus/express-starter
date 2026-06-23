@@ -1,38 +1,70 @@
-import { randomUUID } from 'crypto';
+import { ConflictError, NotFoundError } from '@/lib/error';
+import {
+  createSample,
+  deleteSampleById,
+  getSampleById,
+  getSampleByName,
+  getSamples,
+  updateSampleById,
+} from '@/repositories/sample.repository';
+import type { TGetSamplesQuery } from '@/schemas/sample.schema';
+import type { TGetSamplesResponse, TSample } from '@/types/sample';
+import { getPaginationMeta } from '@/utils/get-pagination-meta';
 
-import type { TSample } from '@/types/sample';
+export function getSamplesService(query: TGetSamplesQuery): TGetSamplesResponse {
+  const { page = 1, limit = 10 } = query;
 
-const samples = new Map<string, string>();
+  const allSamples = getSamples();
+  const paginatedSamples = allSamples.slice((page - 1) * limit, page * limit);
 
-export function getSamples(): TSample[] {
-  return Array.from(samples.entries()).map(([id, name]) => ({ id, name }));
+  return {
+    ...getPaginationMeta({ page, limit, totalCount: allSamples.length }),
+    samples: paginatedSamples,
+  };
 }
 
-export function createSample(name: string): TSample {
-  const id = randomUUID();
-  samples.set(id, name);
-  return { id, name };
+export function createSampleService(name: string): TSample {
+  const existingSample = getSampleByName(name);
+
+  if (existingSample) {
+    throw new ConflictError('samples.alreadyExists');
+  }
+
+  return createSample(name);
 }
 
-export function getSampleById(id: string) {
-  const name = samples.get(id);
-  return name ? { id, name } : null;
+export function getSampleByIdService(id: string): TSample {
+  const sample = getSampleById(id);
+
+  if (!sample) {
+    throw new NotFoundError('samples.notFound');
+  }
+
+  return sample;
 }
 
-export function updateSampleById(id: string, name: string) {
-  if (!checkSampleExistsById(id)) return null;
+export function updateSampleByIdService(id: string, name: string): TSample {
+  const existingSample = getSampleByName(name);
 
-  samples.set(id, name);
-  return { id, name };
+  if (existingSample && existingSample.id !== id) {
+    throw new ConflictError('samples.alreadyExists');
+  }
+
+  const sample = updateSampleById(id, name);
+
+  if (!sample) {
+    throw new NotFoundError('samples.notFound');
+  }
+
+  return sample;
 }
 
-export function deleteSampleById(id: string) {
-  if (!checkSampleExistsById(id)) return null;
+export function deleteSampleByIdService(id: string): string {
+  const deletedId = deleteSampleById(id);
 
-  samples.delete(id);
-  return id;
-}
+  if (!deletedId) {
+    throw new NotFoundError('samples.notFound');
+  }
 
-export function checkSampleExistsById(id: string): boolean {
-  return samples.has(id);
+  return deletedId;
 }

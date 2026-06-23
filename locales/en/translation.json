@@ -3,11 +3,12 @@
     "somethingWentWrong": "Something went wrong",
     "validationFailed": "Validation failed",
     "notFound": "Not found",
-    "invalidJson": "Request body contains invalid JSON"
+    "invalidJson": "Request body contains invalid JSON",
+    "toManyRequests": "Too many requests"
   },
   "samples": {
     "notFound": "Sample not found",
-    "toManyRequests": "Too many requests"
+    "alreadyExists": "A sample with the same name already exists"
   },
   "validation": {
     "sample": {

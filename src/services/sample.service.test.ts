@@ -1,135 +1,109 @@
+import { ConflictError, NotFoundError } from '@/lib/error';
+import { deleteSampleById, getSamples } from '@/repositories/sample.repository';
 import {
-  checkSampleExistsById,
-  createSample,
-  deleteSampleById,
-  getSampleById,
-  getSamples,
-  updateSampleById,
+  createSampleService,
+  deleteSampleByIdService,
+  getSampleByIdService,
+  getSamplesService,
+  updateSampleByIdService,
 } from '@/services/sample.service';
 
 describe('Sample Service', () => {
   beforeEach(() => {
-    // Clear the samples map before each test to ensure test isolation
-    // Note: This is a workaround since the Map is module-scoped
-    // In a real application, you'd inject the storage as a dependency
-    const allSamples = getSamples();
-    allSamples.forEach((sample) => {
+    getSamples().forEach((sample) => {
       try {
         deleteSampleById(sample.id);
       } catch {
-        // Ignore errors if sample doesn't exist
+        // ignore
       }
     });
   });
 
-  describe('getSamples', () => {
-    it('should return an empty array when no samples exist', () => {
-      const result = getSamples();
+  describe('getSamplesService', () => {
+    it('should return empty samples with pagination meta', () => {
+      const result = getSamplesService({ page: 1, limit: 10 });
 
-      expect(result).toEqual([]);
+      expect(result.samples).toEqual([]);
+      expect(result.totalCount).toBe(0);
     });
 
-    it('should return all samples', () => {
-      const sample1 = createSample('Sample 1');
-      const sample2 = createSample('Sample 2');
+    it('should return paginated samples', () => {
+      createSampleService('Sample 1');
+      createSampleService('Sample 2');
+      createSampleService('Sample 3');
 
-      const result = getSamples();
+      const result = getSamplesService({ page: 1, limit: 2 });
 
-      expect(result).toHaveLength(2);
-      expect(result).toContainEqual(sample1);
-      expect(result).toContainEqual(sample2);
+      expect(result.samples).toHaveLength(2);
+      expect(result.totalCount).toBe(3);
     });
   });
 
-  describe('createSample', () => {
-    it('should create a sample with a UUID and name', () => {
-      const name = 'Test Sample';
-      const result = createSample(name);
+  describe('createSampleService', () => {
+    it('should create a sample', () => {
+      const result = createSampleService('New Sample');
 
       expect(result).toHaveProperty('id');
-      expect(result).toHaveProperty('name', name);
-      expect(result.id).toBeTruthy();
-      expect(typeof result.id).toBe('string');
+      expect(result.name).toBe('New Sample');
     });
 
-    it('should add the sample to the collection', () => {
-      const sample = createSample('Test Sample');
-      const allSamples = getSamples();
+    it('should throw ConflictError when name already exists', () => {
+      createSampleService('Duplicate');
 
-      expect(allSamples).toContainEqual(sample);
+      expect(() => createSampleService('Duplicate')).toThrow(ConflictError);
     });
   });
 
-  describe('getSampleById', () => {
-    it('should return a sample when it exists', () => {
-      const createdSample = createSample('Test Sample');
-      const result = getSampleById(createdSample.id);
+  describe('getSampleByIdService', () => {
+    it('should return a sample by id', () => {
+      const created = createSampleService('Test Sample');
+      const result = getSampleByIdService(created.id);
 
-      expect(result).toEqual(createdSample);
-    });
-
-    it('should return null when sample does not exist', () => {
-      const nonExistentId = 'non-existent-id';
-      const result = getSampleById(nonExistentId);
-
-      expect(result).toBeNull();
-    });
-  });
-
-  describe('updateSampleById', () => {
-    it('should update an existing sample', () => {
-      const createdSample = createSample('Original Name');
-      const newName = 'Updated Name';
-
-      const result = updateSampleById(createdSample.id, newName);
-
-      expect(result).toEqual({
-        id: createdSample.id,
-        name: newName,
-      });
-    });
-
-    it('should return null when sample does not exist', () => {
-      const nonExistentId = 'non-existent-id';
-      const newName = 'Updated Name';
-
-      const result = updateSampleById(nonExistentId, newName);
-
-      expect(result).toBeNull();
-    });
-  });
-
-  describe('deleteSampleById', () => {
-    it('should delete an existing sample', () => {
-      const createdSample = createSample('Test Sample');
-
-      const result = deleteSampleById(createdSample.id);
-
-      expect(result).toEqual(createdSample.id);
+      expect(result).toEqual(created);
     });
 
     it('should throw NotFoundError when sample does not exist', () => {
-      const nonExistentId = 'non-existent-id';
-
-      const result = deleteSampleById(nonExistentId);
-
-      expect(result).toBeNull();
+      expect(() => getSampleByIdService('non-existent-id')).toThrow(NotFoundError);
     });
   });
 
-  describe('checkSampleExistsById', () => {
-    it('should return true if sample exists', () => {
-      const createdSample = createSample('Test Sample');
-      const result = checkSampleExistsById(createdSample.id);
+  describe('updateSampleByIdService', () => {
+    it('should update a sample', () => {
+      const created = createSampleService('Original');
+      const result = updateSampleByIdService(created.id, 'Updated');
 
-      expect(result).toBe(true);
+      expect(result).toEqual({ id: created.id, name: 'Updated' });
     });
 
-    it('should return false if sample does not exist', () => {
-      const nonExistentId = 'non-existent-id';
-      const result = checkSampleExistsById(nonExistentId);
+    it('should throw ConflictError when name already exists on another sample', () => {
+      createSampleService('Taken Name');
+      const created = createSampleService('Original');
 
-      expect(result).toBe(false);
+      expect(() => updateSampleByIdService(created.id, 'Taken Name')).toThrow(ConflictError);
+    });
+
+    it('should allow renaming a sample to its own current name', () => {
+      const created = createSampleService('Same Name');
+      const result = updateSampleByIdService(created.id, 'Same Name');
+
+      expect(result).toEqual({ id: created.id, name: 'Same Name' });
+    });
+
+    it('should throw NotFoundError when sample does not exist', () => {
+      expect(() => updateSampleByIdService('non-existent-id', 'Updated')).toThrow(NotFoundError);
+    });
+  });
+
+  describe('deleteSampleByIdService', () => {
+    it('should delete a sample and return its id', () => {
+      const created = createSampleService('To Delete');
+      const result = deleteSampleByIdService(created.id);
+
+      expect(result).toBe(created.id);
+    });
+
+    it('should throw NotFoundError when sample does not exist', () => {
+      expect(() => deleteSampleByIdService('non-existent-id')).toThrow(NotFoundError);
     });
   });
 });

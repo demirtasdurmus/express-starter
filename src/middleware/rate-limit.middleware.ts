@@ -32,7 +32,7 @@ export const globalRateLimit = expressRateLimit({
   keyGenerator,
   skip: (req) => shouldSkipPath(req.url),
   handler: (_req, _res, _next) => {
-    throw new TooManyRequestsError('samples.toManyRequests');
+    throw new TooManyRequestsError('common.toManyRequests');
   },
 });
 
@@ -42,6 +42,6 @@ export const apiRateLimit = expressRateLimit({
   legacyHeaders: false,
   keyGenerator,
   handler: (_req, _res, _next) => {
-    throw new TooManyRequestsError('samples.toManyRequests');
+    throw new TooManyRequestsError('common.toManyRequests');
   },
 });
