@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { app } from '@/app';
-import { deleteSampleById, getSamples } from '@/repositories/sample.repository';
+import { deleteSampleById, getSamples } from '@/repositories/sample.repository'; // test teardown only
 
 import { V1_BASE_URL } from './constants';
 
@@ -51,14 +51,15 @@ describe('Sample Routes', () => {
       expect(response.body?.name).toBe('Test Sample');
     });
 
-    it('should return 409 when a sample with the same name already exists', async () => {
-      await request(app).post(`${V1_BASE_URL}/samples`).send({ name: 'Duplicate Sample' });
-
+    it('should return 400 when request body is invalid JSON', async () => {
       const response = await request(app)
         .post(`${V1_BASE_URL}/samples`)
-        .send({ name: 'Duplicate Sample' });
+        .set('Content-Type', 'application/json')
+        .send('{\n  "name": \n}');
 
-      expect(response.status).toBe(409);
+      expect(response.status).toBe(400);
+      expect(response.headers['content-type']).toMatch(/application\/problem\+json/);
+      expect(response.body?.detail).toBe('Request body contains invalid JSON');
     });
 
     it('should return 422 when validation fails', async () => {
@@ -73,15 +74,14 @@ describe('Sample Routes', () => {
       expect(response.status).toBe(422);
     });
 
-    it('should return 400 when request body is invalid JSON', async () => {
+    it('should return 409 when a sample with the same name already exists', async () => {
+      await request(app).post(`${V1_BASE_URL}/samples`).send({ name: 'Duplicate Sample' });
+
       const response = await request(app)
         .post(`${V1_BASE_URL}/samples`)
-        .set('Content-Type', 'application/json')
-        .send('{\n  "name": \n}');
+        .send({ name: 'Duplicate Sample' });
 
-      expect(response.status).toBe(400);
-      expect(response.headers['content-type']).toMatch(/application\/problem\+json/);
-      expect(response.body?.detail).toBe('Request body contains invalid JSON');
+      expect(response.status).toBe(409);
     });
   });
 
@@ -151,6 +151,20 @@ describe('Sample Routes', () => {
         .send({ name: '' });
 
       expect(response.status).toBe(422);
+    });
+
+    it('should return 409 when name already exists on another sample', async () => {
+      await request(app).post(`${V1_BASE_URL}/samples`).send({ name: 'Taken Name' });
+      const createResponse = await request(app)
+        .post(`${V1_BASE_URL}/samples`)
+        .send({ name: 'Original Name' });
+      const sampleId = createResponse.body.id;
+
+      const response = await request(app)
+        .patch(`${V1_BASE_URL}/samples/${sampleId}`)
+        .send({ name: 'Taken Name' });
+
+      expect(response.status).toBe(409);
     });
 
     it('should return 404 when sample does not exist', async () => {

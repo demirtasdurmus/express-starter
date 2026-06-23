@@ -113,8 +113,8 @@ router.get(
  *                 name:
  *                   type: string
  *                   example: "Sample 1"
- *      409:
- *        description: Conflict - Sample with the same name already exists
+ *       409:
+ *         description: Conflict - Sample with the same name already exists
  */
 router.post(
   '/',
@@ -203,6 +203,8 @@ router.get(
  *                 name:
  *                   type: string
  *                   example: "Sample 1"
+ *       409:
+ *         description: Conflict - Sample with the same name already exists
  */
 router.patch(
   '/:id',
