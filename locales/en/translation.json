@@ -20,6 +20,7 @@
     },
     "sample": {
       "invalidId": "Invalid sample ID",
+      "invalidName": "Name should be a valid string",
       "nameRequired": "Name is required"
     }
   }
