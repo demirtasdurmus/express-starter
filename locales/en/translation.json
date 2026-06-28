@@ -11,14 +11,16 @@
     "alreadyExists": "A sample with the same name already exists"
   },
   "validation": {
-    "sample": {
-      "invalidId": "Invalid sample ID",
-      "nameRequired": "Name is required",
+    "common": {
       "pageInvalid": "Page must be a number",
       "pageMin": "Page must be at least 1",
       "limitInvalid": "Limit must be a number",
       "limitMin": "Limit must be at least 1",
       "limitMax": "Limit must be at most 100"
+    },
+    "sample": {
+      "invalidId": "Invalid sample ID",
+      "nameRequired": "Name is required"
     }
   }
 }

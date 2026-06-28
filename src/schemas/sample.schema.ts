@@ -11,14 +11,14 @@ export const sampleIdParamsSchema = z.object({
 
 export const getSamplesQuerySchema = z.object({
   page: z.coerce
-    .number('validation.sample.pageInvalid' satisfies ParseKeys)
-    .min(1, 'validation.sample.pageMin' satisfies ParseKeys)
+    .number('validation.common.pageInvalid' satisfies ParseKeys)
+    .min(1, 'validation.common.pageMin' satisfies ParseKeys)
     .default(1)
     .optional(),
   limit: z.coerce
-    .number('validation.sample.limitInvalid' satisfies ParseKeys)
-    .min(1, 'validation.sample.limitMin' satisfies ParseKeys)
-    .max(100, 'validation.sample.limitMax' satisfies ParseKeys)
+    .number('validation.common.limitInvalid' satisfies ParseKeys)
+    .min(1, 'validation.common.limitMin' satisfies ParseKeys)
+    .max(100, 'validation.common.limitMax' satisfies ParseKeys)
     .default(10)
     .optional(),
 });
