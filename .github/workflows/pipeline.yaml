@@ -44,6 +44,9 @@ jobs:
       - name: Run Format Check
         run: pnpm format:check
 
+      - name: Run Localization Keys Check
+        run: pnpm i18n:check
+
   testing:
     needs: quality-checking
     runs-on: ubuntu-latest

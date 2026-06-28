@@ -6,7 +6,7 @@ import express, { type Response } from 'express';
 import swaggerUi from 'swagger-ui-express';
 
 import { apiConfig } from '@/config';
-import { isProductionLike } from '@/env';
+import { env, isProductionLike } from '@/env';
 import { NotFoundError } from '@/lib/error';
 import { metricsRegistry } from '@/lib/metrics';
 import { swaggerSpec } from '@/lib/swagger';
@@ -27,14 +27,14 @@ const app: Application = express();
 app.disable('x-powered-by');
 
 /**
- * Enable trust proxy to work correctly behind reverse proxies (nginx, load balancers, etc.)
- * This allows express-rate-limit to correctly identify client IPs from X-Forwarded-For headers
- * Configure the number of proxy hops via TRUST_PROXY_HOPS environment variable
- * Examples: 1 for single nginx, 2 for ALB + CloudFront, true for unknown/variable
+ * Trust proxy configuration for correctly identifying client IPs
+ * - Number: Specifies exact number of proxy hops (e.g., 1 for nginx, 2 for ALB + CloudFront)
+ * - true: Trust all proxies (use with caution, less secure)
+ * Configure via TRUST_PROXY_HOPS environment variable
  * @see https://expressjs.com/en/guide/behind-proxies.html
  * @see https://express-rate-limit.mintlify.app/guides/troubleshooting-proxy-issues
  */
-app.set('trust proxy', apiConfig.trustProxy);
+app.set('trust proxy', env.TRUST_PROXY_HOPS);
 
 /**
  * Use Express built-in ETag for dynamic responses (res.json, res.send)

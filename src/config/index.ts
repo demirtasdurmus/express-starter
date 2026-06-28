@@ -7,22 +7,16 @@ export const apiConfig = {
   title: 'Express Starter API',
   version: JSON.parse(readFileSync('package.json', 'utf8'))?.version || '1.0.0',
   requestBodyLimit: '10mb',
-  /**
-   * Trust proxy configuration for correctly identifying client IPs
-   * - Number: Specifies exact number of proxy hops (e.g., 1 for nginx, 2 for ALB + CloudFront)
-   * - true: Trust all proxies (use with caution, less secure)
-   * Configure via TRUST_PROXY_HOPS environment variable
-   * @see https://expressjs.com/en/guide/behind-proxies.html
-   */
-  trustProxy: env.TRUST_PROXY_HOPS,
   trustedCloudflareProxy: true, // Set it to false if your server is not behind Cloudflare Proxy
-  globalRateLimit: {
-    windowMs: 15 * 60 * 1000,
-    max: isProductionLike ? 300 : 3000,
-  },
-  apiRateLimit: {
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: isProductionLike ? 100 : 1000,
+  rateLimit: {
+    global: {
+      windowMs: 15 * 60 * 1000,
+      max: isProductionLike ? 300 : 3000,
+    },
+    api: {
+      windowMs: 15 * 60 * 1000,
+      max: isProductionLike ? 100 : 1000,
+    },
   },
   cors: {
     allowedOrigins: env.CORS_ORIGIN

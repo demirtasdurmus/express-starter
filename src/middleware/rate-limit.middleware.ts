@@ -26,7 +26,7 @@ const keyGenerator: ValueDeterminingMiddleware<string> = (req) => {
 };
 
 export const globalRateLimit = expressRateLimit({
-  ...apiConfig.globalRateLimit,
+  ...apiConfig.rateLimit.global,
   standardHeaders: true,
   legacyHeaders: false,
   keyGenerator,
@@ -37,7 +37,7 @@ export const globalRateLimit = expressRateLimit({
 });
 
 export const apiRateLimit = expressRateLimit({
-  ...apiConfig.apiRateLimit,
+  ...apiConfig.rateLimit.api,
   standardHeaders: true,
   legacyHeaders: false,
   keyGenerator,
