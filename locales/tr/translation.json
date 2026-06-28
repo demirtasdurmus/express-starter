@@ -20,7 +20,8 @@
     },
     "sample": {
       "invalidId": "Geçersiz örnek ID",
-      "nameRequired": "İsim zorunludur"
+      "nameRequired": "İsim zorunludur",
+      "invalidName": "İsim geçerli bir string olmalıdır"
     }
   }
 }

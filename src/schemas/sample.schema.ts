@@ -25,13 +25,13 @@ export const getSamplesQuerySchema = z.object({
 
 export const createSampleRequestBodySchema = z.object({
   name: z
-    .string('validation.sample.nameRequired' satisfies ParseKeys)
+    .string('validation.sample.invalidName' satisfies ParseKeys)
     .min(1, 'validation.sample.nameRequired' satisfies ParseKeys),
 });
 
 export const updateSampleRequestBodySchema = z.object({
   name: z
-    .string('validation.sample.nameRequired' satisfies ParseKeys)
+    .string('validation.sample.invalidName' satisfies ParseKeys)
     .min(1, 'validation.sample.nameRequired' satisfies ParseKeys),
 });
 
