@@ -53,7 +53,7 @@ jobs:
 
   testing:
     needs: quality-checking
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Get Code
         uses: actions/checkout@v6
@@ -83,7 +83,7 @@ jobs:
 
   building:
     needs: testing
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Get Code
         uses: actions/checkout@v6
