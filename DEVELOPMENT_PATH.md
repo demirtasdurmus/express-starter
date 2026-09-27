@@ -203,7 +203,7 @@ This document tracks all planned improvements and enhancements for the Express S
 - **Impact**: No metrics endpoint
 - **Implemented**:
   - Prometheus-compatible `/metrics` endpoint
-  - Default Node.js/process metrics via `prom-client`
+  - Default Node.js/process metrics via `@prometheus-io/client`
   - HTTP request counter
   - HTTP request duration histogram
   - Stable route labels to avoid high cardinality

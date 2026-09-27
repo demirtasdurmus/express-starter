@@ -1,5 +1,5 @@
+import { collectDefaultMetrics, Counter, Histogram, Registry } from '@prometheus-io/client';
 import type { Request } from 'express';
-import { collectDefaultMetrics, Counter, Histogram, Registry } from 'prom-client';
 
 import { isStaticFile } from '@/utils/is-static-file';
 
