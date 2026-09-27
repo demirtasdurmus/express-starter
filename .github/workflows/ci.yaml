@@ -1,10 +1,14 @@
-name: Pipeline
+name: ci
 
 on:
   pull_request:
     branches: [main]
 
   workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -49,7 +53,7 @@ jobs:
 
   testing:
     needs: quality-checking
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Get Code
         uses: actions/checkout@v6
@@ -79,7 +83,7 @@ jobs:
 
   building:
     needs: testing
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Get Code
         uses: actions/checkout@v6
