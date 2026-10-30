@@ -16,7 +16,7 @@ permissions:
 
 env:
   PORT: 3000
-  NODE_VERSION: 22
+  NODE_VERSION: 24
   # @see https://github.com/scarf-sh/scarf-js
   SCARF_ANALYTICS: false
 
