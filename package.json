@@ -11,7 +11,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=24.0.0"
   },
   "main": "dist/index.mjs",
   "scripts": {
@@ -45,7 +45,7 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
-    "@types/node": "^22.20.5",
+    "@types/node": "^24.19.2",
     "@types/supertest": "^7.2.1",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
@@ -67,6 +67,7 @@
     "typescript-eslint": "^8.72.0"
   },
   "dependencies": {
+    "@prometheus-io/client": "^0.16.1",
     "compression": "^1.8.2",
     "connect-timeout": "^1.9.1",
     "cookie-parser": "^1.4.7",
@@ -80,7 +81,6 @@
     "i18next-http-middleware": "^3.9.9",
     "pino": "^10.4.0",
     "pino-http": "^11.0.0",
-    "@prometheus-io/client": "^0.16.1",
     "swagger-jsdoc": "^6.3.0",
     "swagger-ui-express": "^5.0.1",
     "zod": "^4.6.7"
